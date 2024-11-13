@@ -1,5 +1,5 @@
 <template>
-	<footer class="bg-gray-800 text-gray-300 py-4 mt-auto">
+	<footer class="bg-gray-900 text-gray-300 py-4 mt-auto">
 		<div class="container mx-auto px-4">
 			<div class="flex flex-wrap justify-between items-start">
 				<!-- Section gauche : Equipes -->

@@ -2,14 +2,16 @@
 import LoopVideo from './components/LoopVideo.vue'
 import Header from './components/Header.vue'
 import Login from './components/Login.vue';
+import Register from './components/Register.vue';
 import Footer from './components/Footer.vue'
 </script>
 
 <template>
-	<div class="w-screen h-screen flex flex-col">
+	<div class="w-screen h-screen flex flex-col hidden-scrollbar">
 		<LoopVideo/>
 		<Header/>
 		<Login/>
+		<Register/>
 
 		<main class="flex-1 w-full">
 			<div class="h-full w-full flex items-center justify-center">
@@ -23,5 +25,12 @@ import Footer from './components/Footer.vue'
 <style>
 	body {
 		overflow-x: hidden;
+	}
+	.hidden-scrollbar {
+		overflow: auto;
+		scrollbar-width: none;
+	}
+	.hidden-scrollbar::-webkit-scrollbar {
+		display: none;
 	}
 </style>

@@ -3,14 +3,14 @@
 </script>
 
 <template>
-	<div v-if="GetLoginState" class="fixed inset-0 flex flex-col items-center justify-center"> 
+	<div v-if="GetRegisterState" class="fixed inset-0 flex flex-col items-center justify-center"> 
 		<LoopVideo/>
 		<div class="relative bg-gray-900 w-full max-w-md p-8 rounded-md">
 			<div class="absolute top-3 right-3">
-				<button @click="CloseLogin" class="text-yellow-400 px-2 py-0 rounded-md bg-red-600 hover:bg-red-700">✘</button>
+				<button @click="CloseRegister" class="text-yellow-400 px-2 py-0 rounded-md bg-red-600 hover:bg-red-700">✘</button>
 			</div>
-			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Login')}}</h2> -->
-			<form @submit.prevent="submitLogin">
+			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Register')}}</h2> -->
+			<form @submit.prevent="submitRegister">
 				<div class="mb-4">
 					<label for="pseudo" class="block text-sm font-medium text-gray-300">{{$t('Pseudo')}}</label>
 					<input
@@ -34,7 +34,7 @@
 				<button
 					type="submit"
 					class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md"
-				>{{$t('Login')}}
+				>{{$t('Register')}}
 				</button>
 			</form>
 		</div>
@@ -45,27 +45,29 @@
 	import {mapGetters, mapActions} from 'vuex';
 
 	export default {
-		name: 'Login',
+		name: 'Register',
 		data() {
 			return {
 				pseudo: '',
 				password: '',
+				img: '',
 			};
 		},
 		computed: {
-			...mapGetters(['GetLoginState']),
+			...mapGetters(['GetRegisterState']),
 		},
 		methods: {
-			...mapActions(['CloseLogin']),
+			...mapActions(['CloseRegister']),
 			// api rest envoie de pseudo et password
-			submitLogin() {
+			submitRegister() {
 				console.log(this.pseudo);
 				console.log(this.password);
-				this.CloseLogin();
+				console.log(this.img);
+				this.CloseRegister();
 			},
 		},
 		watch: {
-			GetLoginState(value) {
+			GetRegisterState(value) {
 				if (value) {
 				document.body.classList.add('no-scroll');
 				} else {

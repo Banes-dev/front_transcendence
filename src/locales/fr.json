@@ -3,6 +3,9 @@
     "Team":"Equipe",
     "Github":"Projet Github",
     "Tournaments":"Tournois",
-    "Login":"Se connecter",
-    "Register":"S'inscrire"
+
+    "Login":"Connexion",
+    "Register":"Inscription",
+    "Pseudo":"Pesudo",
+    "Password":"Mot de passe"
 }

@@ -2,5 +2,10 @@
     "Language":"Español",
     "Team":"Equipo",
     "Github":"Proyecto Github",
-    "Tournaments":"Torneos"
+    "Tournaments":"Torneos",
+
+    "Login":"Conexión",
+    "Register":"Inscripción",
+    "Pseudo":"Pesudo",
+    "Password":"Contraseña"
 }
