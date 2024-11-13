@@ -51,7 +51,7 @@
 		/>
 		<div
 			v-if="!isConnected"
-			class="bg-gray-800 border border-gray-600 rounded-md w-26 absolute top-6 z-10"
+			class="bg-gray-800 border border-gray-600 rounded-md w-26 absolute top-6"
 		>
 			<ul>
 				<li
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+	import { mapActions } from 'vuex';
 	export default {
 		name: "Header",
 		data() {
@@ -75,8 +76,8 @@
 				items: [this.$t('Login'), this.$t('Register')],
 				showDropdown: false,
 				isConnected: false,
-				login_state: false,
-				register_state: false,
+				// login_state: false,
+				// register_state: false,
 			};
 		},
 		methods: {
@@ -84,22 +85,29 @@
 				this.$i18n.locale = locale;
 				this.showDropdown = false;
 			},
+			// handle(index) {
+			// 	if (index === 0)
+			// 	{
+			// 		this.login();
+			// 	} else if (index === 1)
+			// 	{
+			// 		this.register();
+			// 	}
+			// },
+			// login() {
+			// 	this.login_state = true;
+			// },
+			// register() {
+			// 	this.register_state = true;
+			// },
+			...mapActions(['OpenLogin']), // Vuex action pour ouvrir le popup
+			...mapActions(['OpenRegister']), // Vuex action pour ouvrir le popup
 			handle(index) {
-				if (index === 0)
-				{
-					this.login();
-				} else if (index === 1)
-				{
-					this.register();
+				if (index === 0) {
+					this.OpenLogin();
+				} else if (index === 1) {
+					this.OpenRegister();
 				}
-			},
-			login() {
-				this.login_state = true;
-				this.isConnected = true;
-			},
-			register() {
-				this.register_state = true;
-				this.isConnected = true;
 			},
 		},
 	};

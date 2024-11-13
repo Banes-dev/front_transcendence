@@ -1,6 +1,7 @@
 <script setup>
 import LoopVideo from './components/LoopVideo.vue'
 import Header from './components/Header.vue'
+import Login from './components/Login.vue';
 import Footer from './components/Footer.vue'
 </script>
 
@@ -8,6 +9,7 @@ import Footer from './components/Footer.vue'
 	<div class="w-screen h-screen flex flex-col">
 		<LoopVideo/>
 		<Header/>
+		<Login/>
 
 		<main class="flex-1 w-full">
 			<div class="h-full w-full flex items-center justify-center">
@@ -19,7 +21,7 @@ import Footer from './components/Footer.vue'
 </template>
 
 <style>
-body {
-	overflow-x: hidden; /* Désactive seulement le défilement horizontal */
-}
+	body {
+		overflow-x: hidden;
+	}
 </style>
