@@ -7,5 +7,7 @@
     "Login":"Conexión",
     "Register":"Inscripción",
     "Pseudo":"Pesudo",
-    "Password":"Contraseña"
+    "Password":"Contraseña",
+    "Confirm_Password": "Confirmar contraseña",
+    "Profile_Image": "Imagen de perfil (opcional)"
 }

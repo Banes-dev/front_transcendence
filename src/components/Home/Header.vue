@@ -5,7 +5,7 @@
 					<h2 class="text-white">{{$t('Tournaments')}}</h2>
 					<img
 						class="relative h-5 w-5"
-						src="../assets/img/cup_yellow.png"
+						src="../../assets/img/cup_yellow.png"
 						alt="Image de la coupe du tournoi"
 					/>
 			</div>
@@ -15,7 +15,7 @@
 				<h2 class="text-white">{{$t('Tournaments')}}</h2>
 				<img
 					class="relative h-5 w-5"
-					src="../assets/img/cup_yellow.png"
+					src="../../assets/img/cup_yellow.png"
 					alt="Image de la coupe du tournoi"
 				/>
 			</div>
@@ -67,7 +67,7 @@
 	<div class="relative flex justify-center">
 		<img
 			class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10"
-			src="../assets/img/default_avatar.png"
+			src="../../assets/img/default_avatar.png"
 			alt="Avatar par défaut"
 		/>
 		<div

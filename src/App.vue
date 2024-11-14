@@ -1,9 +1,9 @@
 <script setup>
 import LoopVideo from './components/LoopVideo.vue'
-import Header from './components/Header.vue'
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
-import Footer from './components/Footer.vue'
+import Header from './components/Home/Header.vue'
+import Login from './components/Login/Login.vue';
+import Register from './components/Register/Register.vue';
+import Footer from './components/Home/Footer.vue'
 </script>
 
 <template>

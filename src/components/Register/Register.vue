@@ -1,5 +1,6 @@
 <script setup>
-	import LoopVideo from './LoopVideo.vue'
+	import LoopVideo from '../LoopVideo.vue'
+	import ImageUpload from './ImageUpload.vue'
 </script>
 
 <template>
@@ -21,7 +22,7 @@
 					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
 					/>
 				</div>
-				<div class="mb-6">
+				<div class="mb-4">
 					<label for="password" class="block text-sm font-medium text-gray-300">{{$t('Password')}}</label>
 					<input
 					type="password"
@@ -31,7 +32,23 @@
 					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
 					/>
 				</div>
+				<div class="mb-4">
+					<label for="confirm_password" class="block text-sm font-medium text-gray-300">{{$t('Confirm_Password')}}</label>
+					<input
+					type="password"
+					id="confirm_password"
+					v-model="confirm_password"
+					required
+					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
+					/>
+				</div>
+				<h2 v-if="password !== confirm_password" class="mb-4 flex items-center justify-center text-red-700 font-bold">Les mots de passe ne correspondent pas</h2>
+				<div class="mb-6">
+					<label for="confirm_password" class="block text-sm font-medium text-gray-300">{{$t('Profile_Image')}}</label>
+					<ImageUpload/>
+				</div>
 				<button
+					v-if="password === confirm_password"
 					type="submit"
 					class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md"
 				>{{$t('Register')}}
@@ -50,6 +67,7 @@
 			return {
 				pseudo: '',
 				password: '',
+				confirm_password: '',
 				img: '',
 			};
 		},
@@ -62,6 +80,7 @@
 			submitRegister() {
 				console.log(this.pseudo);
 				console.log(this.password);
+				console.log(this.confirm_password);
 				console.log(this.img);
 				this.CloseRegister();
 			},

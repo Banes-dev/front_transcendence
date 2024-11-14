@@ -7,5 +7,7 @@
     "Login":"Login",
     "Register":"Register",
     "Pseudo":"Pesudo",
-    "Password":"Password"
+    "Password":"Password",
+    "Confirm_Password": "Confirm password",
+    "Profile_Image": "Profile image (optional)"
 }

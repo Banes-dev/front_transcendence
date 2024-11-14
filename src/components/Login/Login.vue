@@ -1,5 +1,5 @@
 <script setup>
-	import LoopVideo from './LoopVideo.vue'
+	import LoopVideo from '../LoopVideo.vue'
 </script>
 
 <template>
