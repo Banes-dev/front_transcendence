@@ -3,11 +3,13 @@
 </script>
 
 <template>
-	<div v-if="GetLoginState" class="fixed inset-0 flex flex-col items-center justify-center"> 
+	<!-- <div v-if="GetLoginState" class="fixed inset-0 flex flex-col items-center justify-center"> -->
+	<div class="fixed inset-0 flex flex-col items-center justify-center"> 
 		<LoopVideo/>
 		<div class="relative bg-gray-900 w-full max-w-md p-8 rounded-md">
 			<div class="absolute top-3 right-3">
-				<button @click="CloseLogin" class="text-yellow-400 px-2 py-0 rounded-md bg-red-600 hover:bg-red-700">✘</button>
+				<router-link to="/" @click="return_home" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
+				<!-- <button @click="CloseLogin" class="text-yellow-400 px-1.5 py-0 rounded-md bg-red-600 hover:bg-red-700">✘</button> -->
 			</div>
 			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Login')}}</h2> -->
 			<form @submit.prevent="submitLogin">
@@ -53,24 +55,19 @@
 			};
 		},
 		computed: {
-			...mapGetters(['GetLoginState']),
+			// ...mapGetters(['GetLoginState']),
 		},
 		methods: {
-			...mapActions(['CloseLogin']),
+			// ...mapActions(['CloseLogin']),
+			...mapActions(['CloseConnect']),
 			// api rest envoie de pseudo et password
 			submitLogin() {
 				console.log(this.pseudo);
 				console.log(this.password);
 				this.CloseLogin();
 			},
-		},
-		watch: {
-			GetLoginState(value) {
-				if (value) {
-				document.body.classList.add('no-scroll');
-				} else {
-				document.body.classList.remove('no-scroll');
-				}
+			return_home() {
+				this.CloseConnect();
 			},
 		},
 	};

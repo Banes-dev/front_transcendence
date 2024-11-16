@@ -71,13 +71,13 @@
 			alt="Avatar par défaut"
 		/>
 		<div
-			v-if="!isConnected"
+			v-if="!GetConnectState"
 			class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6"
 			role="menu"
 		>
 			<ul>
 				<li v-for="(name, index) in [$t('Login'), $t('Register')]" :key="index">
-					<button
+					<!-- <button
 						@click="handle(index)"
 						@focus="connect_index = index"
 						@blur="connect_index = -1"
@@ -88,7 +88,19 @@
 						type="button"
 						role="menuitem"
 					>{{name}}
-					</button>
+					</button> -->
+					<router-link
+						:to="index === 0 ? '/login' : '/register'"
+						@click="connect_change()"
+						@focus="connect_index = index"
+						@blur="connect_index = -1"
+						:class="{
+						'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
+						'bg-gray-700': connect_index === index,
+						}"
+						role="menuitem"
+					>{{name}}
+					</router-link>
 				</li>
 			</ul>
 		</div>
@@ -97,31 +109,37 @@
 </template>
 
 <script>
-	import {mapActions} from 'vuex';
+	import {mapGetters, mapActions} from 'vuex';
 	export default {
 		name: "Header",
 		data() {
 			return {
 				lang_state: false,
-				isConnected: false,
 				lang_index: -1,
 				connect_index: -1,
 			};
 		},
+		computed: {
+			...mapGetters(['GetConnectState']),
+		},
 		methods: {
+			...mapActions(['OpenConnect']),
 			changeLocale(locale) {
 				this.$i18n.locale = locale;
 				this.lang_state = false;
 			},
-			...mapActions(['OpenLogin']),
-			...mapActions(['OpenRegister']),
-			handle(index) {
-				if (index === 0) {
-					this.OpenLogin();
-				} else if (index === 1) {
-					this.OpenRegister();
-				}
+			connect_change() {
+				this.OpenConnect();
 			},
+			// ...mapActions(['OpenLogin']),
+			// ...mapActions(['OpenRegister']),
+			// handle(index) {
+			// 	if (index === 0) {
+			// 		this.OpenLogin();
+			// 	} else if (index === 1) {
+			// 		this.OpenRegister();
+			// 	}
+			// },
 		},
 	};
 </script>

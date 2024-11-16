@@ -2,37 +2,50 @@ import {createStore} from 'vuex';
 
 export default createStore({
 	state: {
-		login_state: false,
-		register_state: false,
+		connect_state: false,
+		// login_state: false,
+		// register_state: false,
 	},
 	getters: {
-		GetLoginState(state) {
-			return state.login_state
+		GetConnectState(state) {
+			return state.connect_state
 		},
-		GetRegisterState(state) {
-			return state.register_state
-		}
+		// GetLoginState(state) {
+		// 	return state.login_state
+		// },
+		// GetRegisterState(state) {
+		// 	return state.register_state
+		// }
 	},
 	mutations: {
-		SetLoginState(state, value) {
-			state.login_state = value;
+		SetConnectState(state, value) {
+			state.connect_state = value;
 		},
-		SetRegisterState(state, value) {
-			state.register_state = value;
-		},
+		// SetLoginState(state, value) {
+		// 	state.login_state = value;
+		// },
+		// SetRegisterState(state, value) {
+		// 	state.register_state = value;
+		// },
 	},
 	actions: {
-		OpenLogin({commit}) {
-			commit('SetLoginState', true);
+		OpenConnect({commit}) {
+			commit('SetConnectState', true);
 		},
-		CloseLogin({commit}) {
-			commit('SetLoginState', false);
+		CloseConnect({commit}) {
+			commit('SetConnectState', false);
 		},
-		OpenRegister({commit}) {
-			commit('SetRegisterState', true);
-		},
-		CloseRegister({commit}) {
-			commit('SetRegisterState', false);
-		},
+		// OpenLogin({commit}) {
+		// 	commit('SetLoginState', true);
+		// },
+		// CloseLogin({commit}) {
+		// 	commit('SetLoginState', false);
+		// },
+		// OpenRegister({commit}) {
+		// 	commit('SetRegisterState', true);
+		// },
+		// CloseRegister({commit}) {
+		// 	commit('SetRegisterState', false);
+		// },
 	},
 });

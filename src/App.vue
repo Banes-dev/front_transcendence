@@ -7,11 +7,14 @@ import Footer from './components/Home/Footer.vue'
 </script>
 
 <template>
+	<div id="app">
+		<router-view></router-view>
+	</div>
 	<div class="w-screen h-screen flex flex-col hidden-scrollbar">
 		<LoopVideo/>
 		<Header/>
-		<Login/>
-		<Register/>
+		<!-- <Login/> -->
+		<!-- <Register/> -->
 
 		<main class="flex-1 w-full">
 			<div class="h-full w-full flex items-center justify-center">
