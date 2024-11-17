@@ -40,7 +40,7 @@
 			</button>
 			<div
 				v-if="lang_state"
-				class="absolute mt-4 bg-gray-900 border border-gray-600 rounded-md w-full z-10"
+				class="bg-gray-900 border border-gray-600 rounded-md absolute mt-4 w-full z-10"
 				role="menu"
 			>
 				<ul>
