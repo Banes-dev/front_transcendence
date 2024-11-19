@@ -1,8 +1,8 @@
 <template>
 	<header class="bg-gray-900 text-gray-300 py-6 mt-auto max-w-6xl mx-auto px-36 rounded-b-xl relative">
 		<div v-if="$i18n.locale === 'en'">
-			<div class="flex items-center absolute left-1.5 top-3.5 space-x-0">
-					<h2 class="text-white">{{$t('Tournaments')}}</h2>
+			<div class="flex items-center absolute left-2.5 top-4 space-x-0">
+					<h2 class="text-white text-sm">{{$t('Tournaments')}}</h2>
 					<img
 						class="relative h-5 w-5"
 						src="../../assets/img/cup_yellow.png"

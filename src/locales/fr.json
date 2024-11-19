@@ -4,6 +4,9 @@
     "Github":"Projet Github",
     "Tournaments":"Tournois",
 
+    "TicTacToe":"Morpion",
+    "Descri_Pong":"Renvoyer la balle dans l'autre camp pour marquer un point, le premier à 5 gagne.",
+    "Descri_TicTacToe":"Faites une ligne de 3 signes consécutifs avant votre adversaire pour gagner.",
     "Play":"Jouer",
     "Preferences":"Préférences",
 

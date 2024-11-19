@@ -4,6 +4,10 @@ export default {
   content: [],
   theme: {
     extend: {
+      scale: {
+        '40': '0.40',
+        '45': '0.45',
+      }
       // backgroundImage: {
       //   'custom-bg': "url('@/assets/img/fond 2 blur.png')",
       // }

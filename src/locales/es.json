@@ -4,6 +4,9 @@
     "Github":"Proyecto Github",
     "Tournaments":"Torneos",
 
+    "TicTacToe":"Tres en raya",
+    "Descri_Pong":"Envía la pelota de vuelta al otro lado para anotar un punto, el primero en llegar a 5 gana.",
+    "Descri_TicTacToe":"Haz una línea de 3 signos consecutivos antes que tu oponente para ganar.",
     "Play":"Jugar",
     "Preferences":"Preferencias",
 
