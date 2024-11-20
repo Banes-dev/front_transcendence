@@ -7,7 +7,7 @@
 		  <p class="mb-3 font-normal text-gray-400">{{$t('Descri_Pong')}}</p>
 		  <div class="flex justify-between items-center">
 			<router-link
-			  to="/play_pong"
+			  to="/pong"
 			  class="text-white bg-gradient-to-br from-red-600 to-yellow-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
 			><i class="fa-solid fa-gamepad"></i> {{$t('Play')}}
 			</router-link>
@@ -29,7 +29,7 @@
 			<p class="mb-3 font-normal text-gray-400">{{$t('Descri_TicTacToe')}}</p>
 			<div class="flex justify-between items-center">
 				<router-link
-					to="/play_tictactoe"
+					to="/tictactoe"
 					class="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-red-600 to-yellow-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
 				><i class="fa-solid fa-gamepad"></i> {{$t('Play')}}
 				</router-link>

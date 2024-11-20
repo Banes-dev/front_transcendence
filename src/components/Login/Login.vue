@@ -64,7 +64,8 @@
 			submitLogin() {
 				console.log(this.pseudo);
 				console.log(this.password);
-				this.CloseLogin();
+				// this.CloseLogin();
+				this.$router.push('/');
 			},
 			return_home() {
 				this.CloseConnect();
