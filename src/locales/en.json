@@ -9,6 +9,9 @@
     "Descri_TicTacToe":"Make a line of 3 consecutive signs before your opponent to win.",
     "Play":"Play",
     "Preferences":"Preferences",
+    "Preferences_Games":"Game preferences",
+    "Color1":"Main colour : ",
+    "Color2":"Secondary colour : ",
     "Cancel":"Cancel changes",
     "Apply":"Apply changes",
 
