@@ -12,6 +12,9 @@
     "Preferences_Games":"Preferencias de juego",
     "Color1":"Color principal : ",
     "Color2":"Color secundario : ",
+    "Ball_Speed_Time":"Acelera la velocidad de la pelota en función del tiempo",
+    "Ball_Speed_Manual":"Velocidad de la pelota :",
+    "Remove_Hit":"Eliminar un golpe del oponente",
     "Cancel":"Cancelar cambios",
     "Apply":"Aplicar cambios",
 

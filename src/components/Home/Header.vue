@@ -104,12 +104,14 @@
 				</li>
 			</ul>
 		</div>
+		<button @click="created()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Api</button>
 	</div>
 
 </template>
 
 <script>
 	import {mapGetters, mapActions} from 'vuex';
+	import apiClient from '@/axios'; // Adapter le chemin selon ton organisation
 	export default {
 		name: "Header",
 		data() {
@@ -117,6 +119,7 @@
 				lang_state: false,
 				lang_index: -1,
 				connect_index: -1,
+				items: [],
 			};
 		},
 		computed: {
@@ -140,6 +143,19 @@
 			// 		this.OpenRegister();
 			// 	}
 			// },
+			async fetchData() {
+				try {
+					const response = await apiClient.get('register/'); // Remplace 'endpoint/' par ton URL
+					this.items = response.data; // Met à jour les données
+					console.log(json.decode(this.items));
+				} catch (error) {
+					console.error('Erreur lors de la récupération des données :', error);
+				}
+			},
+			created() {
+				console.log("creation api");
+				this.fetchData(); // Appelle l'API lorsque le composant est monté
+			},
 		},
 	};
 </script>

@@ -90,19 +90,24 @@
                 <!-- end color -->
                 <!-- ball speed with time -->
                 <label class="mb-3 inline-flex items-center cursor-pointer">
-                    <span class="text-white">Accelerer la vitesse de la balle en fonction du temps passe </span>
+                    <span class="text-white">{{$t("Ball_Speed_Time")}} </span>
                     <input type="checkbox" value="" class="sr-only peer">
                     <div class="relative w-11 h-6 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
                 </label>
 
                 <!-- ball speed manual -->
-                <div class="relative mb-12">
+                <h2 class="text-white relative sm:absolute my-2">{{$t("Ball_Speed_Manual")}}</h2>
+                <div class="relative mb-12 sm:left-38">
                     <label for="price-range-input" class="sr-only">Default range</label>
-                    <input id="price-range-input" type="range" value="1000" min="100" max="1500" class="w-3/5 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                    <span class="text-sm text-gray-400 absolute start-0 -bottom-6">Min ($100)</span>
-                    <span class="text-sm text-gray-400 absolute start-1/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">$500</span>
-                    <span class="text-sm text-gray-400 absolute start-2/3 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">$1000</span>
-                    <span class="text-sm text-gray-400 absolute end-0 -bottom-6">Max ($1500)</span>
+                    <input id="price-range-input" type="range" value="1" min="0" max="10" class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <span class="text-sm text-gray-400 absolute start-0 -bottom-6">x0.5</span>
+                    <span class="text-sm text-gray-400 absolute w-3/5 transform -translate-x-1/2 -bottom-6">x5</span>
+                    <span class="text-sm text-gray-400 absolute w-2/5 end-6 -bottom-6">x10</span>
+                    <div class="relative mt-2">
+                        <span id="range-indicator" class="text-sm text-gray-400 absolute x-1/2 -top-14 left-0 sm:left-4 lg:left-8 xl:left-14 bg-gray-800 px-2 py-1 rounded-md">
+                            x1
+                        </span>
+                    </div>
                 </div>
   
                 <div class="flex justify-between items-center flex-col md:flex-row space-y-4 md:space-y-0">
@@ -123,15 +128,50 @@
 </template>
 
 <script>
-export default {
-	name: "CustomPong",
-    data() {
-        return {
-            color1: '#ff0000',
-            color2: '#ffd200',
-        };
-    },
-};
+    export default {
+        name: "CustomPong",
+        data() {
+            return {
+                color1: '#ff0000',
+                color2: '#ffd200',
+            };
+        },
+        mounted() {
+            const rangeInput = document.getElementById('price-range-input');
+            const rangeIndicator = document.getElementById('range-indicator');
+
+            rangeInput.addEventListener('input', (event) => {
+                const value = event.target.value;
+
+                // Récupérer la largeur totale de la barre de progression
+                const rangeWidth = rangeInput.offsetWidth;
+
+                // Calculer le pourcentage de la progression (entre 0 et 100)
+                const percent = (value - rangeInput.min) / (rangeInput.max - rangeInput.min);
+
+                // Calculer la position en pixels en fonction du pourcentage
+                const indicatorPosition = percent * rangeWidth;
+
+                // Ajuster la position de l'indicateur pour le centrer
+                const offset = rangeIndicator.offsetWidth / 2;
+                rangeIndicator.style.left = `calc(${indicatorPosition}px - ${offset}px)`;
+
+                // Mettre à jour le texte de l'indicateur
+                rangeIndicator.textContent = `x${value}`;
+            });
+        },
+        // mounted() {
+        //     const rangeInput = document.getElementById('price-range-input');
+        //     const rangeIndicator = document.getElementById('range-indicator');
+
+        //     rangeInput.addEventListener('input', (event) => {
+        //         const value = event.target.value;
+        //         rangeIndicator.textContent = `x${value}`;
+        //         const percent = (value - rangeInput.min) / (rangeInput.max - rangeInput.min) * 100;
+        //         rangeIndicator.style.left = `calc(${percent}% - ${rangeIndicator.offsetWidth / 2}px)`;
+        //     });
+        // },
+    };
 </script>
 
 <style scoped>

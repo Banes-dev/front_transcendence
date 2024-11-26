@@ -12,6 +12,9 @@
     "Preferences_Games":"Game preferences",
     "Color1":"Main colour : ",
     "Color2":"Secondary colour : ",
+    "Ball_Speed_Time":"Accelerate ball speed as a function of time",
+    "Ball_Speed_Manual":"Ball speed :",
+    "Remove_Hit":"Remove an opponent's hit",
     "Cancel":"Cancel changes",
     "Apply":"Apply changes",
 
