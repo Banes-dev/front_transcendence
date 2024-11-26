@@ -147,7 +147,7 @@
 				try {
 					const response = await apiClient.get('register/'); // Remplace 'endpoint/' par ton URL
 					this.items = response.data; // Met à jour les données
-					console.log(json.decode(this.items));
+					console.log(JSON.parse(this.items));
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
 				}
