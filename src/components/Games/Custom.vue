@@ -6,10 +6,10 @@
     <div class="fixed inset-0 flex flex-col items-center justify-center">
         <LoopVideo/>
         <div class="relative w-3/5 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
-            <img class="rounded-t-lg relative z-20" src="../../assets/img/lantern_empty.png" alt="Lanterne qui contient TicTacToe"/>
-            <img class="absolute -top-24 left-0 w-full h-full object-contain scale-40 z-10" src="../../assets/img/morpion_trans.png" alt="Image du Pong"/>
+            <!-- <img class="rounded-t-lg relative z-20" src="../../assets/img/lantern_empty.png" alt="Lanterne qui contient TicTacToe"/>
+            <img class="absolute -top-24 left-0 w-full h-full object-contain scale-40 z-10" src="../../assets/img/morpion_trans.png" alt="Image du Pong"/> -->
             <div class="p-5 relative z-20">
-                <h5 class="mb-8 text-2xl font-bold tracking-tight text-white">{{$t('Preferences_Games')}}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$t('Preferences_Games')}}</h5>
                 <!-- <p class="mb-2 font-normal text-gray-400">{{$t('Descri_TicTacToe')}}</p> -->
                 <!-- color 1 -->
                 <h2 class="text-white absolute my-2">{{$t("Color1")}}</h2>
@@ -58,7 +58,7 @@
                         class="absolute w-10 h-10 mx-38 opacity-0 cursor-pointer"
                     />
                     <div
-                        class="mb-6 w-10 h-10 mx-38 rounded-full border-2 border-gray-300 cursor-pointer"
+                        class="mb-8 w-10 h-10 mx-38 rounded-full border-2 border-gray-300 cursor-pointer"
                         :style="{backgroundColor: color2}"
                     >
                     </div>
@@ -70,7 +70,7 @@
                         class="absolute w-10 h-10 mx-34 opacity-0 cursor-pointer"
                     />
                     <div
-                        class="mb-6 w-10 h-10 mx-34 rounded-full border-2 border-gray-300 cursor-pointer"
+                        class="mb-8 w-10 h-10 mx-34 rounded-full border-2 border-gray-300 cursor-pointer"
                         :style="{backgroundColor: color2}"
                     >
                     </div>
@@ -82,12 +82,13 @@
                         class="absolute w-10 h-10 mx-34 opacity-0 cursor-pointer"
                     />
                     <div
-                        class="mb-6 w-10 h-10 mx-34 rounded-full border-2 border-gray-300 cursor-pointer"
+                        class="mb-8 w-10 h-10 mx-34 rounded-full border-2 border-gray-300 cursor-pointer"
                         :style="{backgroundColor: color2}"
                     >
                     </div>
 				</div>
                 <!-- end color -->
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Pong</h5>
                 <!-- ball speed with time -->
                 <label class="mb-3 inline-flex items-center cursor-pointer">
                     <span class="text-white">{{$t("Ball_Speed_Time")}} </span>
@@ -97,7 +98,7 @@
 
                 <!-- ball speed manual -->
                 <h2 class="text-white relative sm:absolute my-2">{{$t("Ball_Speed_Manual")}}</h2>
-                <div class="relative mb-12 sm:left-38">
+                <div class="relative mb-12 top-2 sm:left-38">
                     <label for="price-range-input" class="sr-only">Default range</label>
                     <input id="price-range-input" type="range" value="1" min="0" max="10" class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
                     <span class="text-sm text-gray-400 absolute start-0 -bottom-6">x0.5</span>
@@ -109,6 +110,14 @@
                         </span>
                     </div>
                 </div>
+
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$t('TicTacToe')}}</h5>
+                <!-- remove hit-->
+                <label class="mb-8 inline-flex items-center cursor-pointer">
+                    <span class="text-white">{{$t("Remove_Hit")}} </span>
+                    <input type="checkbox" value="" class="sr-only peer">
+                    <div class="relative w-11 h-6 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
+                </label>
   
                 <div class="flex justify-between items-center flex-col md:flex-row space-y-4 md:space-y-0">
                     <router-link
@@ -160,17 +169,6 @@
                 rangeIndicator.textContent = `x${value}`;
             });
         },
-        // mounted() {
-        //     const rangeInput = document.getElementById('price-range-input');
-        //     const rangeIndicator = document.getElementById('range-indicator');
-
-        //     rangeInput.addEventListener('input', (event) => {
-        //         const value = event.target.value;
-        //         rangeIndicator.textContent = `x${value}`;
-        //         const percent = (value - rangeInput.min) / (rangeInput.max - rangeInput.min) * 100;
-        //         rangeIndicator.style.left = `calc(${percent}% - ${rangeIndicator.offsetWidth / 2}px)`;
-        //     });
-        // },
     };
 </script>
 

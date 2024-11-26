@@ -3,30 +3,21 @@ import {createStore} from 'vuex';
 export default createStore({
 	state: {
 		connect_state: false,
-		// login_state: false,
-		// register_state: false,
+		color1: "#ff0000",
+		color2: "#ff0000",
+		ball_speed_time: false,
+		ball_speed_manual: 1,
+		remove_hit: false,
 	},
 	getters: {
 		GetConnectState(state) {
 			return state.connect_state
 		},
-		// GetLoginState(state) {
-		// 	return state.login_state
-		// },
-		// GetRegisterState(state) {
-		// 	return state.register_state
-		// }
 	},
 	mutations: {
 		SetConnectState(state, value) {
 			state.connect_state = value;
 		},
-		// SetLoginState(state, value) {
-		// 	state.login_state = value;
-		// },
-		// SetRegisterState(state, value) {
-		// 	state.register_state = value;
-		// },
 	},
 	actions: {
 		OpenConnect({commit}) {
@@ -35,17 +26,5 @@ export default createStore({
 		CloseConnect({commit}) {
 			commit('SetConnectState', false);
 		},
-		// OpenLogin({commit}) {
-		// 	commit('SetLoginState', true);
-		// },
-		// CloseLogin({commit}) {
-		// 	commit('SetLoginState', false);
-		// },
-		// OpenRegister({commit}) {
-		// 	commit('SetRegisterState', true);
-		// },
-		// CloseRegister({commit}) {
-		// 	commit('SetRegisterState', false);
-		// },
 	},
 });
