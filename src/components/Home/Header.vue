@@ -104,7 +104,8 @@
 				</li>
 			</ul>
 		</div>
-		<button @click="created()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Api</button>
+		<button @click="getapi()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button>
+		<button @click="postapi()" class="flex items-center justify-center px-4 py-2 absolute top-96 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Post Api</button>
 	</div>
 
 </template>
@@ -120,6 +121,10 @@
 				lang_index: -1,
 				connect_index: -1,
 				items: [],
+				tabletestapi: {
+					test1: "yes yes",
+					test2: "haha",
+				},
 			};
 		},
 		computed: {
@@ -143,7 +148,8 @@
 			// 		this.OpenRegister();
 			// 	}
 			// },
-			async fetchData() {
+			async getapi() {
+				console.log("get api");
 				try {
 					const response = await apiClient.get('register/'); // Remplace 'endpoint/' par ton URL
 					this.items = response.data; // Met à jour les données
@@ -152,9 +158,14 @@
 					console.error('Erreur lors de la récupération des données :', error);
 				}
 			},
-			created() {
-				console.log("creation api");
-				this.fetchData(); // Appelle l'API lorsque le composant est monté
+			async postapi() {
+				console.log("post api");
+				try {
+					const response = await apiClient.post('register/', this.tabletestapi); // Remplace 'endpoint/' par ton URL
+					console.log('Données envoyées avec succès :', response.data);
+				} catch (error) {
+					console.error('Erreur lors de l\'envoie des données :', error);
+				}
 			},
 		},
 	};
