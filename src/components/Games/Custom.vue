@@ -92,7 +92,7 @@
                 <!-- ball speed with time -->
                 <label class="mb-3 inline-flex items-center cursor-pointer">
                     <span class="text-white">{{$t("Ball_Speed_Time")}} </span>
-                    <input type="checkbox" value="" class="sr-only peer">
+                    <input type="checkbox" v-model="state_ball_time" class="sr-only peer">
                     <div class="relative w-11 h-6 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
                 </label>
 
@@ -100,7 +100,7 @@
                 <h2 class="text-white relative sm:absolute my-2">{{$t("Ball_Speed_Manual")}}</h2>
                 <div class="relative mb-12 top-2 sm:left-38">
                     <label for="price-range-input" class="sr-only">Default range</label>
-                    <input id="price-range-input" type="range" value="1" min="0" max="10" class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <input id="price-range-input" type="range" v-model="ball_speed_value" min="0" max="10" class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
                     <span class="text-sm text-gray-400 absolute start-0 -bottom-6">x0.5</span>
                     <span class="text-sm text-gray-400 absolute w-3/5 transform -translate-x-1/2 -bottom-6">x5</span>
                     <span class="text-sm text-gray-400 absolute w-2/5 end-6 -bottom-6">x10</span>
@@ -115,7 +115,7 @@
                 <!-- remove hit-->
                 <label class="mb-8 inline-flex items-center cursor-pointer">
                     <span class="text-white">{{$t("Remove_Hit")}} </span>
-                    <input type="checkbox" value="" class="sr-only peer">
+                    <input type="checkbox" v-model="state_remove_hit" class="sr-only peer">
                     <div class="relative w-11 h-6 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
                 </label>
   
@@ -127,6 +127,7 @@
                     </router-link>
                     <router-link
                         to="/"
+                        @click="change_preferences()"
                         class="text-white bg-gradient-to-br from-green-800 to-green-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
                     ><i class="fa-solid fa-check"></i> {{$t('Apply')}}
                     </router-link>
@@ -137,15 +138,52 @@
 </template>
 
 <script>
+    import {mapGetters, mapMutations} from 'vuex';
+
     export default {
         name: "CustomPong",
         data() {
             return {
                 color1: '#ff0000',
                 color2: '#ffd200',
+                state_ball_time: false,
+                ball_speed_value: 1,
+                state_remove_hit: false,
             };
         },
+		computed: {
+			...mapGetters(['GetColor1State']),
+			...mapGetters(['GetColor2State']),
+			...mapGetters(['GetBallSpeedTimeState']),
+			...mapGetters(['GetBallSpeedManualState']),
+			...mapGetters(['GetRemoveHitState']),
+		},
+        methods: {
+            ...mapMutations(['SetColor1State']),
+            ...mapMutations(['SetColor2State']),
+            ...mapMutations(['SetBallSpeedTimeState']),
+            ...mapMutations(['SetBallSpeedManualState']),
+            ...mapMutations(['SetRemoveHitState']),
+
+            change_preferences() {
+                this.SetColor1State(this.color1);
+                this.SetColor2State(this.color2);
+                this.SetBallSpeedTimeState(this.state_ball_time);
+                if (this.ball_speed_value == 0)
+                {
+                    this.ball_speed_value = 0.5;
+                }
+                this.SetBallSpeedManualState(this.ball_speed_value);
+				this.SetRemoveHitState(this.state_remove_hit);
+			},
+        },
         mounted() {
+			this.color1 = this.GetColor1State;
+			this.color2 = this.GetColor2State;
+			this.state_ball_time = this.GetBallSpeedTimeState;
+			this.ball_speed_value = this.GetBallSpeedManualState;
+			this.state_remove_hit = this.GetRemoveHitState;
+
             const rangeInput = document.getElementById('price-range-input');
             const rangeIndicator = document.getElementById('range-indicator');
 
