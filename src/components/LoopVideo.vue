@@ -7,7 +7,7 @@
       playsinline
       class="object-cover w-full h-full"
     >
-      <source src="@/assets/video/artifice_1.mp4" type="video/mp4" /> fond_video.mp4
+      <source src="@/assets/video/artifice_1.mp4" type="video/mp4"/>
       Votre navigateur ne supporte pas les vidéos
     </video>
   </div>

@@ -163,8 +163,8 @@
 				try {
 					const response = await apiClient.post('register/', this.tabletestapi); // Remplace 'endpoint/' par ton URL
 					console.log('Données envoyées avec succès :', response.data);
-				} catch (error) {
-					console.error('Erreur lors de l\'envoie des données :', error);
+				} catch (error) {;
+					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 				}
 			},
 		},
