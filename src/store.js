@@ -8,6 +8,7 @@ export default createStore({
 		ball_speed_time: false,
 		ball_speed_manual: 1,
 		remove_hit: false,
+		layout: false,
 	},
 	getters: {
 		GetConnectState(state) {
@@ -28,6 +29,9 @@ export default createStore({
 		GetRemoveHitState(state) {
 			return state.remove_hit
 		},
+		GetLayoutState(state) {
+			return state.layout
+		},
 	},
 	mutations: {
 		SetConnectState(state, value) {
@@ -47,6 +51,9 @@ export default createStore({
 		},
 		SetRemoveHitState(state, value) {
 			state.remove_hit = value;
+		},
+		SetLayoutState(state, value) {
+			state.layout = value;
 		},
 	},
 	actions: {

@@ -12,7 +12,7 @@
 				><i class="fa-solid fa-gamepad"></i> {{$t('Play')}}
 				</router-link>
 				<router-link
-					to="/custom_tictactoe"
+					to="/custom"
 					class="text-white bg-gradient-to-br from-gray-600 to-gray-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-2 py-1 text-center"
 				><i class="fa-solid fa-sliders"></i> {{$t('Preferences')}}
 				</router-link>

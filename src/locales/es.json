@@ -9,6 +9,7 @@
     "Descri_TicTacToe":"Haz una línea de 3 signos consecutivos antes que tu oponente para ganar.",
     "Play":"Jugar",
     "Preferences":"Preferencias",
+
     "Preferences_Games":"Preferencias de juego",
     "Color1":"Color principal : ",
     "Color2":"Color secundario : ",
@@ -17,6 +18,10 @@
     "Remove_Hit":"Eliminar un golpe del oponente",
     "Cancel":"Cancelar cambios",
     "Apply":"Aplicar cambios",
+
+    "Back":"Volver",
+    "Player1":"Jugador 1",
+    "Player2":"Jugador 2",
 
     "Login":"Conexión",
     "Register":"Inscripción",
