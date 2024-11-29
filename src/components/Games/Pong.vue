@@ -10,25 +10,35 @@
 			class="absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
 		><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}
 		</router-link>
+		<KeybindInfo class="hidden md:block"/>
 
 		<img
-			class="absolute -left-12"
-			src="../../assets/img/lantern_long.png"
+			class="absolute -left-20 scale-50"
+			src="../../assets/img/lantern_long_patch.png"
 			alt="Lanterne Joueur Gauche"
-			:style="{filter: `drop-shadow(0px 0px 20px ${GetColor1State})`}"
+			:style="{filter: `drop-shadow(0px 0px 20px ${GetColor1State})`, top: `${leftPaddleY}px`}"
 		/>
 		<img
-			class="absolute -right-12"
-			src="../../assets/img/lantern_long.png"
+			class="absolute -right-20 scale-50"
+			src="../../assets/img/lantern_long_patch.png"
 			alt="Lanterne Joueur Droite"
-			:style="{filter: `drop-shadow(0px 0px 20px ${GetColor1State})`}"
+			:style="{filter: `drop-shadow(0px 0px 20px ${GetColor1State})`, top: `${rightPaddleY}px`}"
 		/>
-		<KeybindInfo class="hidden md:block"/>
 	</div>
 </template>
 
 <script>
 	import {mapGetters, mapMutations} from 'vuex';
+	import startPongGame from './pong.js';
+	import {ref} from 'vue';
+
+	const leftPaddleY = ref(0);
+	const rightPaddleY = ref(0);
+
+	function updatePaddlePositions(positions) {
+		leftPaddleY.value = positions.leftPaddleY - 98;
+		rightPaddleY.value = positions.rightPaddleY - 98;
+	}
 
 	export default {
 		name: "Pong",
@@ -39,9 +49,27 @@
 			...mapGetters(['GetBallSpeedManualState']),
 			...mapGetters(['GetRemoveHitState']),
 		},
+		mounted() {
+			// Lancer le jeu Pong en passant le canvas
+			const canvas = this.$refs.PongCanvas;
+			startPongGame(canvas, updatePaddlePositions);
+		}
 	};
 </script>
 
 <style scoped>
 	@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
+</style>
+
+<style>
+	body {
+		overflow-x: hidden;
+	}
+	.hidden-scrollbar {
+		overflow: auto;
+		scrollbar-width: none;
+	}
+	.hidden-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
 </style>

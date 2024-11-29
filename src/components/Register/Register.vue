@@ -62,6 +62,7 @@
   
 <script>
 	import {mapGetters, mapActions} from 'vuex';
+	import apiClient from '@/axios';
 
 	export default {
 		name: 'Register',
@@ -71,35 +72,46 @@
 				password: '',
 				confirm_password: '',
 				img: '',
+				table_register: {
+					username: "NULL",
+					password: "NULL",
+					img: "NULL",
+				},
 			};
 		},
-		computed: {
-			// ...mapGetters(['GetRegisterState']),
-		},
 		methods: {
-			// ...mapActions(['CloseRegister']),
 			...mapActions(['CloseConnect']),
 			// api rest envoie de pseudo et password
-			submitRegister() {
+			async submitRegister() {
 				console.log(this.pseudo);
 				console.log(this.password);
 				console.log(this.confirm_password);
 				console.log(this.img);
-				this.CloseRegister();
+				this.table_register.username = this.pseudo;
+				this.table_register.password = this.password;
+				this.table_register.img = this.img;
+				const result = await this.postregister();
+				if (result == 1)
+				{
+					this.$router.push('/');
+				}
+				console.log("recup erreur de register");
 			},
 			return_home() {
 				this.CloseConnect();
 			},
+			async postregister() {
+				console.log("post register api");
+				try {
+					const response = await apiClient.post('register/', this.table_register); // Remplace 'endpoint/' par ton URL
+					console.log('Données envoyées avec succès :', response.data);
+					return (1);
+				} catch (error) {;
+					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
+					return (0);
+				}
+			},
 		},
-		// watch: {
-		// 	GetRegisterState(value) {
-		// 		if (value) {
-		// 		document.body.classList.add('no-scroll');
-		// 		} else {
-		// 		document.body.classList.remove('no-scroll');
-		// 		}
-		// 	},
-		// },
 	};
 </script>
 
