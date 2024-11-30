@@ -10,7 +10,6 @@
 		<div class="relative bg-gray-900 w-full max-w-md p-8 rounded-md">
 			<div class="absolute top-3 right-3">
 				<router-link to="/" @click="return_home" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
-				<!-- <button @click="CloseRegister" class="text-yellow-400 px-2 py-0 rounded-md bg-red-600 hover:bg-red-700">✘</button> -->
 			</div>
 			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Register')}}</h2> -->
 			<form @submit.prevent="submitRegister">
@@ -103,7 +102,7 @@
 			async postregister() {
 				console.log("post register api");
 				try {
-					const response = await apiClient.post('register/', this.table_register); // Remplace 'endpoint/' par ton URL
+					const response = await apiClient.post('register/', this.table_register);
 					console.log('Données envoyées avec succès :', response.data);
 					return (1);
 				} catch (error) {;
