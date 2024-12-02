@@ -79,6 +79,7 @@ export default createStore({
 			const user = localStorage.getItem('user');
 			if (user) {
 				commit('SetUser', JSON.parse(user));
+				commit('SetConnectState', true);
 			}
 		},
 		OpenConnect({commit}) {
