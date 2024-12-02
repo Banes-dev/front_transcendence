@@ -84,8 +84,8 @@
 				try {
 					const response = await apiClient.post('login/', this.table_login);
 					console.log('Données envoyées avec succès :', response.data);
-					console.log(response.data.username);
-					this.Login(response.data.username);
+					console.log(response.data);
+					this.Login(response.data);
 					return (1);
 				} catch (error) {;
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);

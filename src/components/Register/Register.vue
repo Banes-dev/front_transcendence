@@ -48,6 +48,10 @@
 					<label for="confirm_password" class="block text-sm font-medium text-gray-300">{{$t('Profile_Image')}}</label>
 					<ImageUpload/>
 				</div>
+				<div class="mb-6">
+					<input type="checkbox" id="checkbox" v-model="checked"/>
+					<label class="my-8 text-sm font-medium text-gray-300 ml-2" for="checkbox">Accepter les <a href="/conditions" class="text-blue-500">conditions d'utilisations</a> du site</label>
+				</div>
 				<button
 					v-if="password === confirm_password"
 					type="submit"
@@ -107,8 +111,8 @@
 				try {
 					const response = await apiClient.post('register/', this.table_register);
 					console.log('Données envoyées avec succès :', response.data);
-					console.log(response.data.username);
-					this.Login(response.data.username);
+					console.log(response.data);
+					this.Login(response.data);
 					return (1);
 				} catch (error) {;
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);

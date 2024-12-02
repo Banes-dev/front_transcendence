@@ -68,17 +68,17 @@ export default createStore({
 	},
 	actions: {
 		Login({commit}, userData) {
-			commit('setUser', userData);
-			localStorage.setItem('user', JSON.stringify(userData)); // Persiste dans localStorage
+			commit('SetUser', userData);
+			localStorage.setItem('user', JSON.stringify(userData));
 		},
 		Logout({commit}) {
-			commit('clearUser');
-			localStorage.removeItem('user'); // Supprime du stockage local
+			commit('ClearUser');
+			localStorage.removeItem('user');
 		},
-		InitializeStore({ commit }) {
+		InitializeStore({commit}) {
 			const user = localStorage.getItem('user');
 			if (user) {
-				commit('setUser', JSON.parse(user));
+				commit('SetUser', JSON.parse(user));
 			}
 		},
 		OpenConnect({commit}) {
