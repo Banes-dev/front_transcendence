@@ -2,6 +2,7 @@ import {createStore} from 'vuex';
 
 export default createStore({
 	state: {
+		user: null,
 		connect_state: false,
 		color1: "#ff0000",
 		color2: "#ffd200",
@@ -11,6 +12,9 @@ export default createStore({
 		layout: false,
 	},
 	getters: {
+		GetUserState(state) {
+			return state.user
+		},
 		GetConnectState(state) {
 			return state.connect_state
 		},
@@ -34,6 +38,12 @@ export default createStore({
 		},
 	},
 	mutations: {
+		SetUser(state, user) {
+			state.user = user;
+		},
+		ClearUser(state) {
+			state.user = null;
+		},
 		SetConnectState(state, value) {
 			state.connect_state = value;
 		},
@@ -57,6 +67,20 @@ export default createStore({
 		},
 	},
 	actions: {
+		Login({commit}, userData) {
+			commit('setUser', userData);
+			localStorage.setItem('user', JSON.stringify(userData)); // Persiste dans localStorage
+		},
+		Logout({commit}) {
+			commit('clearUser');
+			localStorage.removeItem('user'); // Supprime du stockage local
+		},
+		InitializeStore({ commit }) {
+			const user = localStorage.getItem('user');
+			if (user) {
+				commit('setUser', JSON.parse(user));
+			}
+		},
 		OpenConnect({commit}) {
 			commit('SetConnectState', true);
 		},

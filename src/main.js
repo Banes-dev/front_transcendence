@@ -5,5 +5,11 @@ import i18n from './i18n'
 import store from './store'
 import router from './router'
 
-createApp(App).use(i18n).use(store).use(router).mount('#app')
+const app = createApp(App);
 
+store.dispatch('InitializeStore');
+
+app.use(i18n);
+app.use(store);
+app.use(router);
+app.mount('#app');

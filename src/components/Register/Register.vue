@@ -60,7 +60,7 @@
 </template>
   
 <script>
-	import {mapGetters, mapActions} from 'vuex';
+	import {mapGetters, mapActions, mapMutations} from 'vuex';
 	import apiClient from '@/axios';
 
 	export default {
@@ -80,6 +80,7 @@
 		},
 		methods: {
 			...mapActions(['CloseConnect']),
+			...mapActions(['Login']),
 			// api rest envoie de pseudo et password
 			async submitRegister() {
 				console.log(this.pseudo);
@@ -106,6 +107,8 @@
 				try {
 					const response = await apiClient.post('register/', this.table_register);
 					console.log('Données envoyées avec succès :', response.data);
+					console.log(response.data.username);
+					this.Login(response.data.username);
 					return (1);
 				} catch (error) {;
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
