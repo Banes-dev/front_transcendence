@@ -94,7 +94,9 @@
 				{
 					this.$router.push('/');
 				}
-				console.log("recup erreur de register");
+				else {
+					console.log("recup erreur de register");
+				}
 			},
 			return_home() {
 				this.CloseConnect();
