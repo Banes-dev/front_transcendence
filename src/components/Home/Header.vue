@@ -47,17 +47,16 @@
 				<ul>
 					<li v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`">
 						<button
-						@click="changeLocale(locale)"
-						@focus="lang_index = locale"
-						@blur="lang_index = null"
-						:class="{
-							'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
-							'bg-gray-700': lang_index === locale,
-						}"
-						type="button"
-						role="menuitem"
-						>
-						{{$t('Language', locale)}}
+							@click="changeLocale(locale)"
+							@focus="lang_index = locale"
+							@blur="lang_index = null"
+							:class="{
+								'flex items-center justify-center w-full px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
+								'bg-gray-700': lang_index === locale,
+							}"
+							type="button"
+							role="menuitem"
+							>{{$t('Language', locale)}}
 						</button>
 					</li>
 				</ul>
@@ -81,26 +80,26 @@
 						'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
 						'bg-gray-700': connect_index === index,}"
 						role="menuitem"
-					>{{name}}
-					</router-link>
+					>{{name}}</router-link>
 				</li>
 			</ul>
 		</div>
-		<div v-if="connectedmenu_state" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6" role="menu">
+		<div v-if="connectedmenu_state" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6 z-50" role="menu">
 			<ul>
-				<li v-for="(name, index) in [$t('test1'), $t('test2')]" :key="index">
-					<router-link
-						:to="index === 0 ? '/login' : '/register'"
-						@click=""
-						@focus="connected_index = index"
-						@blur="connected_index = -1"
-						:class="{
-						'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
-						'bg-gray-700': connected_index === index,}"
-						role="menuitem"
-					>{{name}}
-					</router-link>
-				</li>
+				<li v-for="(item, index) in menuItems" :key="index">
+				<button
+					@click="HandleSubMenu(index)"
+					@focus="connected_index = index"
+					@blur="connected_index = -1"
+					:class="[
+						'flex items-center justify-start w-full px-4 py-2 text-white hover:text-red-600 cursor-pointer',
+						connected_index === index ? 'bg-gray-700' : '',
+						item.color,
+						item.text === $t('Delete_Account') ? 'mt-4' : ''
+					]"
+					role="menuitem"
+				><i :class="[item.icon, 'mr-2']"></i>{{item.text}}</button>
+			  </li>
 			</ul>
 		</div>
 		<!-- <button @click="getapi()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button> -->
@@ -121,6 +120,12 @@
 				connect_index: -1,
 				connectedmenu_state: false,
 				connected_index: -1,
+				menuItems: [
+					{text: this.$t('Profil'), icon: 'fas fa-user', color: 'text-sky-500 hover:text-yellow-400'},
+					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', color: 'text-lime-500 hover:text-yellow-400'},
+					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', color: 'text-orange-500 hover:text-yellow-400'},
+					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', color: 'text-red-500 hover:text-yellow-400'},
+				],
 				// items: [],
 				// tabletestapi: {
 				// 	test1: "yes yes",
@@ -147,7 +152,22 @@
 				else {
 					this.connectedmenu_state = false;
 				}
-			}
+			},
+			HandleSubMenu(index) {
+				console.log(index);
+				if (index == 0) {
+					// open profil
+				}
+				if (index == 1) {
+					// See all people stats
+				}
+				if (index == 2) {
+					// Deconnection
+				}
+				if (index == 3) {
+					// Delete user
+				}
+			},
 			// async getapi() {
 			// 	console.log("get api");
 			// 	try {

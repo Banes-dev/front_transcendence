@@ -25,8 +25,21 @@
 
     "Login":"Conexión",
     "Register":"Inscripción",
-    "Pseudo":"Pesudo",
+    "Pseudo":"Pseudo",
     "Password":"Contraseña",
     "Confirm_Password": "Confirmar contraseña",
-    "Profile_Image": "Imagen de perfil (opcional)"
+    "Profile_Image": "Imagen de perfil (opcional)",
+    "Condiciones1": "Acepto las ",
+    "Condiciones2": "condiciones de uso",
+    "Conditions3": " del sitio",
+    "Error_Doublemdp": "Las contraseñas no coinciden",
+    "Error_Conditions": "Por favor, acepte las condiciones de uso",
+
+    "Terms_Use": "Condiciones de uso",
+    "Terms_Use_Text": "Text",
+
+    "Perfil": "Perfil",
+    "Perfil_jugador": "Perfil de jugador",
+    "Desconectar": "Desconectar",
+    "Delete_Account": "Eliminar mi cuenta"
 }

@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Home from './components/Home/Home.vue';
 import Login from './components/Login/Login.vue';
 import Register from './components/Register/Register.vue';
+import Conditions from './components/Register/Conditions.vue';
 import Custom from './components/Games/Custom.vue';
 import Pong from './components/Games/Pong.vue';
 import TicTacToe from './components/Games/TicTacToe.vue';
@@ -19,6 +20,10 @@ const routes = [
 	{
 		path: '/register',
 		component: Register,
+	},
+	{
+		path: '/conditions',
+		component: Conditions,
 	},
 	{
 		path: '/custom',

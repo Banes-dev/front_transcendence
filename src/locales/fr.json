@@ -25,8 +25,21 @@
 
     "Login":"Connexion",
     "Register":"Inscription",
-    "Pseudo":"Pesudo",
+    "Pseudo":"Pseudo",
     "Password":"Mot de passe",
     "Confirm_Password": "Confirmer le mot de passe",
-    "Profile_Image": "Image de profil (optionnel)"
+    "Profile_Image": "Image de profil (optionnel)",
+    "Conditions1": "Accepter les ",
+    "Conditions2": "conditions d'utilisation",
+    "Conditions3": " du site",
+    "Error_Doublemdp": "Les mots de passe ne correspondent pas",
+    "Error_Conditions": "Veuillez accepter les conditions d'utilisation",
+
+    "Terms_Use": "Conditions d'utilisation",
+    "Terms_Use_Text": "Text",
+
+    "Profil": "Profil",
+    "Player_Profile": "Profils des joueurs",
+    "Disconnect": "Déconnexion",
+    "Delete_Account": "Supprimer mon compte"
 }

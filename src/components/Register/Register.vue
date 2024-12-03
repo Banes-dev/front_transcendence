@@ -43,17 +43,18 @@
 					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
 					/>
 				</div>
-				<h2 v-if="password !== confirm_password" class="mb-4 flex items-center justify-center text-red-700 font-bold">Les mots de passe ne correspondent pas</h2>
+				<h2 v-if="password !== confirm_password" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{$t('Error_Doublemdp')}}</h2>
 				<div class="mb-6">
 					<label for="confirm_password" class="block text-sm font-medium text-gray-300">{{$t('Profile_Image')}}</label>
 					<ImageUpload/>
 				</div>
 				<div class="mb-6">
-					<input type="checkbox" id="checkbox" v-model="checked"/>
-					<label class="text-sm font-medium text-gray-300 ml-2" for="checkbox">Accepter les <a href="/conditions" class="text-blue-500">conditions d'utilisations</a> du site</label>
+					<input type="checkbox" id="checkbox" v-model="check_conditions"/>
+					<label class="text-sm font-medium text-gray-300 ml-2" for="checkbox">{{$t('Conditions1')}}<a href="/conditions" class="text-blue-500">{{$t('Conditions2')}}</a>{{$t('Conditions3')}}</label>
 				</div>
+				<h2 v-if="!check_conditions" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{$t('Error_Conditions')}}</h2>
 				<button
-					v-if="password === confirm_password"
+					v-if="password === confirm_password && check_conditions == true"
 					type="submit"
 					class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md"
 				>{{$t('Register')}}
@@ -75,6 +76,7 @@
 				password: '',
 				confirm_password: '',
 				img: '',
+				check_conditions: false,
 				table_register: {
 					username: "NULL",
 					password: "NULL",

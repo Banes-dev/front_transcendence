@@ -11,7 +11,7 @@
 		<Header/>
 
 		<main class="flex-1 w-full">
-			<div class="h-full w-full flex flex-col md:flex-row items-center justify-center lg:space-x-52 md:space-x-16 space-y-8 md:space-y-0">
+			<div class="h-full w-full flex flex-col md:flex-row items-center justify-center mt-8 md:mt-0 2xl:space-x-96 xl:space-x-72 lg:space-x-60 space md:space-x-24 space-y-32 md:space-y-0">
 				<Card type="pong"/>
 				<Card type="tictactoe"/>
 			</div>

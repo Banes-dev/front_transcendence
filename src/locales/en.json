@@ -25,8 +25,21 @@
 
     "Login":"Login",
     "Register":"Register",
-    "Pseudo":"Pesudo",
+    "Pseudo":"Pseudo",
     "Password":"Password",
     "Confirm_Password": "Confirm password",
-    "Profile_Image": "Profile image (optional)"
+    "Profile_Image": "Profile image (optional)",
+    "Conditions1": "Accept the ",
+    "Conditions2": "terms of use",
+    "Conditions3": " of the site",
+    "Error_Doublemdp": "Passwords don't match",
+    "Error_Conditions": "Please accept the terms of use",
+
+    "Terms_Use": "Terms and conditions of use",
+    "Terms_Use_Text": "Text",
+
+    "Profile": "Profile",
+    "Player_Profile": "Player profiles",
+    "Disconnect": "Disconnect",
+    "Delete_Account": "Delete my account"
 }
