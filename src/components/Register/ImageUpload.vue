@@ -39,44 +39,45 @@
 		};
 		},
 		methods: {
-		handleFileUpload(event) {
-			const file = event.target.files[0];
-			if (file && file.type.startsWith('image/')) {
-			this.selectedFile = file;
-			this.previewImage = URL.createObjectURL(file);
-			} else {
-			alert('Veuillez sélectionner un fichier image valide.');
-			this.resetFile();
-			}
-		},
-		uploadFile() {
-			if (!this.selectedFile) return;
-	
-			const formData = new FormData();
-			formData.append('file', this.selectedFile);
-	
-			// Simuler un appel d'API
-			fetch('https://example.com/upload', {
-			method: 'POST',
-			body: formData,
-			})
-			.then((response) => {
-				if (response.ok) {
-				alert('Upload réussi !');
-				this.resetFile();
+			handleFileUpload(event) {
+				const file = event.target.files[0];
+				if (file && file.type.startsWith('image/')) {
+					this.selectedFile = file;
+					this.previewImage = URL.createObjectURL(file);
+					this.$emit('image-selected', file); // Émettre un événement avec l'image
 				} else {
-				alert('Erreur lors de l’upload.');
+					alert('Veuillez sélectionner un fichier image valide.');
+					this.resetFile();
 				}
-			})
-			.catch((error) => {
-				console.error('Erreur:', error);
-				alert('Erreur réseau.');
-			});
-		},
-		resetFile() {
-			this.selectedFile = null;
-			this.previewImage = null;
-		},
+			},
+			// uploadFile() {
+			// 	if (!this.selectedFile) return;
+		
+			// 	const formData = new FormData();
+			// 	formData.append('file', this.selectedFile);
+		
+				// Simuler un appel d'API
+				// fetch('https://example.com/upload', {
+				// method: 'POST',
+				// body: formData,
+				// })
+				// .then((response) => {
+				// 	if (response.ok) {
+				// 	alert('Upload réussi !');
+				// 	this.resetFile();
+				// 	} else {
+				// 	alert('Erreur lors de l’upload.');
+				// 	}
+				// })
+				// .catch((error) => {
+				// 	console.error('Erreur:', error);
+				// 	alert('Erreur réseau.');
+				// });
+			// },
+			resetFile() {
+				this.selectedFile = null;
+				this.previewImage = null;
+			},
 		},
 	};
 </script>

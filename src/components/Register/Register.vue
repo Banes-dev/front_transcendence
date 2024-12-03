@@ -46,7 +46,7 @@
 				<h2 v-if="password !== confirm_password" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{$t('Error_Doublemdp')}}</h2>
 				<div class="mb-6">
 					<label for="confirm_password" class="block text-sm font-medium text-gray-300">{{$t('Profile_Image')}}</label>
-					<ImageUpload/>
+					<ImageUpload @image-selected="handleImageSelected"/>
 				</div>
 				<div class="mb-6">
 					<input type="checkbox" id="checkbox" v-model="check_conditions"/>
@@ -75,7 +75,8 @@
 				pseudo: '',
 				password: '',
 				confirm_password: '',
-				img: '',
+				img: null,
+				img_link: null,
 				check_conditions: false,
 				table_register: {
 					username: "NULL",
@@ -96,6 +97,7 @@
 				this.table_register.username = this.pseudo;
 				this.table_register.password = this.password;
 				this.table_register.img = this.img;
+				console.log(this.img);
 				const result = await this.postregister();
 				if (result == 1)
 				{
@@ -107,6 +109,10 @@
 			},
 			return_home() {
 				this.CloseConnect();
+			},
+			handleImageSelected(file) {
+				this.img = file;
+				this.img_link = URL.createObjectURL(file);
 			},
 			async postregister() {
 				console.log("post register api");
