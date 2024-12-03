@@ -1,5 +1,6 @@
 <template>
 	<header class="bg-gray-900 text-gray-300 py-6 mt-auto max-w-6xl mx-auto px-36 rounded-b-xl relative">
+		<!-- Tournois -->
 		<div v-if="$i18n.locale === 'en'">
 			<div class="flex items-center absolute left-2.5 top-4 space-x-0">
 					<h2 class="text-white text-sm">{{$t('Tournaments')}}</h2>
@@ -65,30 +66,12 @@
 	</header>
 	<!-- Profil -->
 	<div class="relative flex justify-center">
-		<img
-			class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10"
-			src="../../assets/img/default_avatar.png"
-			alt="Avatar par défaut"
-		/>
-		<div
-			v-if="!GetConnectState"
-			class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6"
-			role="menu"
-		>
+		<img v-if="!GetConnectState" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
+		<img v-if="GetConnectState" @click="ToggleSubMenu()" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10 cursor-pointer" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
+
+		<div v-if="!GetConnectState" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6" role="menu">
 			<ul>
 				<li v-for="(name, index) in [$t('Login'), $t('Register')]" :key="index">
-					<!-- <button
-						@click="handle(index)"
-						@focus="connect_index = index"
-						@blur="connect_index = -1"
-						:class="{
-						'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
-						'bg-gray-700': connect_index === index,
-						}"
-						type="button"
-						role="menuitem"
-					>{{name}}
-					</button> -->
 					<router-link
 						:to="index === 0 ? '/login' : '/register'"
 						@click="connect_change()"
@@ -96,23 +79,39 @@
 						@blur="connect_index = -1"
 						:class="{
 						'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
-						'bg-gray-700': connect_index === index,
-						}"
+						'bg-gray-700': connect_index === index,}"
 						role="menuitem"
 					>{{name}}
 					</router-link>
 				</li>
 			</ul>
 		</div>
-		<button @click="getapi()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button>
-		<button @click="postapi()" class="flex items-center justify-center px-4 py-2 absolute top-96 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Post Api</button>
+		<div v-if="connectedmenu_state" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6" role="menu">
+			<ul>
+				<li v-for="(name, index) in [$t('test1'), $t('test2')]" :key="index">
+					<router-link
+						:to="index === 0 ? '/login' : '/register'"
+						@click=""
+						@focus="connected_index = index"
+						@blur="connected_index = -1"
+						:class="{
+						'flex items-center justify-center px-4 py-2 text-white hover:text-red-600 cursor-pointer': true,
+						'bg-gray-700': connected_index === index,}"
+						role="menuitem"
+					>{{name}}
+					</router-link>
+				</li>
+			</ul>
+		</div>
+		<!-- <button @click="getapi()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button> -->
+		<!-- <button @click="postapi()" class="flex items-center justify-center px-4 py-2 absolute top-96 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Post Api</button> -->
 	</div>
 
 </template>
 
 <script>
 	import {mapGetters, mapActions} from 'vuex';
-	import apiClient from '@/axios'; // Adapter le chemin selon ton organisation
+	import apiClient from '@/axios';
 	export default {
 		name: "Header",
 		data() {
@@ -120,11 +119,13 @@
 				lang_state: false,
 				lang_index: -1,
 				connect_index: -1,
-				items: [],
-				tabletestapi: {
-					test1: "yes yes",
-					test2: "haha",
-				},
+				connectedmenu_state: false,
+				connected_index: -1,
+				// items: [],
+				// tabletestapi: {
+				// 	test1: "yes yes",
+				// 	test2: "haha",
+				// },
 			};
 		},
 		computed: {
@@ -139,34 +140,33 @@
 			connect_change() {
 				this.OpenConnect();
 			},
-			// ...mapActions(['OpenLogin']),
-			// ...mapActions(['OpenRegister']),
-			// handle(index) {
-			// 	if (index === 0) {
-			// 		this.OpenLogin();
-			// 	} else if (index === 1) {
-			// 		this.OpenRegister();
+			ToggleSubMenu() {
+				if (this.connectedmenu_state == false) {
+					this.connectedmenu_state = true;
+				}
+				else {
+					this.connectedmenu_state = false;
+				}
+			}
+			// async getapi() {
+			// 	console.log("get api");
+			// 	try {
+			// 		const response = await apiClient.get('register/');
+			// 		this.items = response.data;
+			// 		console.log(JSON.parse(this.items));
+			// 	} catch (error) {
+			// 		console.error('Erreur lors de la récupération des données :', error);
 			// 	}
 			// },
-			async getapi() {
-				console.log("get api");
-				try {
-					const response = await apiClient.get('register/'); // Remplace 'endpoint/' par ton URL
-					this.items = response.data; // Met à jour les données
-					console.log(JSON.parse(this.items));
-				} catch (error) {
-					console.error('Erreur lors de la récupération des données :', error);
-				}
-			},
-			async postapi() {
-				console.log("post api");
-				try {
-					const response = await apiClient.post('register/', this.tabletestapi); // Remplace 'endpoint/' par ton URL
-					console.log('Données envoyées avec succès :', response.data);
-				} catch (error) {;
-					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
-				}
-			},
+			// async postapi() {
+			// 	console.log("post api");
+			// 	try {
+			// 		const response = await apiClient.post('register/', this.tabletestapi);
+			// 		console.log('Données envoyées avec succès :', response.data);
+			// 	} catch (error) {;
+			// 		console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
+			// 	}
+			// },
 		},
 	};
 </script>
