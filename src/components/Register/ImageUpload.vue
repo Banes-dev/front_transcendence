@@ -44,12 +44,26 @@
 				if (file && file.type.startsWith('image/')) {
 					this.selectedFile = file;
 					this.previewImage = URL.createObjectURL(file);
-					this.$emit('image-selected', file); // Émettre un événement avec l'image
+					this.convertToBase64(file);
+					setTimeout(() => {
+						this.$emit('image-selected', file);
+					}, 500);
+					// this.$emit('image-selected', file); // Émettre un événement avec l'image
 				} else {
 					alert('Veuillez sélectionner un fichier image valide.');
 					this.resetFile();
 				}
 			},
+
+			// Convert image to Base64 string
+			convertToBase64(file) {
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					this.base64Image = reader.result.split(',')[1]; // Remove the 'data:image/png;base64,' prefix
+				};
+				reader.readAsDataURL(file);
+			},
+
 			// uploadFile() {
 			// 	if (!this.selectedFile) return;
 		
