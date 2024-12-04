@@ -121,10 +121,10 @@
 				connectedmenu_state: false,
 				connected_index: -1,
 				menuItems: [
-					{text: this.$t('Profil'), icon: 'fas fa-user', color: 'text-sky-500 hover:text-yellow-400'},
-					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', color: 'text-lime-500 hover:text-yellow-400'},
-					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', color: 'text-orange-500 hover:text-yellow-400'},
-					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', color: 'text-red-500 hover:text-yellow-400'},
+					{text: this.$t('Profil'), icon: 'fas fa-user', color: 'text-sky-600 hover:text-yellow-400'},
+					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', color: 'text-lime-600 hover:text-yellow-400'},
+					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', color: 'text-orange-600 hover:text-yellow-400'},
+					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', color: 'text-red-600 hover:text-yellow-400'},
 				],
 				// items: [],
 				// tabletestapi: {
@@ -135,9 +135,11 @@
 		},
 		computed: {
 			...mapGetters(['GetConnectState']),
+			...mapGetters(['GetUserState']),
 		},
 		methods: {
 			...mapActions(['OpenConnect']),
+			...mapActions(['Logout']),
 			changeLocale(locale) {
 				this.$i18n.locale = locale;
 				this.lang_state = false;
@@ -153,7 +155,7 @@
 					this.connectedmenu_state = false;
 				}
 			},
-			HandleSubMenu(index) {
+			async HandleSubMenu(index) {
 				console.log(index);
 				if (index == 0) {
 					// open profil
@@ -163,9 +165,49 @@
 				}
 				if (index == 2) {
 					// Deconnection
+					const result = await this.deconnect_api();
+					if (result == 1)
+					{
+						this.Logout();
+						this.$router.push('/');
+					}
+					else {
+						console.log("recup erreur de deconnect");
+					}
 				}
 				if (index == 3) {
 					// Delete user
+					const result = await this.delete_api();
+					if (result == 1)
+					{
+						this.Logout();
+						this.$router.push('/');
+					}
+					else {
+						console.log("recup erreur de delete");
+					}
+				}
+			},
+			async deconnect_api() {
+				console.log("post deconnect api");
+				try {
+					const response = await apiClient.post('logout/', this.GetUserState);
+					console.log('Données envoyées avec succès :', response.data);
+					return (1);
+				} catch (error) {
+					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
+					return (0);
+				}
+			},
+			async delete_api() {
+				console.log("post delete api");
+				try {
+					const response = await apiClient.post('delete/', this.GetUserState);
+					console.log('Données envoyées avec succès :', response.data);
+					return (1);
+				} catch (error) {
+					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
+					return (0);
 				}
 			},
 			// async getapi() {
@@ -183,7 +225,7 @@
 			// 	try {
 			// 		const response = await apiClient.post('register/', this.tabletestapi);
 			// 		console.log('Données envoyées avec succès :', response.data);
-			// 	} catch (error) {;
+			// 	} catch (error) {
 			// 		console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 			// 	}
 			// },

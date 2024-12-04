@@ -6,7 +6,7 @@
 	<!-- <div v-if="GetLoginState" class="fixed inset-0 flex flex-col items-center justify-center"> -->
 	<div class="fixed inset-0 flex flex-col items-center justify-center"> 
 		<LoopVideo/>
-		<div class="relative bg-gray-900 w-full max-w-md p-8 rounded-md">
+		<div class="relative bg-gray-900 w-full sm:max-w-md max-w-xs p-8 rounded-md">
 			<div class="absolute top-3 right-3">
 				<router-link to="/" @click="return_home" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>

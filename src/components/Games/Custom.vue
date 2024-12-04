@@ -5,7 +5,7 @@
 <template>
     <div class="fixed inset-0 flex flex-col items-center justify-center">
         <LoopVideo/>
-        <div class="relative w-3/5 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
+        <div class="relative w-4/5 md:w-3/5 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
             <!-- <img class="rounded-t-lg relative z-20" src="../../assets/img/lantern_empty.png" alt="Lanterne qui contient TicTacToe"/>
             <img class="absolute -top-24 left-0 w-full h-full object-contain scale-40 z-10" src="../../assets/img/morpion_trans.png" alt="Image du Pong"/> -->
             <div class="p-5 relative z-20">
@@ -90,10 +90,10 @@
                 <!-- end color -->
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">Pong</h5>
                 <!-- ball speed with time -->
-                <label class="mb-3 inline-flex items-center cursor-pointer">
+                <label class="mb-3 md:inline-flex items-center cursor-pointer">
                     <span class="text-white">{{$t("Ball_Speed_Time")}} </span>
                     <input type="checkbox" v-model="state_ball_time" class="sr-only peer">
-                    <div class="relative w-11 h-6 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
+                    <div class="relative w-11 h-6 mt-1 md:-mt-0 md:-right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
                 </label>
 
                 <!-- ball speed manual -->
@@ -113,10 +113,10 @@
 
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$t('TicTacToe')}}</h5>
                 <!-- remove hit-->
-                <label class="mb-8 inline-flex items-center cursor-pointer">
+                <label class="mb-8 md:inline-flex items-center cursor-pointer">
                     <span class="text-white">{{$t("Remove_Hit")}} </span>
                     <input type="checkbox" v-model="state_remove_hit" class="sr-only peer">
-                    <div class="relative w-11 h-6 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
+                    <div class="relative w-11 h-6 mb-8 md:mb-0 mt-1 md:mt-0 md:-right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
                 </label>
   
                 <div class="flex justify-between items-center flex-col md:flex-row space-y-4 md:space-y-0">
