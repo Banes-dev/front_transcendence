@@ -3,6 +3,8 @@ import Home from './components/Home/Home.vue';
 import Login from './components/Login/Login.vue';
 import Register from './components/Register/Register.vue';
 import Conditions from './components/Register/Conditions.vue';
+import Profil from './components/Profil/Profil.vue';
+import ListPlayers from './components/Profil/ListPlayers.vue';
 import Custom from './components/Games/Custom.vue';
 import Pong from './components/Games/Pong.vue';
 import TicTacToe from './components/Games/TicTacToe.vue';
@@ -24,6 +26,14 @@ const routes = [
 	{
 		path: '/conditions',
 		component: Conditions,
+	},
+	{
+		path: '/profil',
+		component: Profil,
+	},
+	{
+		path: '/list_players',
+		component: ListPlayers,
 	},
 	{
 		path: '/custom',

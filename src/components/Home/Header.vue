@@ -92,9 +92,9 @@
 					@focus="connected_index = index"
 					@blur="connected_index = -1"
 					:class="[
-						'flex items-center justify-start w-full px-4 py-2 text-white hover:text-red-600 cursor-pointer',
+						'flex items-center justify-start w-full px-4 py-2 hover:text-red-600 cursor-pointer',
 						connected_index === index ? 'bg-gray-700' : '',
-						item.color,
+						item.colorClass,
 						item.text === $t('Delete_Account') ? 'mt-4' : ''
 					]"
 					role="menuitem"
@@ -121,10 +121,10 @@
 				connectedmenu_state: false,
 				connected_index: -1,
 				menuItems: [
-					{text: this.$t('Profil'), icon: 'fas fa-user', color: 'text-sky-600 hover:text-yellow-400'},
-					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', color: 'text-lime-600 hover:text-yellow-400'},
-					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', color: 'text-orange-600 hover:text-yellow-400'},
-					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', color: 'text-red-600 hover:text-yellow-400'},
+					{text: this.$t('Profil'), icon: 'fas fa-user', colorClass: 'text-sky-500 hover:text-yellow-400'},
+					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', colorClass: 'text-lime-500 hover:text-yellow-400'},
+					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', colorClass: 'text-orange-500 hover:text-yellow-400'},
+					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', colorClass: 'text-red-500 hover:text-yellow-400'},
 				],
 				// items: [],
 				// tabletestapi: {
@@ -159,9 +159,11 @@
 				console.log(index);
 				if (index == 0) {
 					// open profil
+					this.$router.push('/profil');
 				}
 				if (index == 1) {
 					// See all people stats
+					this.$router.push('/list_players');
 				}
 				if (index == 2) {
 					// Deconnection
@@ -169,7 +171,10 @@
 					if (result == 1)
 					{
 						this.Logout();
-						this.$router.push('/');
+						setTimeout(() => {
+							this.$router.push('/');
+						}, 500);
+						// this.$router.push('/');
 					}
 					else {
 						console.log("recup erreur de deconnect");
@@ -181,7 +186,10 @@
 					if (result == 1)
 					{
 						this.Logout();
-						this.$router.push('/');
+						setTimeout(() => {
+							this.$router.push('/');
+						}, 500);
+						// this.$router.push('/');
 					}
 					else {
 						console.log("recup erreur de delete");
