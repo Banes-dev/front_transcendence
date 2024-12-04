@@ -90,14 +90,19 @@
 			...mapActions(['Login']),
 			// api rest envoie de pseudo et password
 			async submitRegister() {
-				console.log(this.pseudo);
-				console.log(this.password);
-				console.log(this.confirm_password);
-				console.log(this.img);
+				// console.log(this.pseudo);
+				// console.log(this.password);
+				// console.log(this.confirm_password);
+				// console.log(this.img);
 				this.table_register.username = this.pseudo;
 				this.table_register.password = this.password;
-				this.table_register.img = this.img;
-				console.log(this.img);
+				// this.table_register.img = this.img;
+				if (this.img) {
+					this.table_register.img = await this.convertToBase64(this.img);
+				}
+				console.log(this.table_register.username);
+				console.log(this.table_register.password);
+				console.log(this.table_register.img);
 				const result = await this.postregister();
 				if (result == 1)
 				{
@@ -113,6 +118,18 @@
 			handleImageSelected(file) {
 				this.img = file;
 				this.img_link = URL.createObjectURL(file);
+			},
+			convertToBase64(file) {
+				return new Promise((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onloadend = () => {
+					resolve(reader.result.split(',')[1]); // Retirer le préfixe base64
+					};
+					reader.onerror = (error) => {
+					reject(error);
+					};
+					reader.readAsDataURL(file);
+				});
 			},
 			async postregister() {
 				console.log("post register api");
