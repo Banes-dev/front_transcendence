@@ -55,6 +55,25 @@
 				}
 			},
 
+			// new
+			// handleFileUpload(event) {
+			// 	const file = event.target.files[0];
+			// 	if (file && file.type.startsWith('image/')) {
+			// 		this.previewImage = URL.createObjectURL(file);
+			// 		const reader = new FileReader();
+			// 		reader.onloadend = () => {
+			// 			// Convertir l'image en base64
+			// 			const base64Image = reader.result;
+			// 			this.$emit('image-selected', base64Image);
+			// 			this.selectedFile = base64Image;  // Stocker l'image en base64
+			// 		};
+			// 		reader.readAsDataURL(file);  // Convertir le fichier en base64
+			// 	} else {
+			// 		alert('Veuillez sÃ©lectionner un fichier image valide.');
+			// 		this.resetFile();
+			// 	}
+			// },
+
 			// Convert image to Base64 string
 			// convertToBase64(file) {
 			// 	const reader = new FileReader();

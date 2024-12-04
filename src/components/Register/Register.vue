@@ -96,10 +96,10 @@
 				// console.log(this.img);
 				this.table_register.username = this.pseudo;
 				this.table_register.password = this.password;
-				// this.table_register.img = this.img;
-				if (this.img) {
-					this.table_register.img = await this.convertToBase64(this.img);
-				}
+				this.table_register.img = this.img;
+				// if (this.img) {
+				// 	this.table_register.img = await this.convertToBase64(this.img);
+				// }
 				console.log(this.table_register.username);
 				console.log(this.table_register.password);
 				console.log(this.table_register.img);
@@ -123,10 +123,11 @@
 				return new Promise((resolve, reject) => {
 					const reader = new FileReader();
 					reader.onloadend = () => {
-					resolve(reader.result.split(',')[1]); // Retirer le préfixe base64
+						// resolve(reader.result.split(',')[1]); Retirer le préfixe base64
+						resolve(reader.result); // Retirer le préfixe base64
 					};
 					reader.onerror = (error) => {
-					reject(error);
+						reject(error);
 					};
 					reader.readAsDataURL(file);
 				});
