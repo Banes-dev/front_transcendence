@@ -43,6 +43,7 @@
 					this.items = response.data;
                     this.pseudo = response.data.username;
 					console.log(JSON.parse(this.items));
+                    console.log("Get profil bien effectuer");
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
 				}

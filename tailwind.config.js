@@ -14,6 +14,8 @@ export default {
 			'30': '7.5rem',
 			'34': '8.5rem',
 			'38': '9.5rem',
+			'104': '26rem',
+			'112': '28rem',
 
 			'11/12': '91.666667%', // 11 / 12 pour canva pong
 			'11.5/12': '95%' // 11 / 12 pour canva pong

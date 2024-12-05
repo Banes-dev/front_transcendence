@@ -1,30 +1,73 @@
+<script setup>
+	import LoopVideo from '../LoopVideo.vue'
+</script>
+
 <template>
-	<div class="relative max-w-sm bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
-		<img class="rounded-t-lg relative z-20" src="../../assets/img/lantern_empty.png" alt="Lanterne qui contient TicTacToe"/>
-		<img class="absolute -top-24 left-0 w-full h-full object-contain scale-40 z-10" src="../../assets/img/morpion_trans.png" alt="Image du Pong"/>
-		<div class="p-5 relative z-20">
-			<h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$t('TicTacToe')}}</h5>
-			<p class="mb-3 font-normal text-gray-400">{{$t('Descri_TicTacToe')}}</p>
-			<div class="flex justify-between items-center">
-				<router-link
-					to="/tictactoe"
-					class="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-red-600 to-yellow-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
-				><i class="fa-solid fa-gamepad"></i> {{$t('Play')}}
-				</router-link>
-				<router-link
-					to="/custom"
-					class="text-white bg-gradient-to-br from-gray-600 to-gray-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-2 py-1 text-center"
-				><i class="fa-solid fa-sliders"></i> {{$t('Preferences')}}
-				</router-link>
-			</div>
+	<div class="fixed inset-0 flex flex-col items-center justify-center">
+		<LoopVideo/>
+		<div class="relative w-80 h-80 sm:w-96 sm:h-96 lg:w-104 lg:h-104 xl:w-112 xl:h-112 bg-black border border-gray-800 rounded-lg shadow-lg">
+			<!-- differentes case -->
+			<div
+				v-for="(cell, index) in board"
+				:key="index"
+				class="w-1/3 h-1/3 flex items-center justify-center border border-gray-800 text-white text-3xl font-bold cursor-pointer hover:bg-gray-700"
+				@click="makeMove(index)"
+			>{{cell}}</div>
 		</div>
 	</div>
 </template>
 
 <script>
-export default {
-	name: "TicTacToe",
-};
+	import {ref} from 'vue';
+
+	export default {
+		name: 'TicTacToe',
+		setup() {
+			// Définir les données réactives
+			const board = ref(Array(9).fill('')); // Grille 3x3 vide
+			const currentPlayer = ref('X'); // Joueur actuel (X commence)
+			const winner = ref(null);
+
+			// Fonction pour effectuer un mouvement
+			const makeMove = (index) => {
+				if (!board.value[index] && !winner.value) {
+					board.value[index] = currentPlayer.value;
+					if (checkWinner()) {
+					winner.value = currentPlayer.value;
+					} else {
+					currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'; // Changer de joueur
+					}
+				}
+			};
+
+			// Fonction pour vérifier un gagnant
+			const checkWinner = () => {
+				const winningCombinations = [
+					[0, 1, 2], [3, 4, 5], [6, 7, 8], // Lignes
+					[0, 3, 6], [1, 4, 7], [2, 5, 8], // Colonnes
+					[0, 4, 8], [2, 4, 6],           // Diagonales
+				];
+				return winningCombinations.some((combination) => {
+					const [a, b, c] = combination;
+					return (
+					board.value[a] &&
+					board.value[a] === board.value[b] &&
+					board.value[a] === board.value[c]
+					);
+				});
+			};
+
+			// Réinitialiser le jeu
+			const resetGame = () => {
+				board.value = Array(9).fill('');
+				currentPlayer.value = 'X';
+				winner.value = null;
+			};
+
+			// Exposer les variables et fonctions au template
+			return {board, currentPlayer, winner, makeMove, resetGame,};
+		},
+	};
 </script>
 
 <style scoped>

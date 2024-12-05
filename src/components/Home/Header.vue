@@ -156,7 +156,7 @@
 				}
 			},
 			async HandleSubMenu(index) {
-				console.log(index);
+				// console.log(index);
 				if (index == 0) {
 					// open profil
 					this.$router.push('/profil');
