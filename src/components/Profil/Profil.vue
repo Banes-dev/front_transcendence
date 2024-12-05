@@ -16,11 +16,14 @@
                 <h2 class="text-white">{{win_tictactoe}}</h2>
                 <h2 class="text-white">{{lose_tictactoe}}</h2>
             </div>
+            <button @click="get_profil_api()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button>
         </div>
     </div>
 </template>
 
 <script>
+    import apiClient from '@/axios';
+
 	export default {
 		name: 'Profil',
         data() {
