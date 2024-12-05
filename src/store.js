@@ -3,7 +3,7 @@ import {createStore} from 'vuex';
 export default createStore({
 	state: {
 		user: null,
-		connect_state: true,
+		connect_state: false,
 		color1: "#ff0000",
 		color2: "#ffd200",
 		ball_speed_time: false,

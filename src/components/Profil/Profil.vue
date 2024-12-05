@@ -28,6 +28,7 @@
 		name: 'Profil',
         data() {
 			return {
+                item: null,
 				pseudo: null,
                 mdp: null,
                 img: null,
@@ -42,10 +43,24 @@
             async get_profil_api() {
 				console.log("get profil api");
 				try {
-					const response = await apiClient.get('player/');
-					this.items = response.data;
-                    this.pseudo = response.data.username;
-					console.log(JSON.parse(this.items));
+					const response = await apiClient.get('profil/');
+                    console.log("Structure complète :", response);
+					this.items = response.data.data;
+					console.log(this.items);
+                    this.pseudo = response.data.data.username;
+                    console.log(this.pseudo);
+                    this.mdp = this.mdp = "*".repeat(12);
+                    console.log(this.mdp);
+                    this.img = "gerer img";
+                    console.log(this.img);
+                    this.win_pong = response.data.data.win_pong;
+                    console.log(this.win_pong);
+                    this.lose_pong = response.data.data.lose_pong;
+                    console.log(this.lose_pong);
+                    this.win_tictactoe = response.data.data.win_tictactoe;
+                    console.log(this.win_tictactoe);
+                    this.lose_tictactoe = response.data.data.lose_tictactoe;
+                    console.log(this.lose_tictactoe);
                     console.log("Get profil bien effectuer");
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
