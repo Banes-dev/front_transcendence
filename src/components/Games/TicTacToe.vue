@@ -1,8 +1,10 @@
 <script setup>
 	import LoopVideo from '../LoopVideo.vue'
 
-	import { ref, computed } from 'vue';
+	import {useI18n} from 'vue-i18n';
+	import {ref, computed} from 'vue';
 
+	const {t} = useI18n()
 	// Grille vide (3x3)
 	const board = ref(Array(9).fill(null));
 	// Joueur actuel
@@ -13,20 +15,20 @@
 	const statusMessage = computed(() => {
 		if (winner.value) {
 			if (currentPlayer.value === "X") {
-				return `<i class="fa-solid fa-trophy mr-6"></i>Joueur 1 (x)<i class="fa-solid fa-trophy ml-6"></i>`;
+				return `<i class="fa-solid fa-trophy mr-6"></i>${t('Player1_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
 			}
 			else {
-				return `<i class="fa-solid fa-trophy mr-6"></i>Joueur 2 (o)<i class="fa-solid fa-trophy ml-6"></i>`;
+				return `<i class="fa-solid fa-trophy mr-6"></i>${t('Player2_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
 			}
 		}
 		if (board.value.every(cell => cell)) {
-			return `<i class="fa-solid fa-handshake-angle mr-6"></i>Egalité !`;
+			return `<i class="fa-solid fa-handshake-angle mr-6"></i>${t('Equality')}`;
 		}
 		if (currentPlayer.value === "X") {
-			return `<i class="fa-solid fa-play mr-6"></i>Joueur 1 (x)`;
+			return `<i class="fa-solid fa-play mr-6"></i>${t('Player1_TicTacToe')}`;
 		}
 		else {
-			return `<i class="fa-solid fa-play mr-6"></i>Joueur 2 (o)`;
+			return `<i class="fa-solid fa-play mr-6"></i>${t('Player2_TicTacToe')}`;
 		}
 	});
 

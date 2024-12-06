@@ -23,7 +23,7 @@
 
 	<div v-if="type === 'tictactoe'" class="relative max-w-sm bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
 		<img class="rounded-t-lg relative z-20" src="../../assets/img/lantern_empty.png" alt="Lanterne qui contient TicTacToe"/>
-		<img class="absolute -top-24 left-0 w-full h-full object-contain scale-40 z-10" src="../../assets/img/morpion_trans.png" alt="Image du Pong"/>
+		<img class="absolute -top-24 left-0 w-full h-full object-contain scale-40 z-10" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
 		<div class="p-5 relative z-20">
 			<h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{$t('TicTacToe')}}</h5>
 			<p class="mb-3 font-normal text-gray-400">{{$t('Descri_TicTacToe')}}</p>

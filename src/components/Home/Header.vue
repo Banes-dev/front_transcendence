@@ -56,7 +56,7 @@
 							}"
 							type="button"
 							role="menuitem"
-							>{{$t('Language', locale)}}
+							>{{ getLanguageName(locale) }}
 						</button>
 					</li>
 				</ul>
@@ -66,7 +66,7 @@
 	<!-- Profil -->
 	<div class="relative flex justify-center">
 		<img v-if="!GetConnectState" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
-		<img v-if="GetConnectState" @click="ToggleSubMenu()" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10 cursor-pointer" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
+		<img v-if="GetConnectState" @click="ToggleSubMenu()" @keydown.enter="ToggleSubMenu()" @keydown.space="ToggleSubMenu()" tabindex="0" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10 cursor-pointer" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
 
 		<div v-if="!GetConnectState" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6" role="menu">
 			<ul>
@@ -84,7 +84,7 @@
 				</li>
 			</ul>
 		</div>
-		<div v-if="connectedmenu_state" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6 z-50" role="menu">
+		<div v-if="connectedmenu_state" class="bg-gray-900 border border-gray-600 rounded-md absolute top-6 z-50" role="menu">
 			<ul>
 				<li v-for="(item, index) in menuItems" :key="index">
 				<button
@@ -120,12 +120,6 @@
 				connect_index: -1,
 				connectedmenu_state: false,
 				connected_index: -1,
-				menuItems: [
-					{text: this.$t('Profil'), icon: 'fas fa-user', colorClass: 'text-sky-500 hover:text-yellow-400'},
-					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', colorClass: 'text-lime-500 hover:text-yellow-400'},
-					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', colorClass: 'text-orange-500 hover:text-yellow-400'},
-					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', colorClass: 'text-red-500 hover:text-yellow-400'},
-				],
 				// items: [],
 				// tabletestapi: {
 				// 	test1: "yes yes",
@@ -136,10 +130,26 @@
 		computed: {
 			...mapGetters(['GetConnectState']),
 			...mapGetters(['GetUserState']),
+			menuItems() {
+				return [
+					{ text: this.$t('Profil'), icon: 'fas fa-user', colorClass: 'text-sky-500 hover:text-yellow-400' },
+					{ text: this.$t('Player_Profile'), icon: 'fas fa-bars', colorClass: 'text-lime-500 hover:text-yellow-400' },
+					{ text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', colorClass: 'text-orange-500 hover:text-yellow-400' },
+					{ text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', colorClass: 'text-red-500 hover:text-yellow-400' },
+				];
+			}
 		},
 		methods: {
 			...mapActions(['OpenConnect']),
 			...mapActions(['Logout']),
+			getLanguageName(locale) {
+				const languageNames = {
+					fr: 'Français',
+					en: 'English',
+					es: 'Español'
+				};
+				return languageNames[locale] || locale; // Retourne le nom de la langue, ou la locale si la langue n'est pas trouvée
+			},
 			changeLocale(locale) {
 				this.$i18n.locale = locale;
 				this.lang_state = false;
@@ -171,10 +181,8 @@
 					if (result == 1)
 					{
 						this.Logout();
-						setTimeout(() => {
-							this.$router.push('/');
-						}, 500);
-						// this.$router.push('/');
+						this.$router.push('/');
+						window.location.reload();
 					}
 					else {
 						console.log("recup erreur de deconnect");
@@ -186,10 +194,8 @@
 					if (result == 1)
 					{
 						this.Logout();
-						setTimeout(() => {
-							this.$router.push('/');
-						}, 500);
-						// this.$router.push('/');
+						this.$router.push('/');
+    					window.location.reload();
 					}
 					else {
 						console.log("recup erreur de delete");

@@ -20,9 +20,13 @@
     "Apply":"Apply changes",
 
     "Back":"Back",
-    "Reset":"Reset",
     "Player1":"Player 1",
     "Player2":"Player 2",
+
+    "Reset":"Reset",
+    "Player1_TicTacToe":"Player 1 (x)",
+    "Player2_TicTacToe":"Player 2 (o)",
+    "Equality":"Equality !",
 
     "Login":"Login",
     "Register":"Register",
@@ -42,5 +46,11 @@
     "Profile": "Profile",
     "Player_Profile": "Player profiles",
     "Disconnect": "Disconnect",
-    "Delete_Account": "Delete my account"
+    "Delete_Account": "Delete my account",
+
+    "List_Players":"List of players",
+    "Win_Pong":"Victory Pong : ",
+    "Lose_Pong":"Defeat Pong : ",
+    "Win_TicTacToe":"Victory TicTacToe : ",
+    "Lose_TicTacToe":"Defeat TicTacToe : "
 }

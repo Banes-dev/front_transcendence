@@ -20,9 +20,13 @@
     "Apply":"Appliquer les modifications",
 
     "Back":"Retour",
-    "Reset":"Réinitialiser",
     "Player1":"Joueur 1",
     "Player2":"Joueur 2",
+
+    "Reset":"Réinitialiser",
+    "Player1_TicTacToe":"Joueur 1 (x)",
+    "Player2_TicTacToe":"Joueur 2 (o)",
+    "Equality":"Egalité !",
 
     "Login":"Connexion",
     "Register":"Inscription",
@@ -42,5 +46,11 @@
     "Profil": "Profil",
     "Player_Profile": "Profils des joueurs",
     "Disconnect": "Déconnexion",
-    "Delete_Account": "Supprimer mon compte"
+    "Delete_Account": "Supprimer mon compte",
+
+    "List_Players":"Liste des joueurs",
+    "Win_Pong":"Victoire Pong : ",
+    "Lose_Pong":"Défaite Pong : ",
+    "Win_TicTacToe":"Victoire Morpion : ",
+    "Lose_TicTacToe":"Défaite Morpion : "
 }
