@@ -10,11 +10,31 @@
                 <h2 class="text-white">{{pseudo}}</h2>
                 <h2 class="text-white">{{mdp}}</h2>
                 <h2 class="text-white">{{img}}</h2>
-                <h2 class="text-white">{{friends}}</h2>
+                <!-- <h2 class="text-white">{{friends}}</h2> -->
+                <ul>
+                    <li v-for="(friend, index) in friends" :key="index" class="text-white">
+                        {{ friend.username }}
+                    </li>
+                </ul>
                 <h2 class="text-white">{{win_pong}}</h2>
                 <h2 class="text-white">{{lose_pong}}</h2>
                 <h2 class="text-white">{{win_tictactoe}}</h2>
                 <h2 class="text-white">{{lose_tictactoe}}</h2>
+                <!-- Recherche d'amis -->
+                <div class="mt-5">
+                    <input
+                        type="text"
+                        v-model="searchUsername"
+                        placeholder="Rechercher un joueur"
+                        class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
+                    />
+                    <button
+                        @click="addFriend"
+                        class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md mt-2"
+                    >
+                        Ajouter comme ami
+                    </button>
+                </div>
             </div>
             <button @click="get_profil_api()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button>
         </div>
@@ -37,6 +57,7 @@
                 lose_pong: null,
                 win_tictactoe: null,
                 lose_tictactoe: null,
+                searchUsername: '',
 			};
 		},
         methods: {
@@ -53,6 +74,10 @@
                     console.log(this.mdp);
                     this.img = "gerer img";
                     console.log(this.img);
+
+                    this.friends = response.data.data.friends;
+                    console.log("friends:", this.friends);
+
                     this.win_pong = response.data.data.win_pong;
                     console.log(this.win_pong);
                     this.lose_pong = response.data.data.lose_pong;
@@ -66,7 +91,19 @@
 					console.error('Erreur lors de la récupération des données :', error);
 				}
 			},
-        }
+            async addFriend() {
+                try {
+                    const response = await apiClient.post('AddFriends/', {friend_username: this.searchUsername});
+                    console.log("AddFriends ok");
+                    this.get_profil_api(); // Rafraîchit la liste des amis
+                } catch (error) {
+                    console.error('Erreur lors de l\'ajout d\'un ami :', error.response?.data || error.message);
+                }
+			},
+        },
+        mounted() {
+            this.get_profil_api();
+        },
 	};
 </script>
 
