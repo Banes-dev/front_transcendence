@@ -1,26 +1,3 @@
-<!-- <script setup>
-	import LoopVideo from '../LoopVideo.vue'
-</script> -->
-
-<!-- <template>
-	<div class="fixed inset-0 flex flex-col items-center justify-center">
-		<LoopVideo/>
-		<router-link
-			to="/"
-			class="absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
-		><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}
-		</router-link>
-		<div class="relative w-80 h-80 sm:w-96 sm:h-96 lg:w-104 lg:h-104 xl:w-112 xl:h-112 bg-black border border-gray-800 rounded-lg shadow-lg">
-			<div
-				v-for="(cell, index) in board"
-				:key="index"
-				class="w-1/3 h-1/3 flex items-center justify-center border border-gray-800 text-white text-3xl font-bold cursor-pointer hover:bg-gray-700"
-				@click="makeMove(index)"
-			>{{cell}}</div>
-		</div>
-	</div>
-</template> -->
-
 <script setup>
 	import LoopVideo from '../LoopVideo.vue'
 
@@ -36,20 +13,20 @@
 	const statusMessage = computed(() => {
 		if (winner.value) {
 			if (currentPlayer.value === "X") {
-				return "Gagnant : Joueur 1 (X) 🎉";
+				return `<i class="fa-solid fa-trophy mr-6"></i>Joueur 1 (x)<i class="fa-solid fa-trophy ml-6"></i>`;
 			}
 			else {
-				return "Gagnant : Joueur 2 (O) 🎉";
+				return `<i class="fa-solid fa-trophy mr-6"></i>Joueur 2 (o)<i class="fa-solid fa-trophy ml-6"></i>`;
 			}
 		}
 		if (board.value.every(cell => cell)) {
-			return "Match nul !";
+			return `<i class="fa-solid fa-handshake-angle mr-6"></i>Egalité !`;
 		}
 		if (currentPlayer.value === "X") {
-			return "C'est au Joueur 1 (X) de jouer";
+			return `<i class="fa-solid fa-play mr-6"></i>Joueur 1 (x)`;
 		}
 		else {
-			return "C'est au Joueur 2 (O) de jouer";
+			return `<i class="fa-solid fa-play mr-6"></i>Joueur 2 (o)`;
 		}
 	});
 
@@ -62,13 +39,13 @@
 
 	// Fonction pour vérifier un gagnant
 	const checkWinner = () => {
-	for (const [a, b, c] of winningCombinations) {
-		if (board.value[a] && board.value[a] === board.value[b] && board.value[a] === board.value[c]) {
-		winner.value = board.value[a];
-		return true;
+		for (const [a, b, c] of winningCombinations) {
+			if (board.value[a] && board.value[a] === board.value[b] && board.value[a] === board.value[c]) {
+			winner.value = board.value[a];
+			return true;
+			}
 		}
-	}
-	return false;
+		return false;
 	};
 
 	// Fonction pour effectuer un mouvement
@@ -86,6 +63,10 @@
 		currentPlayer.value = 'X';
 		winner.value = null;
 	};
+
+	const isGameOver = computed(() => {
+		return winner.value != null || (board.value && board.value.every(cell => cell != null));
+	});
 </script>
 
 <template>
@@ -93,12 +74,12 @@
 		<LoopVideo/>
 		<router-link
 			to="/"
-			class="absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
+			class="absolute top-0 sm:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
 		><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}</router-link>
 
 		<!-- a quelle joueur de jouer -->
-		<div class="relative items-center justify-center bg-gray-900 mb-8 rounded-lg shadow-lg">
-			<p class="relative items-center justify-center text-white text-3xl mx-4 my-2">{{statusMessage}}</p>
+		<div class="absolute top-36 sm:top-30 md:top-26 lg:top-18 xl:top-16 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-gray-800 to-purple-600 hover:bg-gradient-to-bl mb-8 rounded-lg shadow-lg">
+			<p class="relative items-center justify-center text-white text-3xl sm:text-4xl lg:text-5xl mx-4 my-4" v-html="statusMessage"></p>
 		</div>
 		
 		<!-- Grille du Tic-Tac-Toe -->
@@ -115,7 +96,7 @@
 					v-for="(cell, index) in board"
 					:key="index"
 					class="flex items-center justify-center w-full h-full text-8xl font-bold cursor-pointer hover:bg-slate-400"
-					:class="cell === 'X' ? 'text-red-500' : 'text-blue-500'"
+					:style="{color: cell === 'X' ? GetColor1State : cell === 'O' ? GetColor2State : 'inherit'}"
 					@click="makeMove(index)"
 				><span class="flex items-center justify-center w-full h-0">{{cell}}</span>
 				</div>
@@ -124,15 +105,23 @@
 	
 		<!-- Bouton de réinitialisation -->
 		<button
+			v-if="isGameOver"
 			@click="resetGame"
-			class="mt-8 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow-lg"
+			class="absolute bottom-40 px-4 py-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-white rounded-lg shadow-lg"
 		><i class="fa-solid fa-rotate-right mr-3"></i>{{$t('Reset')}}</button>
 	</div>
-  </template>
+</template>
 
 <script>
+	import {mapGetters, mapMutations} from 'vuex';
+
 	export default {
 		name: 'TicTacToe',
+		computed: {
+			...mapGetters(['GetColor1State']),
+			...mapGetters(['GetColor2State']),
+			...mapGetters(['GetRemoveHitState']),
+		},
 	};
 </script>
 
