@@ -46,18 +46,18 @@
         data() {
             return {
                 players: [
-                    {username:"test1", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    {username:"test2", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    {username:"test3", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
-                    {username:"test4", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    {username:"test5", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    {username:"test6", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
-                    {username:"test7", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    {username:"test8", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    {username:"test9", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
-                    {username:"test10", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    {username:"test11", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    {username:"test12", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"}
+                    // {username:"test1", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test2", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test3", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
+                    // {username:"test4", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test5", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test6", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
+                    // {username:"test7", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test8", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test9", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
+                    // {username:"test10", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test11", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test12", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"}
                 ],
                 openMenus: [],
             };
@@ -72,25 +72,25 @@
                     this.openMenus.push(index);
                 }
             },
-            // async get_profil_api() {
-            //     console.log("get profil api");
-            //     try {
-            //         const response = await apiClient.get('ListPlayers/');
-            //         console.log("Structure complète :", response);
+            async get_profil_api() {
+                console.log("get profil api");
+                try {
+                    const response = await apiClient.get('ListPlayers/');
+                    console.log("Structure complète :", response);
 
-            //         if(response.data && response.data.status === 'success'){
-            //             this.players = response.data.data;
-            //             console.log("Liste Player:", this.players);
-            //         } else {
-            //             throw new Error("Format inattendu de la réponse de l'API");
-            //         }
-            //     } catch (error) {
-            //         console.error('Erreur lors de la récupération des données :', error);
-            //     }
-            // },
+                    if(response.data && response.data.status === 'success'){
+                        this.players = response.data.data;
+                        console.log("Liste Player:", this.players);
+                    } else {
+                        throw new Error("Format inattendu de la réponse de l'API");
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la récupération des données :', error);
+                }
+            },
         },
         mounted() {
-            // this.get_profil_api();
+            this.get_profil_api();
         },
     };
 </script>

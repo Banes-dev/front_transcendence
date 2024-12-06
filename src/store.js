@@ -1,4 +1,4 @@
-import {createStore} from 'vuex';
+import { createStore } from 'vuex';
 
 export default createStore({
 	state: {
@@ -13,74 +13,102 @@ export default createStore({
 	},
 	getters: {
 		GetUserState(state) {
-			return state.user
+			return state.user;
 		},
 		GetConnectState(state) {
-			return state.connect_state
+			return state.connect_state;
 		},
 		GetColor1State(state) {
-			return state.color1
+			return state.color1;
 		},
 		GetColor2State(state) {
-			return state.color2
+			return state.color2;
 		},
 		GetBallSpeedTimeState(state) {
-			return state.ball_speed_time
+			return state.ball_speed_time;
 		},
 		GetBallSpeedManualState(state) {
-			return state.ball_speed_manual
+			return state.ball_speed_manual;
 		},
 		GetRemoveHitState(state) {
-			return state.remove_hit
+			return state.remove_hit;
 		},
 		GetLayoutState(state) {
-			return state.layout
+			return state.layout;
 		},
 	},
 	mutations: {
 		SetUser(state, user) {
 			state.user = user;
+			localStorage.setItem('user', JSON.stringify(user));
 		},
 		ClearUser(state) {
 			state.user = null;
+			localStorage.removeItem('user');
 		},
 		SetConnectState(state, value) {
 			state.connect_state = value;
+			localStorage.setItem('connect_state', JSON.stringify(value));
 		},
 		SetColor1State(state, value) {
 			state.color1 = value;
+			localStorage.setItem('color1', value);
 		},
 		SetColor2State(state, value) {
 			state.color2 = value;
+			localStorage.setItem('color2', value);
 		},
 		SetBallSpeedTimeState(state, value) {
 			state.ball_speed_time = value;
+			localStorage.setItem('ball_speed_time', JSON.stringify(value));
 		},
 		SetBallSpeedManualState(state, value) {
 			state.ball_speed_manual = value;
+			localStorage.setItem('ball_speed_manual', JSON.stringify(value));
 		},
 		SetRemoveHitState(state, value) {
 			state.remove_hit = value;
+			localStorage.setItem('remove_hit', JSON.stringify(value));
 		},
 		SetLayoutState(state, value) {
 			state.layout = value;
+			localStorage.setItem('layout', JSON.stringify(value));
 		},
 	},
 	actions: {
-		Login({commit}, userData) {
+		Login({ commit }, userData) {
 			commit('SetUser', userData);
-			localStorage.setItem('user', JSON.stringify(userData));
 		},
-		Logout({commit}) {
+		Logout({ commit }) {
 			commit('ClearUser');
-			localStorage.removeItem('user');
 		},
-		InitializeStore({commit}) {
+		InitializeStore({ commit }) {
 			const user = localStorage.getItem('user');
+			const connect_state = localStorage.getItem('connect_state');
+			const color1 = localStorage.getItem('color1');
+			const color2 = localStorage.getItem('color2');
+			const ball_speed_time = localStorage.getItem('ball_speed_time');
+			const ball_speed_manual = localStorage.getItem('ball_speed_manual');
+			const remove_hit = localStorage.getItem('remove_hit');
+			const layout = localStorage.getItem('layout');
+
 			if (user) {
 				commit('SetUser', JSON.parse(user));
-				commit('SetConnectState', true);
+				// commit('SetConnectState', JSON.parse(connect_state) || false);
+				// commit('SetColor1State', color1 || "#ff0000");
+				// commit('SetColor2State', color2 || "#ffd200");
+				// commit('SetBallSpeedTimeState', JSON.parse(ball_speed_time) || false);
+				// commit('SetBallSpeedManualState', JSON.parse(ball_speed_manual) || 1);
+				// commit('SetRemoveHitState', JSON.parse(remove_hit) || false);
+				// commit('SetLayoutState', JSON.parse(layout) || false);
 			}
+			commit('SetConnectState', JSON.parse(connect_state) || false);
+			commit('SetColor1State', color1 || "#ff0000");
+			commit('SetColor2State', color2 || "#ffd200");
+			commit('SetBallSpeedTimeState', JSON.parse(ball_speed_time) || false);
+			commit('SetBallSpeedManualState', JSON.parse(ball_speed_manual) || 1);
+			commit('SetRemoveHitState', JSON.parse(remove_hit) || false);
+			commit('SetLayoutState', JSON.parse(layout) || false);
 		},
 		OpenConnect({commit}) {
 			commit('SetConnectState', true);
