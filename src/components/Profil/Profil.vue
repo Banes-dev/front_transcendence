@@ -40,8 +40,75 @@
             </div>
             <button @click="get_profil_api()" class="absolute top-80 px-4 py-2  text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button>
         </div> -->
-		<div class="fixed top-4 right-4 w-full max-w-xs sm:max-w-md h-screen flex flex-col">
-			<div class="relative w-full max-w-xs sm:max-w-md mb-6 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg">
+
+        <!-- Player info -->
+        <!-- <div class="relative top-16 left-4 w-73/100 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg">
+			<img class="relative scale-50 rounded-xl" src="../../assets/img/default_avatar.png" alt="Notre image de profil"/>
+            <div class="relative p-5">
+                <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Informations personnelles</h5>
+				<button
+					@click="addFriend()"
+					class="w-1/6 bg-red-600 hover:bg-red-700 text-yellow-400 font-semibold py-2 rounded-lg shadow-lg"
+				><i class="fa-solid fa-user-plus"></i></button>
+			</div>
+		</div> -->
+        <!-- Player info -->
+        <div class="relative top-16 left-4 w-73/100 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg p-4 flex">
+            <!-- Image de profil -->
+            <div class="flex flex-col items-center mb-0">
+                <img class="w-96 h-96 rounded-xl object-cover mr-4 mb-4" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
+                <button 
+                    @click="replaceImage"
+                    class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
+                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier l'image</button>
+            </div>
+            <!-- Informations -->
+            <div>
+                <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Informations personnelles</h5>
+                <!-- pseudo -->
+                <p class="text-gray-300 mb-2">Pseudo : {{pseudo}}</p>
+                <button 
+                    @click="replaceImage"
+                    class="bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
+                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier mon pseudo</button>
+                <!-- mdp -->
+                <p class="text-gray-300 mb-2">Mot de passe : {{mdp}}</p>
+                <button 
+                    @click="replaceImage"
+                    class="bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
+                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier mon mot de passe</button>
+                <!-- status -->
+                <p class="text-gray-300 mb-2">Status : </p>
+                <div class="flex space-x-4 mb-6">
+                    <div v-for="option in statusOptions" :key="option.value" class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            :id="option.value" 
+                            :checked="status === option.value" 
+                            @change="selectStatus(option.value)"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                        />
+                        <label :for="option.value" class="ml-2 text-sm text-gray-300">{{option.label}}</label>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div 
+                        :class="{
+                        'w-6 h-6 rounded-full': true,
+                        'bg-green-600': status === 'online',
+                        'bg-yellow-500': status === 'inactive',
+                        'bg-red-600': status === 'offline'
+                        }"
+                    ></div>
+                    <span class="text-white right-4">{{statusLabel}}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Amis -->
+		<div class="fixed top-4 right-4 w-full max-w-md h-screen flex flex-col">
+			<!-- Ajout d'amis -->
+            <div class="relative w-full max-w-md mb-6 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg">
 				<div class="relative p-5">
 					<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Ajout d'amis</h5>
 					<input
@@ -56,16 +123,35 @@
 					><i class="fa-solid fa-user-plus"></i></button>
 				</div>
 			</div>
-			<div class="relative flex-grow w-full max-w-xs sm:max-w-md bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg" style="max-height: calc(100vh - 150px); margin-bottom: 36px;">
-				<div class="relative p-5 h-full flex flex-col">
-					<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Mes Amis</h5>
-					<ul class="flex-grow overflow-y-auto pr-2">
-						<li v-for="(friend, index) in friends" :key="index" class="p-2 text-white bg-gray-800 mb-3 rounded-lg shadow-lg">
-							{{friend.username}}
-						</li>
-					</ul>
-				</div>
-			</div>
+            <!-- Listes d'amis -->
+            <div 
+                class="relative flex-grow w-full max-w-md bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg" 
+                style="max-height: calc(100vh - 150px); margin-bottom: 36px; height: 500px;"
+                >
+                <div class="relative p-5 h-full flex flex-col">
+                    <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Mes Amis</h5>
+                    <ul 
+                    class="flex-grow overflow-y-auto pr-2"
+                    style="max-height: calc(100% - 50px);"
+                    >
+                    <li 
+                        v-for="(friend, index) in friends" 
+                        :key="index" 
+                        class="p-2 text-white bg-gray-800 mb-3 rounded-lg shadow-lg flex justify-between items-center"
+                    >
+                        <span>{{friend.username}}</span>
+                        <div 
+                            :class="{
+                                'w-4 h-4 rounded-full': true,
+                                'bg-green-600': friend.status === 'online',
+                                'bg-yellow-500': friend.status === 'inactive',
+                                'bg-red-600': friend.status === 'offline'
+                            }"
+                        ></div>
+                    </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     <!-- </div> -->
 </template>
@@ -81,20 +167,56 @@
 				pseudo: null,
                 mdp: null,
                 img: null,
+                status: "online",
                 // friends: {},
 				friends: [
 					{username: "test1", status: "online"},
-					{username: "test2", status: "absent"},
-					{username: "test1", status: "inactive"},
+					{username: "test2", status: "offline"},
+					{username: "test3", status: "inactive"},
+                    {username: "test4", status: "online"},
+					{username: "test5", status: "offline"},
+					{username: "test6", status: "inactive"},
+                    {username: "test7", status: "online"},
+					{username: "test8", status: "offline"},
+					{username: "test9", status: "inactive"},
+                    {username: "test10", status: "online"},
+					{username: "test11", status: "offline"},
+					{username: "test12", status: "inactive"},
+                    {username: "test13", status: "online"},
+					{username: "test14", status: "offline"},
+					{username: "test15", status: "inactive"},
 				],
                 win_pong: null,
                 lose_pong: null,
                 win_tictactoe: null,
                 lose_tictactoe: null,
                 searchUsername: '',
+                statusOptions: [
+                    {value: "online", label: "En ligne"},
+                    {value: "inactive", label: "Inactif"},
+                    {value: "offline", label: "Hors ligne"},
+                ],
 			};
 		},
+        computed: {
+            statusLabel() {
+            switch (this.status) {
+                case 'online':
+                return 'En ligne';
+                case 'offline':
+                return 'Hors ligne';
+                case 'inactive':
+                return 'Inactif';
+                default:
+                return 'Aucun statut';
+            }
+            },
+        },
         methods: {
+            selectStatus(value) {
+                // Permet de sélectionner uniquement une option à la fois
+                this.status = this.status === value ? null : value;
+            },
             async get_profil_api() {
 				console.log("get profil api");
 				try {
@@ -102,12 +224,15 @@
                     console.log("Structure complète :", response);
 					this.items = response.data.data;
 					console.log(this.items);
+
                     this.pseudo = response.data.data.username;
                     console.log(this.pseudo);
                     this.mdp = this.mdp = "*".repeat(12);
                     console.log(this.mdp);
                     this.img = "gerer img";
                     console.log(this.img);
+                    this.status = response.data.data.status;
+                    console.log(this.status);
 
                     this.friends = response.data.data.friends;
                     console.log("friends:", this.friends);

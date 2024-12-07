@@ -22,7 +22,7 @@
                                 <div class="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
                                     <img class="w-12 h-12 mb-2" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
                                     <p><strong>{{$t('Win_Pong')}}</strong>{{player.win_pong}}</p>
-                                    <p><strong>{{$t('Lose_Pong')}}</strong>{{player.lost_pong}}</p>
+                                    <p><strong>{{$t('Lose_Pong')}}</strong>{{player.lose_pong}}</p>
                                 </div>
                                 <div class="flex flex-col items-center sm:items-end">
                                     <img class="w-12 h-12 mb-2" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
@@ -46,18 +46,18 @@
         data() {
             return {
                 players: [
-                    // {username:"test1", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    // {username:"test2", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    // {username:"test3", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
-                    // {username:"test4", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    // {username:"test5", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    // {username:"test6", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
-                    // {username:"test7", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    // {username:"test8", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    // {username:"test9", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
-                    // {username:"test10", win_pong: "6", lost_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
-                    // {username:"test11", win_pong: "2", lost_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
-                    // {username:"test12", win_pong: "42", lost_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"}
+                    // {username:"test1", win_pong: "6", lose_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test2", win_pong: "2", lose_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test3", win_pong: "42", lose_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
+                    // {username:"test4", win_pong: "6", lose_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test5", win_pong: "2", lose_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test6", win_pong: "42", lose_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
+                    // {username:"test7", win_pong: "6", lose_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test8", win_pong: "2", lose_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test9", win_pong: "42", lose_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"},
+                    // {username:"test10", win_pong: "6", lose_pong: "6", win_tictactoe: "6", lose_tictactoe: "6"},
+                    // {username:"test11", win_pong: "2", lose_pong: "2", win_tictactoe: "2", lose_tictactoe: "2"},
+                    // {username:"test12", win_pong: "42", lose_pong: "42", win_tictactoe: "42", lose_tictactoe: "42"}
                 ],
                 openMenus: [],
             };

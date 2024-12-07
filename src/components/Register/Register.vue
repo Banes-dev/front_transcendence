@@ -153,7 +153,6 @@
 						},
 					});
 					console.log('Données envoyées avec succès :', response.data);
-					console.log(response.data);
 					this.Login(response.data);
 					return (1);
 				} catch (error) {

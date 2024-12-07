@@ -22,6 +22,7 @@ export default {
 			'112': '28rem',
 
 			'11/12': '91.666667%', // 11 / 12 pour canva pong
+			'73/100': '73.0%', // 
 			'11.5/12': '95%' // 11 / 12 pour canva pong
 		},
 		// backgroundImage: {
