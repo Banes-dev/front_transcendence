@@ -94,16 +94,26 @@
 				// console.log(this.password);
 				// console.log(this.confirm_password);
 				// console.log(this.img);
-				this.table_register.username = this.pseudo;
-				this.table_register.password = this.password;
-				this.table_register.img = this.img;
+
+				// this.table_register.username = this.pseudo;
+				// this.table_register.password = this.password;
+				// this.table_register.img = this.img;
 				// if (this.img) {
 				// 	this.table_register.img = await this.convertToBase64(this.img);
 				// }
-				console.log(this.table_register.username);
-				console.log(this.table_register.password);
-				console.log(this.table_register.img);
-				const result = await this.postregister();
+				
+				// console.log(this.table_register.username);
+				// console.log(this.table_register.password);
+				// console.log(this.table_register.img);
+
+				const formData = new FormData();
+				formData.append('username', this.pseudo);
+				formData.append('password', this.password);
+				if (this.img) {
+					formData.append('img', this.img);
+				}
+
+				const result = await this.postregister(formData);
 				if (result == 1)
 				{
 					this.$router.push('/');
@@ -119,23 +129,29 @@
 				this.img = file;
 				this.img_link = URL.createObjectURL(file);
 			},
-			convertToBase64(file) {
-				return new Promise((resolve, reject) => {
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						// resolve(reader.result.split(',')[1]); Retirer le préfixe base64
-						resolve(reader.result); // Retirer le préfixe base64
-					};
-					reader.onerror = (error) => {
-						reject(error);
-					};
-					reader.readAsDataURL(file);
-				});
-			},
-			async postregister() {
+			// convertToBase64(file) {
+			// 	return new Promise((resolve, reject) => {
+			// 		const reader = new FileReader();
+			// 		reader.onloadend = () => {
+			// 			// resolve(reader.result.split(',')[1]); Retirer le préfixe base64
+			// 			resolve(reader.result); // Retirer le préfixe base64
+			// 		};
+			// 		reader.onerror = (error) => {
+			// 			reject(error);
+			// 		};
+			// 		reader.readAsDataURL(file);
+			// 	});
+			// },
+			async postregister(formData) {
 				console.log("post register api");
 				try {
-					const response = await apiClient.post('register/', this.table_register);
+					// const response = await apiClient.post('register/', this.table_register);
+					// const response = await apiClient.post('register/', formData);
+					const response = await apiClient.post('register/', formData, {
+						headers: {
+							'Content-Type': 'multipart/form-data',
+						},
+					});
 					console.log('Données envoyées avec succès :', response.data);
 					console.log(response.data);
 					this.Login(response.data);
