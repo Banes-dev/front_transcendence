@@ -53,7 +53,7 @@
 			</div>
 		</div> -->
         <!-- Player info -->
-        <div class="relative top-16 left-4 w-73/100 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg p-4 flex">
+        <div class="relative top-16 left-4 w-73/100 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-4 flex">
             <!-- Image de profil -->
             <div class="flex flex-col items-center mb-0">
                 <img class="w-96 h-96 rounded-xl object-cover mr-4 mb-4" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
@@ -104,11 +104,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- Stats de jeux -->
+        <!-- <div class="relative bottom-4 left-4 w-73/100 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg p-4 flex">
+        </div> -->
+        <div class="relative -bottom-16 w-73/100 mx-4 mt-2 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 p-3 text-sm rounded-lg shadow-lg">
+            <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start">
+                <div class="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
+                    <img class="w-48 h-48 mb-2" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
+                    <p class="text-white"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
+                    <p class="text-white"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
+                </div>
+                <div class="flex flex-col items-center sm:items-end space-4">
+                    <img class="w-48 h-48 mb-2" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
+                    <p class="text-white"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
+                    <p class="text-white"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
+                </div>
+            </div>
+        </div>
         
         <!-- Amis -->
 		<div class="fixed top-4 right-4 w-full max-w-md h-screen flex flex-col">
 			<!-- Ajout d'amis -->
-            <div class="relative w-full max-w-md mb-6 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg">
+            <div class="relative w-full max-w-md mb-6 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg">
 				<div class="relative p-5">
 					<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Ajout d'amis</h5>
 					<input
@@ -125,7 +143,7 @@
 			</div>
             <!-- Listes d'amis -->
             <div 
-                class="relative flex-grow w-full max-w-md bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg" 
+                class="relative flex-grow w-full max-w-md bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg" 
                 style="max-height: calc(100vh - 150px); margin-bottom: 36px; height: 500px;"
                 >
                 <div class="relative p-5 h-full flex flex-col">
@@ -200,16 +218,16 @@
 		},
         computed: {
             statusLabel() {
-            switch (this.status) {
-                case 'online':
-                return 'En ligne';
-                case 'offline':
-                return 'Hors ligne';
-                case 'inactive':
-                return 'Inactif';
-                default:
-                return 'Aucun statut';
-            }
+                switch (this.status) {
+                    case 'online':
+                    return 'En ligne';
+                    case 'offline':
+                    return 'Hors ligne';
+                    case 'inactive':
+                    return 'Inactif';
+                    default:
+                    return 'Aucun statut';
+                }
             },
         },
         methods: {
