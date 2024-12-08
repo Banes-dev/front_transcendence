@@ -216,6 +216,7 @@
             selectStatus(value) {
                 // Permet de sélectionner uniquement une option à la fois
                 this.status = this.status === value ? null : value;
+                this.updateStatus();
             },
             async get_profil_api() {
 				console.log("get profil api");
@@ -229,7 +230,7 @@
                     console.log(this.pseudo);
                     this.mdp = this.mdp = "*".repeat(12);
                     console.log(this.mdp);
-                    this.img = "gerer img";
+                    this.img = (this.img);
                     console.log(this.img);
                     this.status = response.data.data.status;
                     console.log(this.status);
@@ -259,6 +260,14 @@
                     console.error('Erreur lors de l\'ajout d\'un ami :', error.response?.data || error.message);
                 }
 			},
+            async updateStatus() {
+                try {
+                    const response = await apiClient.put('profil/', {status: this.status});
+                    console.log('Status ok:', response.data);
+                } catch (error) {
+                    console.error('Erreur lors de la mise à jour du statut :', error.response?.data || error.message);
+                }
+            },
         },
         mounted() {
             this.get_profil_api();
