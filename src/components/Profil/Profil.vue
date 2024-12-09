@@ -68,13 +68,13 @@
                 <!-- pseudo -->
                 <p class="text-gray-300 mb-2">Pseudo : {{pseudo}}</p>
                 <button 
-                    @click="replaceImage"
+                    @click="updatePseudo"
                     class="bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
                 ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier mon pseudo</button>
                 <!-- mdp -->
                 <p class="text-gray-300 mb-2">Mot de passe : {{mdp}}</p>
                 <button 
-                    @click="replaceImage"
+                    @click="updateMdp"
                     class="bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
                 ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier mon mot de passe</button>
                 <!-- status -->
@@ -186,24 +186,24 @@
                 mdp: null,
                 img: null,
                 status: "online",
-                // friends: {},
-				friends: [
-					{username: "test1", status: "online"},
-					{username: "test2", status: "offline"},
-					{username: "test3", status: "inactive"},
-                    {username: "test4", status: "online"},
-					{username: "test5", status: "offline"},
-					{username: "test6", status: "inactive"},
-                    {username: "test7", status: "online"},
-					{username: "test8", status: "offline"},
-					{username: "test9", status: "inactive"},
-                    {username: "test10", status: "online"},
-					{username: "test11", status: "offline"},
-					{username: "test12", status: "inactive"},
-                    {username: "test13", status: "online"},
-					{username: "test14", status: "offline"},
-					{username: "test15", status: "inactive"},
-				],
+                friends: {},
+				// friends: [
+				// 	{username: "test1", status: "online"},
+				// 	{username: "test2", status: "offline"},
+				// 	{username: "test3", status: "inactive"},
+                //     {username: "test4", status: "online"},
+				// 	{username: "test5", status: "offline"},
+				// 	{username: "test6", status: "inactive"},
+                //     {username: "test7", status: "online"},
+				// 	{username: "test8", status: "offline"},
+				// 	{username: "test9", status: "inactive"},
+                //     {username: "test10", status: "online"},
+				// 	{username: "test11", status: "offline"},
+				// 	{username: "test12", status: "inactive"},
+                //     {username: "test13", status: "online"},
+				// 	{username: "test14", status: "offline"},
+				// 	{username: "test15", status: "inactive"},
+				// ],
                 win_pong: null,
                 lose_pong: null,
                 win_tictactoe: null,
@@ -246,10 +246,14 @@
 
                     this.pseudo = response.data.data.username;
                     console.log(this.pseudo);
-                    this.mdp = this.mdp = "*".repeat(12);
+
+                    this.mdp = response.data.data.password;
+                    this.mdp = "*".repeat(12);
                     console.log(this.mdp);
-                    this.img = (this.img);
+
+                    this.img = response.data.data.image;
                     console.log(this.img);
+
                     this.status = response.data.data.status;
                     console.log(this.status);
 
@@ -260,10 +264,12 @@
                     console.log(this.win_pong);
                     this.lose_pong = response.data.data.lose_pong;
                     console.log(this.lose_pong);
+
                     this.win_tictactoe = response.data.data.win_tictactoe;
                     console.log(this.win_tictactoe);
                     this.lose_tictactoe = response.data.data.lose_tictactoe;
                     console.log(this.lose_tictactoe);
+
                     console.log("Get profil bien effectuer");
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
@@ -284,6 +290,33 @@
                     console.log('Status ok:', response.data);
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du statut :', error.response?.data || error.message);
+                }
+            },
+            async updatePseudo() {
+                try {
+                    const newPseudo = prompt("Entrez votre nouveau pseudo :");
+                    if (newPseudo) {
+                        const response = await apiClient.put('profil/', { username: newPseudo });
+                        console.log('Pseudo mis à jour avec succès :', response.data);
+                        this.pseudo = newPseudo;
+                        // this.get_profil_api();
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la mise à jour du pseudo :', error.response?.data || error.message);
+                }
+            },
+            async updateMdp() {
+                try {
+                    const newMdp = prompt("Entrez votre nouveau password :");
+                    if (newMdp) {
+                        const response = await apiClient.put('profil/', { password: newMdp });
+                        console.log('mdp mis à jour avec succès :', response.data);
+                        this.mdp = newMdp ;
+                        this.mdp = "*".repeat(12);
+                        // this.get_profil_api();
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la mise à jour du mdp :', error.response?.data || error.message);
                 }
             },
         },
