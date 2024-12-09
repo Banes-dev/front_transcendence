@@ -10,6 +10,7 @@ export default createStore({
 		ball_speed_manual: 1,
 		remove_hit: false,
 		layout: false,
+		language: "fr",
 	},
 	getters: {
 		GetUserState(state) {
@@ -35,6 +36,9 @@ export default createStore({
 		},
 		GetLayoutState(state) {
 			return state.layout;
+		},
+		GetLanguageState(state) {
+			return state.language;
 		},
 	},
 	mutations: {
@@ -73,6 +77,10 @@ export default createStore({
 			state.layout = value;
 			localStorage.setItem('layout', JSON.stringify(value));
 		},
+		SetLanguageState(state, value) {
+			state.language = value;
+			localStorage.setItem('language', JSON.stringify(value));
+		},
 	},
 	actions: {
 		Login({ commit }, userData) {
@@ -89,6 +97,7 @@ export default createStore({
 			const ball_speed_manual = localStorage.getItem('ball_speed_manual');
 			const remove_hit = localStorage.getItem('remove_hit');
 			const layout = localStorage.getItem('layout');
+			const language = localStorage.getItem('language');
 
 			if (user) {
 				commit('SetUser', JSON.parse(user));
@@ -105,6 +114,10 @@ export default createStore({
 			commit('SetBallSpeedManualState', JSON.parse(ball_speed_manual) || 1);
 			commit('SetRemoveHitState', JSON.parse(remove_hit) || false);
 			commit('SetLayoutState', JSON.parse(layout) || false);
+			commit('SetLanguageState', JSON.parse(language) || "fr");
+		},
+		ChangeLanguage({commit}, language) {
+			commit('SetLanguageState', language);
 		},
 		OpenConnect({commit}) {
 			commit('SetConnectState', true);

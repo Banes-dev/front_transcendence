@@ -2,24 +2,24 @@
 	<header class="bg-gray-900 text-gray-300 py-6 mt-auto max-w-6xl mx-auto px-36 rounded-b-xl relative">
 		<!-- Tournois -->
 		<div v-if="$i18n.locale === 'en'">
-			<div class="flex items-center absolute left-2.5 top-4 space-x-0">
-					<h2 class="text-white text-sm">{{$t('Tournaments')}}</h2>
-					<img
-						class="relative h-5 w-5"
-						src="../../assets/img/cup_yellow.png"
-						alt="Image de la coupe du tournoi"
-					/>
-			</div>
+			<router-link to="/tournaments" class="flex items-center absolute left-2.5 top-4 space-x-0">
+				<h2 class="text-white text-sm">{{$t('Tournaments')}}</h2>
+				<img
+					class="relative h-5 w-5"
+					src="../../assets/img/cup_yellow.png"
+					alt="Image de la coupe du tournoi"
+				/>
+			</router-link>
 		</div>
 		<div v-else>
-			<div class="flex items-center absolute left-5 top-3.5 space-x-1">
+			<router-link to="/tournaments" class="flex items-center absolute left-5 top-3.5 space-x-1">
 				<h2 class="text-white">{{$t('Tournaments')}}</h2>
 				<img
 					class="relative h-5 w-5"
 					src="../../assets/img/cup_yellow.png"
 					alt="Image de la coupe du tournoi"
 				/>
-			</div>
+			</router-link>
 		</div>
 
 		<!-- Traduction -->
@@ -130,28 +130,31 @@
 		computed: {
 			...mapGetters(['GetConnectState']),
 			...mapGetters(['GetUserState']),
+			...mapGetters(['GetLanguageState']),
 			menuItems() {
 				return [
-					{ text: this.$t('Profil'), icon: 'fas fa-user', colorClass: 'text-sky-500 hover:text-yellow-400' },
-					{ text: this.$t('Player_Profile'), icon: 'fas fa-bars', colorClass: 'text-lime-500 hover:text-yellow-400' },
-					{ text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', colorClass: 'text-orange-500 hover:text-yellow-400' },
-					{ text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', colorClass: 'text-red-500 hover:text-yellow-400' },
+					{text: this.$t('Profil'), icon: 'fas fa-user', colorClass: 'text-sky-500 hover:text-yellow-400'},
+					{text: this.$t('Player_Profile'), icon: 'fas fa-bars', colorClass: 'text-lime-500 hover:text-yellow-400'},
+					{text: this.$t('Disconnect'), icon: 'fas fa-sign-out-alt', colorClass: 'text-orange-500 hover:text-yellow-400'},
+					{text: this.$t('Delete_Account'), icon: 'fas fa-trash-alt', colorClass: 'text-red-500 hover:text-yellow-400'},
 				];
 			}
 		},
 		methods: {
 			...mapActions(['OpenConnect']),
 			...mapActions(['Logout']),
+			...mapActions(['ChangeLanguage']),
 			getLanguageName(locale) {
 				const languageNames = {
 					fr: 'Français',
 					en: 'English',
 					es: 'Español'
 				};
-				return languageNames[locale] || locale; // Retourne le nom de la langue, ou la locale si la langue n'est pas trouvée
+				return languageNames[locale] || locale;
 			},
 			changeLocale(locale) {
 				this.$i18n.locale = locale;
+				this.ChangeLanguage(locale);
 				this.lang_state = false;
 			},
 			connect_change() {
@@ -166,17 +169,13 @@
 				}
 			},
 			async HandleSubMenu(index) {
-				// console.log(index);
 				if (index == 0) {
-					// open profil
 					this.$router.push('/profil');
 				}
 				if (index == 1) {
-					// See all people stats
 					this.$router.push('/list_players');
 				}
 				if (index == 2) {
-					// Deconnection
 					const result = await this.deconnect_api();
 					if (result == 1)
 					{
@@ -189,7 +188,6 @@
 					}
 				}
 				if (index == 3) {
-					// Delete user
 					const result = await this.delete_api();
 					if (result == 1)
 					{
@@ -243,6 +241,9 @@
 			// 		console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 			// 	}
 			// },
+		},
+		mounted() {
+			this.$i18n.locale = this.GetLanguageState;
 		},
 	};
 </script>

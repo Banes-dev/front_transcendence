@@ -8,6 +8,7 @@ import ListPlayers from './components/Profil/ListPlayers.vue';
 import Custom from './components/Games/Custom.vue';
 import Pong from './components/Games/Pong.vue';
 import TicTacToe from './components/Games/TicTacToe.vue';
+import Tournaments from './components/Home/Tournaments.vue';
 
 const routes = [
 	{
@@ -46,6 +47,10 @@ const routes = [
 	{
 		path: '/tictactoe',
 		component: TicTacToe,
+	},
+	{
+		path: '/tournaments',
+		component: Tournaments,
 	},
 ];
 
