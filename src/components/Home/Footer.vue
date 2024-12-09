@@ -19,9 +19,10 @@
 		
 				<!-- Section droite : Github -->
 				<div class="w-full md:w-1/3 text-center md:text-right">
-					<h2 class="text-xl font-semibold text-white mb-4">{{$t('Github')}}</h2>
-					<div class="flex justify-center md:justify-end mr-0 md:mr-14 space-x-3">
-						<a href="https://github.com/Banes-dev/ft_transcendence" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+					<h2 class="text-xl font-semibold text-white mb-4">{{$t('Others')}}</h2>
+					<div class="flex flex-col mb-4 justify-center md:justify-end">
+						<a href="https://github.com/Banes-dev/ft_transcendence" class="hover:text-white"><i class="fab fa-github mr-2"></i>{{$t('Github')}}</a>
+						<router-link to="/conditions" class="hover:text-white"><i class="fa-solid fa-clipboard-list mr-2"></i> {{$t('Conditions')}}</router-link>
 					</div>
 				</div>
 			</div>

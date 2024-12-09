@@ -1,7 +1,9 @@
 {
     "Language":"Français",
     "Team":"Equipe",
+    "Others":"Autres",
     "Github":"Projet Github",
+    "Condtitions":"Conditions d'utilisation",
     "Tournaments":"Tournois",
 
     "TicTacToe":"Morpion",
