@@ -14,13 +14,13 @@
 
 		<img
 			class="absolute -left-20 scale-50"
-			src="../../assets/img/lantern_long_patch.png"
+			src="../../assets/img/lantern_long.png"
 			alt="Lanterne Joueur Gauche"
 			:style="{filter: `drop-shadow(0px 0px 20px ${GetColor1State})`, top: `${leftPaddleY}px`}"
 		/>
 		<img
 			class="absolute -right-20 scale-50"
-			src="../../assets/img/lantern_long_patch.png"
+			src="../../assets/img/lantern_long.png"
 			alt="Lanterne Joueur Droite"
 			:style="{filter: `drop-shadow(0px 0px 20px ${GetColor1State})`, top: `${rightPaddleY}px`}"
 		/>
