@@ -24,6 +24,9 @@
     "Back":"Volver",
     "Player1":"Jugador 1",
     "Player2":"Jugador 2",
+    "Up":"Alto",
+    "Down":"Bajo",
+    "Phone_Size":"Para jugar, pon el teléfono en modo horizontal.",
 
     "Reset":"Restablecer",
     "Player1_TicTacToe":"Jugador 1 (x)",

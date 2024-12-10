@@ -24,6 +24,9 @@
     "Back":"Back",
     "Player1":"Player 1",
     "Player2":"Player 2",
+    "Up":"Up",
+    "Down":"Down",
+    "Phone_Size":"Please turn your phone to landscape mode to play.",
 
     "Reset":"Reset",
     "Player1_TicTacToe":"Player 1 (x)",

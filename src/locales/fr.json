@@ -24,6 +24,9 @@
     "Back":"Retour",
     "Player1":"Joueur 1",
     "Player2":"Joueur 2",
+    "Up":"Haut",
+    "Down":"Bas",
+    "Phone_Size":"Veuillez tourner votre téléphone en mode paysage pour jouer.",
 
     "Reset":"Réinitialiser",
     "Player1_TicTacToe":"Joueur 1 (x)",

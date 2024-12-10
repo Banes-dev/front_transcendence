@@ -3,80 +3,87 @@ import LoopVideo from '../LoopVideo.vue';
 </script>
 
 <template>
-  <div class="fixed inset-0 flex flex-col items-center justify-center">
-    <LoopVideo />
-    <div class="relative w-4/5 md:w-3/5 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
-      <div class="absolute top-3 right-3 z-50">
-        <router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
-      </div>
-      <div class="p-5 relative z-20">
-        <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Tournois</h5>
+	<div class="fixed inset-0 flex flex-col items-center justify-center">
+		<LoopVideo />
+		<div class="relative w-4/5 md:w-3/5 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">
+			<div class="absolute top-3 right-3 z-50">
+				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
+			</div>
+			<div class="p-5 relative z-20">
+				<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Tournois</h5>
+				<!-- game choice -->
+				<label class="mb-3 inline-flex items-center cursor-pointer">
+					<span class="text-white">Pong</span>
+					<input type="checkbox" v-model="game_choice" class="sr-only peer">
+					<div class="relative w-11 h-6 -mt-0 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
+					<span class="text-white ml-6">TicTacToe</span>
+				</label>
 
-        <!-- Nombre de joueurs -->
-        <h2 class="text-white relative sm:absolute my-4">Nombre de joueurs :</h2>
-        <div class="relative mb-12 top-4 sm:left-38">
-          <input
-            id="price-range-input"
-            type="range"
-            v-model="nb_player"
-            min="3"
-            max="6"
-            class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-          />
-          <span class="text-sm text-gray-400 absolute start-0 -bottom-6">x3</span>
-          <span class="text-sm text-gray-400 absolute w-2/5 end-6 -bottom-6">x6</span>
-        </div>
+				<!-- Nombre de joueurs -->
+				<h2 class="text-white relative sm:absolute my-4">Nombre de joueurs :</h2>
+					<div class="relative mb-12 top-4 sm:left-38">
+					<input
+						id="price-range-input"
+						type="range"
+						v-model="nb_player"
+						min="3"
+						max="6"
+						class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+					/>
+					<span class="text-sm text-gray-400 absolute start-0 -bottom-6">x3</span>
+					<span class="text-sm text-gray-400 absolute w-2/5 end-6 -bottom-6">x6</span>
+				</div>
 
-        <!-- Pseudos des joueurs -->
-        <div class="mb-6">
-          <div v-for="(player, index) in players" :key="player.id" class="mb-2">
-            <label
-              :for="'player-' + player.id"
-              class="block text-sm font-medium text-gray-300"
-            >
-              Joueur {{ index + 1 }}
-            </label>
-            <input
-              :id="'player-' + player.id"
-              v-model="player.name"
-              type="text"
-              placeholder="Entrez un pseudo"
-              class="w-full mt-1 px-3 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-red-600"
-            />
-          </div>
-        </div>
+				<!-- Pseudos des joueurs -->
+				<div class="mb-6">
+				<div v-for="(player, index) in players" :key="player.id" class="mb-2">
+					<label
+					:for="'player-' + player.id"
+					class="block text-sm font-medium text-gray-300"
+					>
+					Joueur {{ index + 1 }}
+					</label>
+					<input
+					:id="'player-' + player.id"
+					v-model="player.name"
+					type="text"
+					placeholder="Entrez un pseudo"
+					class="w-full mt-1 px-3 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-red-600"
+					/>
+				</div>
+				</div>
 
-        <!-- Arbre des tournois -->
-        <div>
-          <ul>
-            <li
-              v-for="(round, roundIndex) in rounds"
-              :key="'round-' + roundIndex"
-              class="mb-6"
-            >
-              <h4 class="text-lg text-yellow-400">Tour {{ roundIndex + 1 }}</h4>
-              <ul>
-                <li
-                  v-for="(match, matchIndex) in round"
-                  :key="'match-' + roundIndex + '-' + matchIndex"
-                  class="text-white"
-                >
-                  Match {{ matchIndex + 1 }} : 
-                  <span class="font-bold">
-                    {{ match[0]?.name || `Joueur ${match[0]?.id}` }}
-                  </span>
-                  <span> - </span>
-                  <span class="font-bold">
-                    {{ match[1]?.name || `Joueur ${match[1]?.id}` }}
-                  </span>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+				<!-- Arbre des tournois -->
+				<div>
+				<ul>
+					<li
+					v-for="(round, roundIndex) in rounds"
+					:key="'round-' + roundIndex"
+					class="mb-6"
+					>
+					<h4 class="text-lg text-yellow-400">Tour {{ roundIndex + 1 }}</h4>
+					<ul>
+						<li
+						v-for="(match, matchIndex) in round"
+						:key="'match-' + roundIndex + '-' + matchIndex"
+						class="text-white"
+						>
+						Match {{ matchIndex + 1 }} : 
+						<span class="font-bold">
+							{{ match[0]?.name || `Joueur ${match[0]?.id}` }}
+						</span>
+						<span> - </span>
+						<span class="font-bold">
+							{{ match[1]?.name || `Joueur ${match[1]?.id}` }}
+						</span>
+						</li>
+					</ul>
+					</li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
