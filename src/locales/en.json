@@ -26,6 +26,8 @@
     "Player2":"Player 2",
     "Up":"Up",
     "Down":"Down",
+    "Victory_Player1":"Victory for player 1 (Left)",
+    "Victory_Player2":"Victory for player 2 (Right)",
     "Phone_Size":"Please turn your phone to landscape mode to play.",
 
     "Reset":"Reset",

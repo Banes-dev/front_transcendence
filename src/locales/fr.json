@@ -26,6 +26,8 @@
     "Player2":"Joueur 2",
     "Up":"Haut",
     "Down":"Bas",
+    "Victory_Player1":"Victoire du joueur 1 (Gauche)",
+    "Victory_Player2":"Victoire du joueur 2 (Droite)",
     "Phone_Size":"Veuillez tourner votre téléphone en mode paysage pour jouer.",
 
     "Reset":"Réinitialiser",

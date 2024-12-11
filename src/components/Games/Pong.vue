@@ -17,8 +17,8 @@
 			<h2 class="absolute mr-52 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{score_player1}}</h2>
 			<h2 class="absolute ml-52 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{score_player2}}</h2>
 			<div v-if="score_player1 >= 5 || score_player2 >= 5" class="absolute justify-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-red-800 to-red-500 hover:bg-gradient-to-bl rounded-lg shadow-lg">
-				<h2 v-if="score_player1 >= 5" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>Victoire du joueur 1 (Gauche)<i class="fa-solid fa-trophy ml-4"></i></h2>
-				<h2 v-if="score_player2 >= 5" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>Victoire du joueur 2 (Droite)<i class="fa-solid fa-trophy ml-4"></i></h2>
+				<h2 v-if="score_player1 >= 5" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{$t("Victory_Player1")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
+				<h2 v-if="score_player2 >= 5" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{$t("Victory_Player2")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
 				<button
 					v-if="score_player1 >= 5 || score_player2 >= 5"
 					@click="startGameLoop()"
@@ -30,10 +30,10 @@
 				src="../../assets/img/lantern_rectangle.png"
 				alt="Lanterne Joueur Gauche"
 				:style="{
-				filter: `drop-shadow(0px 0px 20px ${GetColor1State})`,
-				top: `${leftPaddleY}px`,
-				left: `${leftPaddleX}px`,
-				height: `${lanternHeight}px`,
+					filter: `drop-shadow(0px 0px 20px ${GetColor1State})`,
+					top: `${leftPaddleY}px`,
+					left: `${leftPaddleX}px`,
+					height: `${lanternHeight}px`,
 				}"
 			/>
 			<img
@@ -41,10 +41,10 @@
 				src="../../assets/img/lantern_rectangle.png"
 				alt="Lanterne Joueur Droite"
 				:style="{
-				filter: `drop-shadow(0px 0px 20px ${GetColor1State})`,
-				top: `${rightPaddleY}px`,
-				right: `${rightPaddleX}px`,
-				height: `${lanternHeight}px`,
+					filter: `drop-shadow(0px 0px 20px ${GetColor1State})`,
+					top: `${rightPaddleY}px`,
+					right: `${rightPaddleX}px`,
+					height: `${lanternHeight}px`,
 				}"
 			/>		  
 		</div>

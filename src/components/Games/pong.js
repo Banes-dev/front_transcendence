@@ -72,82 +72,85 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
   
     // Logique de collision de la balle
     function MoveBall() {
-        ballSpeedX += ball_more_speed_x;
-        ballSpeedY += ball_more_speed_y;
-        ballX += ballSpeedX;
-        ballY += ballSpeedY;
+        ballX += ballSpeedX + ball_more_speed_x;
+        ballY += ballSpeedY + ball_more_speed_y;
+    
+        // Collision avec le haut et le bas du canvas
+        if (ballY <= 0 || ballY >= canvas.height) {
+            ballSpeedY = -ballSpeedY; // Inverser la direction
+            ball_more_speed_y = -ball_more_speed_y; // Conserver l'effet de vitesse supplémentaire
+        }
+    
+        // Collision avec la raquette gauche
+        if (
+            ballX - ballSize <= paddleOffset + paddleWidth &&
+            ballY >= leftPaddleY &&
+            ballY <= leftPaddleY + paddleHeight
+        ) {
+            ballSpeedX = -ballSpeedX; // Inverser la direction
+            ball_more_speed_x = -ball_more_speed_x; // Conserver l'effet de vitesse supplémentaire
+            ballX = paddleOffset + paddleWidth + ballSize;
+    
+            // Modifier ballSpeedY en fonction de l'impact
+            const impact = (ballY - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+            ballSpeedY = impact * 4;
+        }
+    
+        // Collision avec la raquette droite
+        if (
+            ballX + ballSize >= canvas.width - paddleOffset - paddleWidth &&
+            ballY >= rightPaddleY &&
+            ballY <= rightPaddleY + paddleHeight
+        ) {
+            ballSpeedX = -ballSpeedX; // Inverser la direction
+            ball_more_speed_x = -ball_more_speed_x; // Conserver l'effet de vitesse supplémentaire
+            ballX = canvas.width - paddleOffset - paddleWidth - ballSize;
+    
+            // Modifier ballSpeedY en fonction de l'impact
+            const impact = (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
+            ballSpeedY = impact * 4;
+        }
+    
+        // Si la balle sort du canvas (score ou reset)
+        if (ballX <= 0 || ballX >= canvas.width) {
+            resetBall();
+        }
+    }
 
-            // Collision avec le haut et le bas du canvas
-            if (ballY <= 0 || ballY >= canvas.height) {
-                ballSpeedY = -ballSpeedY;
-                ball_more_speed_y = -ball_more_speed_y;
-            }
-        
-            // Collision avec la raquette gauche
-            if (
-                ballX - ballSize <= paddleOffset + paddleWidth && 
-                ballY >= leftPaddleY && 
-                ballY <= leftPaddleY + paddleHeight
-            ) {
-                ballSpeedX = -ballSpeedX;
-                ball_more_speed_x = -ball_more_speed_x;
-                ballX = paddleOffset + paddleWidth + ballSize;
-            
-                // Modifier ballSpeedY en fonction de l'impact
-                const impact = (ballY - (leftPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
-                ballSpeedY = impact * 4; // Ajustez ce multiplicateur pour contrôler l'effet
-            }
-            
-            // Collision avec la raquette droite
-            if (
-                ballX + ballSize >= canvas.width - paddleOffset - paddleWidth && 
-                ballY >= rightPaddleY && 
-                ballY <= rightPaddleY + paddleHeight
-            ) {
-                ballSpeedX = -ballSpeedX;
-                ball_more_speed_x = -ball_more_speed_x;
-                ballX = canvas.width - paddleOffset - paddleWidth - ballSize;
-            
-                // Modifier ballSpeedY en fonction de l'impact
-                const impact = (ballY - (rightPaddleY + paddleHeight / 2)) / (paddleHeight / 2);
-                ballSpeedY = impact * 4; // Ajustez ce multiplicateur pour contrôler l'effet
-            }
-        
-            // Si la balle sort du canvas (score ou reset)
-            if (ballX <= 0 || ballX >= canvas.width) {
-                if (ballX >= canvas.width) {
-                    player1 = player1 + 1;
-                }
-                if (ballX <= 0) {
-                    player2 = player2 + 1;
-                }
-                ballX = canvas.width / 2;
-                ballY = canvas.height / 2;
-                ballSpeedX = 0 * store.getters["GetBallSpeedManualState"];
-                ballSpeedY = 0 * store.getters["GetBallSpeedManualState"];
-                if (Math.random() >= 0.5) {
-                    ballSpeedX = -ballSpeedX;
-                }
-                ball_more_speed_x = -ball_more_speed_x;
-                ball_more_speed_x = 0;
-                ball_more_speed_y = 0;
-                if (typeof GetScore === 'function') {
-                    GetScore({player1, player2});
-                }
-                setTimeout(() => {
-                    ballSpeedX = 8 * store.getters["GetBallSpeedManualState"];
-                }, "4000");
-                // ballX = canvas.width / 2;
-                // ballY = canvas.height / 2;
-                // ballSpeedX = 8 * store.getters["GetBallSpeedManualState"];
-                // ballSpeedY = 0 * store.getters["GetBallSpeedManualState"];
-                // if (Math.random() >= 0.5) {
-                //     ballSpeedX = -ballSpeedX;
-                // }
-                // ball_more_speed_x = -ball_more_speed_x;
-                // ball_more_speed_x = 0;
-                // ball_more_speed_y = 0;
-            }
+    let isSpeedIncreaseActive = true;
+    function resetBall() {
+        // Score et envoie score
+        if (ballX >= canvas.width) {
+            player1 = player1 + 1;
+        }
+        if (ballX <= 0) {
+            player2 = player2 + 1;
+        }
+        if (typeof GetScore === 'function') {
+            GetScore({player1, player2});
+        }
+
+        // Balle au centre et vitesse a 0
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballSpeedX = 0 * store.getters["GetBallSpeedManualState"];
+        ballSpeedY = 0 * store.getters["GetBallSpeedManualState"];
+    
+        // Réinitialisation des vitesses supplémentaires
+        ball_more_speed_x = 0;
+        ball_more_speed_y = 0;
+        isSpeedIncreaseActive = false;
+    
+        // Appliquer une direction aléatoire pour `ballSpeedX`
+        if (Math.random() >= 0.5) {
+            ballSpeedX = -ballSpeedX;
+        }
+
+        // Attendre 4 seconde pour que la balle rebouge
+        setTimeout(() => {
+            ballSpeedX = 8 * store.getters["GetBallSpeedManualState"];
+            isSpeedIncreaseActive = true;
+        }, "4000");
     }
   
     // Mouvement des raquettes
@@ -166,23 +169,24 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     }
 
     // Augmenter vitesse de la balle
+    let speedIntervalId = null;
     function IncreaseBallSpeed() {
-        if (ball_more_speed_x < 10 && ball_more_speed_x > -10) {
-            if (ball_more_speed_x < 0) {
-                ball_more_speed_x = ball_more_speed_x - 0.00001;
+        if (speedIntervalId !== null) return;
+    
+        speedIntervalId = setInterval(() => {
+            if (!isSpeedIncreaseActive) return;
+
+            if (Math.abs(ball_more_speed_x) < 40) {
+                ball_more_speed_x += ballSpeedX > 0 ? 0.2 : -0.2;
             }
-            else {
-                ball_more_speed_x = ball_more_speed_x + 0.00001;
+            if (Math.abs(ball_more_speed_y) < 40) {
+                ball_more_speed_y += ballSpeedY > 0 ? 0.2 : -0.2;
             }
-        }
-        if (ball_more_speed_y < 10  && ball_more_speed_y > -10) {
-            if (ball_more_speed_y < 0) {
-                ball_more_speed_y = ball_more_speed_y - 0.00001;
+            if (Math.abs(ball_more_speed_x) >= 40 && Math.abs(ball_more_speed_y) >= 40) {
+                clearInterval(speedIntervalId);
+                speedIntervalId = null;
             }
-            else {
-                ball_more_speed_y = ball_more_speed_y + 0.00001;
-            }
-        }
+        }, 800);
     }
   
     // Fonction de jeu
@@ -197,7 +201,6 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             IncreaseBallSpeed();
         }
         Draw();
-        console.log("test");
     
         if (isGameRunning) {
             animationFrameId = requestAnimationFrame(gameLoop);
@@ -236,12 +239,10 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     // Démarrer le jeu
     gameLoop();
     controlPaddles();
-    console.log(animationFrameId);
     return animationFrameId;
 }
 
 export function stopPongGame(animationFrameId) {
-    console.log(animationFrameId);
     if (animationFrameId && isGameRunning) {
         isGameRunning = false;
         cancelAnimationFrame(animationFrameId);
