@@ -52,28 +52,36 @@
 			<div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
 				<!-- Paddle gauche : Haut -->
 				<button
-					class="opacity-50 hover:opacity-75"
-					@touchstart="handleTouch('left', 'up')"
-					@touchend="handleTouchEnd('left')"
-				></button>
+				  class="bg-blue-500 opacity-50 hover:opacity-75"
+				  @mousedown="movePaddle('left', 'up', true)"
+				  @mouseup="movePaddle('left', 'up', false)"
+				  @touchstart.prevent="movePaddle('left', 'up', true)"
+				  @touchend.prevent="movePaddle('left', 'up', false)"
+				>↑</button>
 				<!-- Paddle droit : Haut -->
 				<button
-					class="opacity-50 hover:opacity-75"
-					@touchstart="handleTouch('right', 'up')"
-					@touchend="handleTouchEnd('right')"
-				></button>
+				  class="bg-red-500 opacity-50 hover:opacity-75"
+				  @mousedown="movePaddle('right', 'up', true)"
+				  @mouseup="movePaddle('right', 'up', false)"
+				  @touchstart.prevent="movePaddle('right', 'up', true)"
+				  @touchend.prevent="movePaddle('right', 'up', false)"
+				>↑</button>
 				<!-- Paddle gauche : Bas -->
 				<button
-					class="opacity-50 hover:opacity-75"
-					@touchstart="handleTouch('left', 'down')"
-					@touchend="handleTouchEnd('left')"
-				></button>
+				  class="bg-blue-500 opacity-50 hover:opacity-75"
+				  @mousedown="movePaddle('left', 'down', true)"
+				  @mouseup="movePaddle('left', 'down', false)"
+				  @touchstart.prevent="movePaddle('left', 'down', true)"
+				  @touchend.prevent="movePaddle('left', 'down', false)"
+				>↓</button>
 				<!-- Paddle droit : Bas -->
 				<button
-					class="opacity-50 hover:opacity-75"
-					@touchstart="handleTouch('right', 'down')"
-					@touchend="handleTouchEnd('right')"
-				></button>
+				  class="bg-red-500 opacity-50 hover:opacity-75"
+				  @mousedown="movePaddle('right', 'down', true)"
+				  @mouseup="movePaddle('right', 'down', false)"
+				  @touchstart.prevent="movePaddle('right', 'down', true)"
+				  @touchend.prevent="movePaddle('right', 'down', false)"
+				>↓</button>
 			</div>
 			<!-- Victoire fin de match -->
 			<div v-if="score_player1 >= 5 || score_player2 >= 5" class="absolute justify-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-red-800 to-red-500 hover:bg-gradient-to-bl rounded-lg shadow-lg">
@@ -92,7 +100,7 @@
 <script>
 	import {ref} from 'vue';
 	import {mapGetters} from 'vuex';
-	import startPongGame, {stopPongGame} from "./pong.js";
+	import startPongGame, {stopPongGame, movePaddle} from "./pong.js";
 
 	export default {
 		name: "Pong",
@@ -107,7 +115,7 @@
 				isLandscape: false,
 				isWidth: false,
 				isMobile: false,
-				pong_instance: null,
+				gameLoopId: null,
 				score_player1: 0,
 				score_player2: 0,
 			};
@@ -171,20 +179,13 @@
 				this.score_player1 = 0;
 				this.score_player2 = 0;
 				const canvas = this.$refs.PongCanvas;
-				this.pong_instance = startPongGame(canvas, this.UpdatePaddlePositions, this.UpdateScore);
+				this.gameLoopId = startPongGame(canvas, this.UpdatePaddlePositions, this.UpdateScore);
 			},
 			stopGameLoop() {
-				if (this.pong_instance.animationFrameId) {
-					stopPongGame(this.pong_instance.animationFrameId);
-					this.pong_instance = null;
+				if (this.gameLoopId) {
+					stopPongGame(this.gameLoopId);
+					this.gameLoopId = null;
 				}
-			},
-
-			handleTouch(side, direction) {
-				this.pong_instance.handleTouch(side, direction);
-			},
-			handleTouchEnd(side) {
-				this.pong_instance.handleTouchEnd(side);
 			},
 		},
 		mounted() {
@@ -203,11 +204,11 @@
 			// Lancer le jeu Pong et calculer les dimensions
 			if (this.isMobile == true && this.isLandscape == true || this.isWidth == true) {
 				const canvas = this.$refs.PongCanvas;
-				this.pong_instance = startPongGame(canvas, this.UpdatePaddlePositions, this.UpdateScore);
+				this.gameLoopId = startPongGame(canvas, this.UpdatePaddlePositions, this.UpdateScore);
 			}
 			if (this.isMobile == false) {
 				const canvas = this.$refs.PongCanvas;
-				this.pong_instance = startPongGame(canvas, this.UpdatePaddlePositions, this.UpdateScore);
+				this.gameLoopId = startPongGame(canvas, this.UpdatePaddlePositions, this.UpdateScore);
 			}
 
 			// Calcul initial et écoute des redimensionnements

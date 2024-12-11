@@ -53,12 +53,12 @@
 					<label class="text-sm font-medium text-gray-300 ml-2" for="checkbox">{{$t('Conditions1')}}<a href="/conditions" class="text-blue-500">{{$t('Conditions2')}}</a>{{$t('Conditions3')}}</label>
 				</div>
 				<h2 v-if="!check_conditions" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{$t('Error_Conditions')}}</h2>
+				<h2 v-if="error_return_api" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{error_return_api}}</h2>
 				<button
 					v-if="password === confirm_password && check_conditions == true"
 					type="submit"
 					class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md"
-				>{{$t('Register')}}
-				</button>
+				>{{$t('Register')}}</button>
 			</form>
 		</div>
 	</div>
@@ -83,6 +83,7 @@
 					password: "NULL",
 					img: "NULL",
 				},
+				error_return_api: null,
 			};
 		},
 		methods: {
@@ -146,7 +147,6 @@
 				console.log("post register api");
 				try {
 					// const response = await apiClient.post('register/', this.table_register);
-					// const response = await apiClient.post('register/', formData);
 					const response = await apiClient.post('register/', formData, {
 						headers: {
 							'Content-Type': 'multipart/form-data',
@@ -157,6 +157,10 @@
 					return (1);
 				} catch (error) {
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
+					// console.error(error.response);
+					// console.error(error.response.data);
+					// console.error(error.message);
+					// faire erreur api
 					return (0);
 				}
 			},

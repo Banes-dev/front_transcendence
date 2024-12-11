@@ -208,6 +208,26 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     }
   
     // Contrôle des raquettes
+    function movePaddle(side, direction) {
+        if (side === 'left') {
+            leftPaddleSpeed = direction === 'up' ? -PaddleSpeed : PaddleSpeed;
+        } else if (side === 'right') {
+            rightPaddleSpeed = direction === 'up' ? -PaddleSpeed : PaddleSpeed;
+        }
+    }
+    function stopPaddle(side) {
+        if (side === 'left') {
+            leftPaddleSpeed = 0;
+        } else if (side === 'right') {
+            rightPaddleSpeed = 0;
+        }
+    }
+    function handleTouch(side, direction) {
+        movePaddle(side, direction);
+    }
+    function handleTouchEnd(side) {
+        stopPaddle(side);
+    }
     function controlPaddles() {
         window.addEventListener("keydown", (event) => {
             const layoutState = store.getters["GetLayoutState"];
@@ -239,7 +259,7 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     // Démarrer le jeu
     gameLoop();
     controlPaddles();
-    return animationFrameId;
+    return {animationFrameId, handleTouch, handleTouchEnd};
 }
 
 export function stopPongGame(animationFrameId) {
