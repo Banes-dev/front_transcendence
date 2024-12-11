@@ -1,4 +1,5 @@
 import store from "@/store";
+import aiController from "./ia.js";
 
 let isGameRunning = false;
 
@@ -188,6 +189,40 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             }
         }, 800);
     }
+
+    const gameState = {          
+        canvasWidth : canvas.width,
+        canvasHeight : canvas.height,
+        paddleWidth : canvas.width * 0.05,
+        paddleHeight : canvas.height * 0.2,
+        paddleOffset : canvas.width * 0.02,
+        ballSize : 10,
+        rightPaddleY : rightPaddleY,
+        PaddleSpeed : 6,
+        gnow : Date.now(),
+        ballX : ballX,
+        ballY : ballY,
+        ballSpeedX : ballSpeedX,
+        ballSpeedY : ballSpeedY,
+        ball_more_speed_x : ball_more_speed_x,
+        ball_more_speed_y : ball_more_speed_y
+    };
+
+    function updateGameState() {
+        gameState.rightPaddleY = rightPaddleY;
+        gameState.gnow = Date.now();
+        gameState.ballX = ballX;
+        gameState.ballY = ballY;
+        gameState.ballSpeedX = ballSpeedX;
+        gameState.ballSpeedY = ballSpeedY;
+        gameState.ball_more_speed_x = ball_more_speed_x;
+        gameState.ball_more_speed_y = ball_more_speed_y;
+    }
+
+    let isAIEnabled = true; // Active l'IA
+    let ai = aiController();
+    let lastUpdateTime = Date.now();
+    let sleep = 1000;
   
     // Fonction de jeu
     function gameLoop() {
@@ -195,12 +230,23 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             isGameRunning = false;
             cancelAnimationFrame(animationFrameId);
         }
+        let now = Date.now();
+        let t = now - lastUpdateTime;
+        if (now - lastUpdateTime >= sleep) {
+            updateGameState();
+            console.log(t)
+            console.log(gameState.ballSpeedX, gameState.ballSpeedY, gameState.ballX, gameState.ballY);
+            lastUpdateTime = now;
+        }
         MoveBall();
         MovePaddles();
         if (store.getters["GetBallSpeedTimeState"] == true) {
             IncreaseBallSpeed();
         }
         Draw();
+        if (isAIEnabled && ai) {
+            rightPaddleSpeed = ai.updateAi(gameState);
+        }
     
         if (isGameRunning) {
             animationFrameId = requestAnimationFrame(gameLoop);
@@ -255,10 +301,57 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             }
         });
     }
+
+    function controlPaddlesLeftIA() {
+        // Ia rightPaddleSpeed = -PaddleSpeed;
+        window.addEventListener("keydown", (event) => {
+            const layoutState = store.getters["GetLayoutState"];
+            if (layoutState) {
+                if (event.key === "w") leftPaddleSpeed = -PaddleSpeed;
+            }
+            else {
+                if (event.key === "z") leftPaddleSpeed = -PaddleSpeed;
+            }
+            if (event.key === "s") leftPaddleSpeed = PaddleSpeed;
+        });
+    
+        window.addEventListener("keyup", (event) => {
+            const layoutState = store.getters["GetLayoutState"];
+            if (layoutState) {
+                if (event.key === "w" || event.key === "s") leftPaddleSpeed = 0;
+            }
+            else {
+                if (event.key === "z" || event.key === "s") leftPaddleSpeed = 0;
+            }
+        });
+    }
   
     // Démarrer le jeu
     gameLoop();
-    controlPaddles();
+    if (isAIEnabled && ai) {
+        const gameState = {          
+            canvasWidth : canvas.width,
+            canvasHeight : canvas.height,
+            paddleWidth : canvas.width * 0.05,
+            paddleHeight : canvas.height * 0.2,
+            paddleOffset : canvas.width * 0.02,
+            ballSize : 10,
+            rightPaddleY : rightPaddleY,
+            PaddleSpeed : 6,
+            gnow : Date.now(),
+            ballX : ballX,
+            ballY : ballY,
+            ballSpeedX : ballSpeedX,
+            ballSpeedY : ballSpeedY,
+            ball_more_speed_x : ball_more_speed_x,
+            ball_more_speed_y : ball_more_speed_y
+        };
+        ai.updateAi(gameState);
+        controlPaddlesLeftIA();
+    }
+    else {
+        controlPaddles();
+    }
     return {animationFrameId, handleTouch, handleTouchEnd};
 }
 
