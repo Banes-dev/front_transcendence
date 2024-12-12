@@ -94,7 +94,7 @@
 			else {
 				state = "lose_tictactoe";
 			}
-			const response = await apiClient.post('player/', {userState, state});
+			const response = await apiClient.post('player/', {user: userState, stat_type: state});
 			console.log('Données envoyées avec succès :', response.data);
 		} catch (error) {;
 			console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
