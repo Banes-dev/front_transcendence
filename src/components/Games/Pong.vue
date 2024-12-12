@@ -118,6 +118,7 @@
 			...mapGetters(['GetBallSpeedTimeState']),
 			...mapGetters(['GetBallSpeedManualState']),
 			...mapGetters(['GetRemoveHitState']),
+			...mapGetters(['GetUserState']),
 		},
 		methods: {
 			// Update size & position
@@ -138,6 +139,28 @@
 			UpdateScore(recup_score) {
 				this.score_player1 = recup_score.player1;
 				this.score_player2 = recup_score.player2;
+				if (this.score_player1 >= 5 || this.score_player2 >= 5) {
+					// appel api
+					this.post_pong(this.score_player1);
+				}
+			},
+			async post_pong(score_player1) {
+				console.log("post end pong api");
+				try {
+					const userState = this.GetUserState;
+					let state;
+					console.log(score_player1);
+					if (score_player1 >= 5) {
+						state = "win_pong";
+					}
+					else {
+						state = "lose_pong";
+					}
+					const response = await apiClient.post('player/', {user: userState, stat_type: state});
+					console.log('Données envoyées avec succès :', response.data);
+				} catch (error) {;
+					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
+				}
 			},
 			// Check for phone
 			checkIsLandscape() {
