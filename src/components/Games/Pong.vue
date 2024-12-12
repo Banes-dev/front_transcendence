@@ -92,6 +92,7 @@
 <script>
 	import {ref} from 'vue';
 	import {mapGetters, mapActions} from 'vuex';
+	import apiClient from '@/axios';
 	import startPongGame, {stopPongGame} from "./pong.js";
 
 	export default {
