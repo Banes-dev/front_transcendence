@@ -74,16 +74,16 @@ export default function aiController(){
 
             if (t[2] == "droite") //point d'arriver
             {
-                if ((rightPaddleY) < (t[1])  && (rightPaddleY + paddleHeight) > t[1])
+                if ((rightPaddleY) < (t[1] - paddleHeight / 3)  && (rightPaddleY + paddleHeight) > t[1])
                 {
                     return 0;
                 }
-                else if ((rightPaddleY + paddleHeight / 10) >= t[1])
+                else if ((rightPaddleY + paddleHeight / 5) >= t[1])
                 {
                     rightPaddleY -= PaddleSpeed;;
                     return -PaddleSpeed;
                 }
-                else if ((rightPaddleY - paddleHeight / 2) < t[1] && (rightPaddleY + paddleHeight) <= t[1])
+                else if ((rightPaddleY - paddleHeight / 3) < t[1] && (rightPaddleY + paddleHeight / 2) <= t[1])
                 {
                     rightPaddleY += PaddleSpeed;
                     return PaddleSpeed;

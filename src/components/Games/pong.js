@@ -345,6 +345,7 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             ballSpeedY : ballSpeedY,
             ball_more_speed_x : ball_more_speed_x,
             ball_more_speed_y : ball_more_speed_y
+            
         };
         ai.updateAi(gameState);
         controlPaddlesLeftIA();
