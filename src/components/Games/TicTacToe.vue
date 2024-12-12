@@ -54,6 +54,13 @@
 	// Fonction pour effectuer un mouvement
 	const makeMove = async (index) => {
 		if (board.value[index] || winner.value) return; // Empêche de jouer sur une case occupée ou après la fin
+		if (store.getters["GetRemoveHitState"]) {
+			if (Math.random() < 1 / 9) {
+				console.log('Coup annulé, chance sur 9 activée.');
+				currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'; // Change de joueur
+				return;
+			}
+		}
 		board.value[index] = currentPlayer.value;
 		if (checkWinner()) {
 			// Gérer l'appel API après avoir trouvé un gagnant
@@ -83,11 +90,9 @@
 	});
 
 	const post_tictactoe = async (winner) => {
-		console.log("post end tictactoe api");
 		try {
 			const userState = store.getters.GetUserState;
 			let state;
-			console.log(winner);
 			if (winner == "X") {
 				state = "win_tictactoe";
 			}
@@ -95,7 +100,6 @@
 				state = "lose_tictactoe";
 			}
 			const response = await apiClient.post('player/', {user: userState, stat_type: state});
-			console.log('Données envoyées avec succès :', response.data);
 		} catch (error) {;
 			console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 		}
@@ -156,27 +160,6 @@
 			...mapGetters(['GetRemoveHitState']),
 			...mapGetters(['GetUserState']),
 		},
-		// methods: {
-		// 	async post_tictactoe(winner) {
-		// 		console.log("post end tictactoe api");
-		// 		try {
-		// 			let state;
-		// 			console.log(winner);
-		// 			if (winner == "X") {
-		// 				state = true;
-		// 			}
-		// 			else {
-		// 				state = false;
-		// 			}
-		// 			const response = await apiClient.post('player/', {GetUserState, state});
-		// 			console.log('Données envoyées avec succès :', response.data);
-		// 			return (1);
-		// 		} catch (error) {;
-		// 			console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
-		// 			return (0);
-		// 		}
-		// 	},
-		// }
 	};
 </script>
 

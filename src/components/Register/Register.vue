@@ -4,7 +4,6 @@
 </script>
 
 <template>
-	<!-- <div v-if="GetRegisterState" class="fixed inset-0 flex flex-col items-center justify-center"> -->
 	<div class="fixed inset-0 flex flex-col items-center justify-center">
 		<LoopVideo/>
 		<div class="relative bg-gray-900 border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 w-full max-w-xs sm:max-w-md p-8 rounded-md">
@@ -43,6 +42,7 @@
 					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
 					/>
 				</div>
+				<h2 v-if="error_return_api" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{error_return_api}}</h2>
 				<h2 v-if="password !== confirm_password" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{$t('Error_Doublemdp')}}</h2>
 				<div class="mb-6">
 					<label for="confirm_password" class="block text-sm font-medium text-gray-300">{{$t('Profile_Image')}}</label>
@@ -53,7 +53,6 @@
 					<label class="text-sm font-medium text-gray-300 ml-2" for="checkbox">{{$t('Conditions1')}}<a href="/conditions" class="text-blue-500">{{$t('Conditions2')}}</a>{{$t('Conditions3')}}</label>
 				</div>
 				<h2 v-if="!check_conditions" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{$t('Error_Conditions')}}</h2>
-				<h2 v-if="error_return_api" class="mb-4 flex items-center justify-center text-red-700 font-bold">{{error_return_api}}</h2>
 				<button
 					v-if="password === confirm_password && check_conditions == true"
 					type="submit"
@@ -75,13 +74,13 @@
 				pseudo: '',
 				password: '',
 				confirm_password: '',
-				img: null,
-				img_link: null,
+				image: null,
+				image_link: null,
 				check_conditions: false,
 				table_register: {
 					username: "NULL",
 					password: "NULL",
-					img: "NULL",
+					image: "NULL",
 				},
 				error_return_api: null,
 			};
@@ -89,29 +88,29 @@
 		methods: {
 			...mapActions(['CloseConnect']),
 			...mapActions(['Login']),
-			// api rest envoie de pseudo et password
 			async submitRegister() {
+				this.error_return_api = null;
 				// console.log(this.pseudo);
 				// console.log(this.password);
 				// console.log(this.confirm_password);
-				// console.log(this.img);
+				// console.log(this.image);
 
 				// this.table_register.username = this.pseudo;
 				// this.table_register.password = this.password;
-				// this.table_register.img = this.img;
-				// if (this.img) {
-				// 	this.table_register.img = await this.convertToBase64(this.img);
+				// this.table_register.image = this.image;
+				// if (this.image) {
+				// 	this.table_register.image = await this.convertToBase64(this.image);
 				// }
 				
 				// console.log(this.table_register.username);
 				// console.log(this.table_register.password);
-				// console.log(this.table_register.img);
+				// console.log(this.table_register.image);
 
 				const formData = new FormData();
 				formData.append('username', this.pseudo);
 				formData.append('password', this.password);
-				if (this.img) {
-					formData.append('img', this.img);
+				if (this.image) {
+					formData.append('image', this.image);
 				}
 
 				const result = await this.postregister(formData);
@@ -127,22 +126,9 @@
 				this.CloseConnect();
 			},
 			handleImageSelected(file) {
-				this.img = file;
-				this.img_link = URL.createObjectURL(file);
+				this.image = file;
+				this.image_link = URL.createObjectURL(file);
 			},
-			// convertToBase64(file) {
-			// 	return new Promise((resolve, reject) => {
-			// 		const reader = new FileReader();
-			// 		reader.onloadend = () => {
-			// 			// resolve(reader.result.split(',')[1]); Retirer le préfixe base64
-			// 			resolve(reader.result); // Retirer le préfixe base64
-			// 		};
-			// 		reader.onerror = (error) => {
-			// 			reject(error);
-			// 		};
-			// 		reader.readAsDataURL(file);
-			// 	});
-			// },
 			async postregister(formData) {
 				console.log("post register api");
 				try {
@@ -157,10 +143,7 @@
 					return (1);
 				} catch (error) {
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
-					// console.error(error.response);
-					// console.error(error.response.data);
-					// console.error(error.message);
-					// faire erreur api
+					this.error_return_api = this.$t('Error_MdpApi');
 					return (0);
 				}
 			},

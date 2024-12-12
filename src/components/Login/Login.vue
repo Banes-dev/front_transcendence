@@ -32,6 +32,9 @@
 					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
 					/>
 				</div>
+				<div v-if="errorMessage" class="mb-4 text-red-500 text-sm">
+					{{errorMessage}}
+				</div>
 				<button
 					type="submit"
 					class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md"
@@ -56,6 +59,7 @@
 					username: "NULL",
 					password: "NULL",
 				},
+				errorMessage: '',
 			};
 		},
 		methods: {
@@ -86,8 +90,10 @@
 					console.log('Données envoyées avec succès :', response.data);
 					console.log(response.data);
 					this.Login(response.data);
+					this.errorMessage = '';
 					return (1);
-				} catch (error) {;
+				} catch (error) {
+					this.errorMessage = this.$t('Error_LoginApi');
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 					return (0);
 				}

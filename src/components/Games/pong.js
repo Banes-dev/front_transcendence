@@ -219,7 +219,7 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
         gameState.ball_more_speed_y = ball_more_speed_y;
     }
 
-    let isAIEnabled = true; // Active l'IA
+    let isAIEnabled = store.getters["GetPlayIaState"]; // Active l'IA
     let ai = aiController();
     let lastUpdateTime = Date.now();
     let sleep = 1000;
@@ -234,8 +234,6 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
         let t = now - lastUpdateTime;
         if (now - lastUpdateTime >= sleep) {
             updateGameState();
-            console.log(t)
-            console.log(gameState.ballSpeedX, gameState.ballSpeedY, gameState.ballX, gameState.ballY);
             lastUpdateTime = now;
         }
         MoveBall();
@@ -344,8 +342,7 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             ballSpeedX : ballSpeedX,
             ballSpeedY : ballSpeedY,
             ball_more_speed_x : ball_more_speed_x,
-            ball_more_speed_y : ball_more_speed_y
-            
+            ball_more_speed_y : ball_more_speed_y  
         };
         ai.updateAi(gameState);
         controlPaddlesLeftIA();

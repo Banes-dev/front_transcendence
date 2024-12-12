@@ -13,11 +13,12 @@
     "Preferences":"Preferencias",
 
     "Preferences_Games":"Preferencias de juego",
+    "Play_With_Ia":"Jugar contra un ia",
     "Color1":"Color principal : ",
     "Color2":"Color secundario : ",
     "Ball_Speed_Time":"Acelera la velocidad de la pelota en función del tiempo",
     "Ball_Speed_Manual":"Velocidad de la pelota :",
-    "Remove_Hit":"Eliminar un golpe del oponente",
+    "Remove_Hit":"Supresión de disparos aleatorios",
     "Cancel":"Cancelar cambios",
     "Apply":"Aplicar cambios",
 
@@ -46,6 +47,8 @@
     "Conditions3": " del sitio",
     "Error_Doublemdp": "Las contraseñas no coinciden",
     "Error_Conditions": "Por favor, acepte las condiciones de uso",
+    "Error_MdpApi": "La contraseña debe tener al menos 8 caracteres, incluyendo 1 letra y 1 carácter especial. No debe ser demasiado parecida al nombre de usuario o al nombre común.",
+    "Error_LoginApi": "Nombre de usuario o contraseña no válidos",
 
     "Terms_Use": "Condiciones de uso",
     "Terms_Use_Text": "La información recogida en el cuestionario es registrada en un fichero informático por el equipo de trascendencia. La base legal para el tratamiento es la del cnil.\nLos datos marcados con un asterisco en el cuestionario son de obligada cumplimentación. Los datos recogidos sólo serán comunicados a los siguientes destinatarios: Proyecto Trascendencia.\nLos datos se conservarán durante 2 años.\nPuede acceder a los datos que le conciernen, rectificarlos, solicitar su supresión o ejercer su derecho a la limitación del tratamiento de sus datos. \nPara ejercer estos derechos o si tiene alguna pregunta sobre el tratamiento de sus datos en el marco de este régimen, puede ponerse en contacto con Cap'n. Si, después de ponerse en contacto con nosotros, considera que no se han respetado sus derechos en materia de «Protección de datos y libertades públicas», puede presentar una reclamación ante la CNIL.",

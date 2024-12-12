@@ -13,11 +13,12 @@
     "Preferences":"Préférences",
 
     "Preferences_Games":"Préférences des jeux",
+    "Play_With_Ia":"Jouer contre une intelligence artificielle",
     "Color1":"Couleur principale : ",
     "Color2":"Couleur secondaire : ",
     "Ball_Speed_Time":"Accélérer la vitesse de la balle en fonction du temps",
     "Ball_Speed_Manual":"Vitesse de la balle :",
-    "Remove_Hit":"Retirer un coup de l'adversaire",
+    "Remove_Hit":"Suppression de coup aléatoire",
     "Cancel":"Annuler les modifications",
     "Apply":"Appliquer les modifications",
 
@@ -46,6 +47,8 @@
     "Conditions3": " du site",
     "Error_Doublemdp": "Les mots de passe ne correspondent pas",
     "Error_Conditions": "Veuillez accepter les conditions d'utilisation",
+    "Error_MdpApi": "Le mot de passe doit avoir 8 caractères min dont 1 lettre et 1 caractère spécial. Il ne doit pas être trop proche du pseudo ou commun",
+    "Error_LoginApi": "Le pseudo ou le mot de passe ne sont pas valides",
 
     "Terms_Use": "Conditions d'utilisation",
     "Terms_Use_Text": "Les informations recueillies dans le questionnaire sont enregistrées dans un fichier informatisé par la team transcendence. La base légale du traitement est celle de la cnil.\nLes données marquées par un astérisque dans le questionnaire doivent obligatoirement être fournies. Dans le cas contraire, aucun enregistrement ne sera possible.\nLes données collectées seront communiquées aux seuls destinataires suivants : Projet Transcendence.\nElles sont conservées pendant 2 ans.\nVous pouvez accéder aux données vous concernant, les rectifier, demander leur effacement ou exercer votre droit à la limitation du traitement de vos données. \nConsultez le site cnil.fr pour plus d’informations sur vos droits.\nPour exercer ces droits ou pour toute question sur le traitement de vos données dans ce dispositif, vous pouvez contacter Cap'n \nSi vous estimez, après nous avoir contactés, que vos droits « Informatique et Libertés » ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL.",

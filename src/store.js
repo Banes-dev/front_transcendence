@@ -4,6 +4,7 @@ export default createStore({
 	state: {
 		user: null,
 		connect_state: false,
+		play_ia: false,
 		color1: "#ff0000",
 		color2: "#ffd200",
 		ball_speed_time: false,
@@ -18,6 +19,9 @@ export default createStore({
 		},
 		GetConnectState(state) {
 			return state.connect_state;
+		},
+		GetPlayIaState(state) {
+			return state.play_ia;
 		},
 		GetColor1State(state) {
 			return state.color1;
@@ -52,6 +56,10 @@ export default createStore({
 		},
 		SetConnectState(state, value) {
 			state.connect_state = value;
+		},
+		SetPlayIaState(state, value) {
+			state.play_ia = value;
+			localStorage.setItem('play_ia', JSON.stringify(value));
 		},
 		SetColor1State(state, value) {
 			state.color1 = value;
@@ -91,6 +99,7 @@ export default createStore({
 		},
 		InitializeStore({ commit }) {
 			const user = localStorage.getItem('user');
+			const play_ia = localStorage.getItem('play_ia');
 			const color1 = localStorage.getItem('color1');
 			const color2 = localStorage.getItem('color2');
 			const ball_speed_time = localStorage.getItem('ball_speed_time');
@@ -108,6 +117,7 @@ export default createStore({
 				// commit('SetRemoveHitState', JSON.parse(remove_hit) || false);
 				// commit('SetLayoutState', JSON.parse(layout) || false);
 			}
+			commit('SetPlayIaState', JSON.parse(play_ia) || false);
 			commit('SetColor1State', color1 || "#ff0000");
 			commit('SetColor2State', color2 || "#ffd200");
 			commit('SetBallSpeedTimeState', JSON.parse(ball_speed_time) || false);
