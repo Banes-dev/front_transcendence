@@ -91,7 +91,7 @@
 
 <script>
 	import {ref} from 'vue';
-	import {mapGetters} from 'vuex';
+	import {mapGetters, mapActions} from 'vuex';
 	import startPongGame, {stopPongGame} from "./pong.js";
 
 	export default {
