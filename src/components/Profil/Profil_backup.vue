@@ -9,108 +9,100 @@
             to="/"
             class="absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
         ><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}</router-link>
-        <!-- Conteneur principal -->
-        <div class="flex flex-col items-start w-full space-y-6 ml-20">
-            <!-- Section Informations joueur -->
-            <div class="w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-6">
-                <div class="flex flex-col md:flex-row items-center md:items-start">
-                    <!-- Image de profil -->
-                    <div>
-                    <img
-                        v-if="!img"
-                        src="../../assets/img/default_avatar.png"
-                        alt="Image de profil"
-                        class="w-44 h-44 md:w-52 md:h-52 xl:w-64 xl:h-64 rounded-xl object-cover"
+        <!-- Player info -->
+        <div class="relative md:fixed top-16 left-0 ml-6 w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-4 flex">
+            <!-- Image de profil -->
+            <div class="flex flex-col items-center">
+                <div v-if="!img">
+                    <img class="w-44 h-44 md:w-52 md:h-52 xl:w-96 xl:h-96 w-rounded-xl object-cover mr-4 mb-0" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
+                </div>
+                <div v-else>
+					<img :src="img" class="w-44 h-44 md:w-52 md:h-52 xl:w-96 xl:h-96 rounded-xl object-cover mr-4 mb-0" alt="Image de profil"/>
+				</div>
+                <!-- <button 
+                    @click="replaceImage"
+                    class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
+                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier l'image</button> -->
+            </div>
+            <!-- Informations -->
+            <div>
+                <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">{{$t('Title_Info')}}</h5>
+                <!-- pseudo -->
+                <p class="text-gray-300 mb-2">{{$t('Profil_Pseudo')}}{{pseudo}}</p>
+                <label class="inline-flex items-center bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg cursor-pointer">
+                    <input type="checkbox" v-model="state_newPseudo" class="hidden"/>
+                <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Pseudo')}}</label>
+                <div v-if="state_newPseudo">
+                    <input
+                        type="text"
+                        v-model="newPseudo"
+                        :placeholder="$t('Exemple_Edit_Pseudo')"
+                        class="w-5/5 p-1 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
                     />
-                    <img
-                        v-else
-                        :src="img"
-                        alt="Image de profil"
-                        class="w-44 h-44 md:w-52 md:h-52 xl:w-64 xl:h-64 rounded-xl object-cover"
+                    <button
+                        @click="updatePseudo"
+                        class="w-10 mb-4 bg-red-600 hover:bg-red-700 text-yellow-400 py-1 rounded-lg shadow-lg"
+                    ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <!-- mdp -->
+                <p class="text-gray-300 mb-2">{{$t('Profil_Mdp')}}{{mdp}}</p>
+                <label class="inline-flex items-center bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg cursor-pointer">
+                    <input type="checkbox" v-model="state_newMdp" class="hidden"/>
+                <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Mdp')}}</label>
+                <div v-if="state_newMdp">
+                    <input
+                        type="text"
+                        v-model="newMdp"
+                        :placeholder="$t('Exemple_Edit_Mdp')"
+                        class="w-5/5 p-1 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
                     />
-                    </div>
-        
-                    <!-- Détails du joueur -->
-                    <div class="flex-1">
-                    <h5 class="text-2xl font-bold text-white mb-4">{{$t('Title_Info')}}</h5>
-                    <p class="text-gray-300 mb-2">{{$t('Profil_Pseudo')}}{{ pseudo }}</p>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <label
-                        class="flex items-center bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg cursor-pointer"
-                        >
-                        <input type="checkbox" v-model="state_newPseudo" class="hidden" />
-                        <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Pseudo')}}
-                        </label>
-                        <div v-if="state_newPseudo" class="flex items-center space-x-2">
-                        <input
-                            type="text"
-                            v-model="newPseudo"
-                            :placeholder="$t('Exemple_Edit_Pseudo')"
-                            class="w-full p-2 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg"
-                        />
-                        <button
-                            @click="updatePseudo"
-                            class="bg-red-600 hover:bg-red-700 text-yellow-400 px-4 py-2 rounded-lg"
-                        >
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 mb-2">{{$t('Profil_Statut')}}</p>
-                    <div class="flex space-x-4">
-                        <div
-                        v-for="option in statusOptions"
-                        :key="option.value"
-                        class="flex items-center"
-                        >
-                        <input
-                            type="radio"
-                            :id="option.value"
-                            :checked="status === option.value"
+                    <button
+                        @click="updateMdp"
+                        class="w-10 mb-4 bg-red-600 hover:bg-red-700 text-yellow-400 py-1 rounded-lg shadow-lg"
+                    ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <!-- status -->
+                <p class="text-gray-300 mb-2">{{$t('Profil_Statut')}}</p>
+                <div class="flex space-x-4 mb-4">
+                    <div v-for="option in statusOptions" :key="option.value" class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            :id="option.value" 
+                            :checked="status === option.value" 
                             @change="selectStatus(option.value)"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                         />
-                        <label :for="option.value" class="ml-2 text-sm text-gray-300">
-                            {{ option.label }}
-                        </label>
-                        </div>
-                    </div>
+                        <label :for="option.value" class="ml-2 text-sm text-gray-300">{{option.label}}</label>
                     </div>
                 </div>
+                <div class="flex items-center space-x-2">
+                    <div 
+                        :class="{
+                            'w-6 h-6 rounded-full': true,
+                            'bg-green-600': status === 'online',
+                            'bg-yellow-500': status === 'inactive',
+                            'bg-red-600': status === 'offline'
+                        }"
+                    ></div>
+                    <span class="text-white right-4">{{statusLabel}}</span>
                 </div>
-        
-                <!-- Section Statistiques -->
-                <div class="w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-6">
-                <div class="flex flex-col md:flex-row justify-between items-center md:items-start">
-                    <!-- Stats Pong -->
-                    <div class="flex flex-col items-center mb-6 md:mb-0">
-                    <img
-                        src="../../assets/img/pong_trans.png"
-                        alt="Image Pong"
-                        class="w-48 h-48 mb-4"
-                    />
-                    <p class="text-white text-lg mb-2">
-                        <strong>{{$t('Win_Pong')}}:</strong> {{ win_pong }}
-                    </p>
-                    <p class="text-white text-lg">
-                        <strong>{{$t('Lose_Pong')}}:</strong> {{ lose_pong }}
-                    </p>
-                    </div>
-        
-                    <!-- Stats Morpion -->
-                    <div class="flex flex-col items-center">
-                    <img
-                        src="../../assets/img/morpion_trans.png"
-                        alt="Image Morpion"
-                        class="w-48 h-48 mb-4"
-                    />
-                    <p class="text-white text-lg mb-2">
-                        <strong>{{$t('Win_TicTacToe')}}:</strong> {{ win_tictactoe }}
-                    </p>
-                    <p class="text-white text-lg">
-                        <strong>{{$t('Lose_TicTacToe')}}:</strong> {{ lose_tictactoe }}
-                    </p>
-                    </div>
+            </div>
+        </div>
+
+        <!-- Stats de jeux -->
+        <div class="relative md:fixed left-0 w-2/3 ml-6 mt-2 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 p-3 text-sm rounded-lg shadow-lg"
+            style="max-height: calc(100vh - 530px); margin-bottom: 36px; height: 420px;"
+        >
+            <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start">
+                <div class="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
+                    <img class="w-48 h-48 mb-10" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
+                    <p class="text-white text-xl mb-8 ml-4"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
+                    <p class="text-white text-xl ml-4"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
+                </div>
+                <div class="flex flex-col items-center sm:items-end space-4">
+                    <img class="w-48 h-48 mb-10" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
+                    <p class="text-white text-xl mb-8 mr-4"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
+                    <p class="text-white text-xl mr-4"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
                 </div>
             </div>
         </div>

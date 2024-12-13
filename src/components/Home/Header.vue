@@ -103,8 +103,6 @@
 			  </li>
 			</ul>
 		</div>
-		<!-- <button @click="getapi()" class="flex items-center justify-center px-4 py-2 absolute top-80 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button> -->
-		<!-- <button @click="postapi()" class="flex items-center justify-center px-4 py-2 absolute top-96 text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Post Api</button> -->
 	</div>
 
 </template>
@@ -122,11 +120,6 @@
 				connectedmenu_state: false,
 				connected_index: -1,
 				img: null,
-				// items: [],
-				// tabletestapi: {
-				// 	test1: "yes yes",
-				// 	test2: "haha",
-				// },
 			};
 		},
 		computed: {
@@ -232,36 +225,12 @@
 					console.error('Erreur lors de la récupération des données :', error);
 				}
 			},
-			// async getapi() {
-			// 	console.log("get api");
-			// 	try {
-			// 		const response = await apiClient.get('register/');
-			// 		this.items = response.data;
-			// 		console.log(JSON.parse(this.items));
-			// 	} catch (error) {
-			// 		console.error('Erreur lors de la récupération des données :', error);
-			// 	}
-			// },
-			// async postapi() {
-			// 	console.log("post api");
-			// 	try {
-			// 		const response = await apiClient.post('register/', this.tabletestapi);
-			// 		console.log('Données envoyées avec succès :', response.data);
-			// 	} catch (error) {
-			// 		console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
-			// 	}
-			// },
 		},
 		mounted() {
 			this.$i18n.locale = this.GetLanguageState;
 			if (this.GetConnectState) {
 				this.header_get_profil();
 			}
-			// if (this.GetUserState) {
-			// 	console.log("json parse : ", JSON.parse(this.GetUserState));
-			// 	console.log("json stringify : ", JSON.stringify(this.GetUserState));
-			// 	this.img = `http://localhost:8000/media/player_picture/${this.GetUserState.username}.png`;
-			// }
 		},
 	};
 </script>
