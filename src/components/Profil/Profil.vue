@@ -5,7 +5,6 @@
 <template>
     <div class="fixed inset-0 flex flex-col items-center justify-center">
         <LoopVideo/>
-	<!-- </div> -->
         <router-link
             to="/"
             class="absolute top-0 sm:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
@@ -13,6 +12,7 @@
         <!-- Player info -->
         <div class="relative top-10 -left-60 mb-6 w-73/100 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-4 flex">
             <!-- Image de profil -->
+
             <div class="flex flex-col items-center">
                 <div v-if="!img">
                     <img class="w-96 h-96 rounded-xl object-cover mr-4 mb-0" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
@@ -27,22 +27,44 @@
             </div>
             <!-- Informations -->
             <div>
-                <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">Informations personnelles</h5>
+                <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">{{$t('Title_Info')}}</h5>
                 <!-- pseudo -->
-                <p class="text-gray-300 mb-2">Pseudo : {{pseudo}}</p>
-                <button 
-                    @click="updatePseudo"
-                    class="bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
-                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier mon pseudo</button>
+                <p class="text-gray-300 mb-2">{{$t('Profil_Pseudo')}}{{pseudo}}</p>
+                <label class="inline-flex items-center bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg cursor-pointer">
+                    <input type="checkbox" v-model="state_newPseudo" class="hidden"/>
+                <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Pseudo')}}</label>
+                <div v-if="state_newPseudo">
+                    <input
+                        type="text"
+                        v-model="newPseudo"
+                        :placeholder="$t('Exemple_Edit_Pseudo')"
+                        class="w-5/5 p-1 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
+                    />
+                    <button
+                        @click="updatePseudo"
+                        class="w-10 mb-4 bg-red-600 hover:bg-red-700 text-yellow-400 py-1 rounded-lg shadow-lg"
+                    ><i class="fa-solid fa-plus"></i></button>
+                </div>
                 <!-- mdp -->
-                <p class="text-gray-300 mb-2">Mot de passe : {{mdp}}</p>
-                <button 
-                    @click="updateMdp"
-                    class="bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
-                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier mon mot de passe</button>
+                <p class="text-gray-300 mb-2">{{$t('Profil_Mdp')}}{{mdp}}</p>
+                <label class="inline-flex items-center bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg cursor-pointer">
+                    <input type="checkbox" v-model="state_newMdp" class="hidden"/>
+                <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Mdp')}}</label>
+                <div v-if="state_newMdp">
+                    <input
+                        type="text"
+                        v-model="newMdp"
+                        :placeholder="$t('Exemple_Edit_Mdp')"
+                        class="w-5/5 p-1 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
+                    />
+                    <button
+                        @click="updateMdp"
+                        class="w-10 mb-4 bg-red-600 hover:bg-red-700 text-yellow-400 py-1 rounded-lg shadow-lg"
+                    ><i class="fa-solid fa-plus"></i></button>
+                </div>
                 <!-- status -->
-                <p class="text-gray-300 mb-2">Status : </p>
-                <div class="flex space-x-4 mb-6">
+                <p class="text-gray-300 mb-2">{{$t('Profil_Statut')}}</p>
+                <div class="flex space-x-4 mb-4">
                     <div v-for="option in statusOptions" :key="option.value" class="flex items-center">
                         <input 
                             type="checkbox" 
@@ -57,10 +79,10 @@
                 <div class="flex items-center space-x-2">
                     <div 
                         :class="{
-                        'w-6 h-6 rounded-full': true,
-                        'bg-green-600': status === 'online',
-                        'bg-yellow-500': status === 'inactive',
-                        'bg-red-600': status === 'offline'
+                            'w-6 h-6 rounded-full': true,
+                            'bg-green-600': status === 'online',
+                            'bg-yellow-500': status === 'inactive',
+                            'bg-red-600': status === 'offline'
                         }"
                     ></div>
                     <span class="text-white right-4">{{statusLabel}}</span>
@@ -74,14 +96,14 @@
         >
             <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start">
                 <div class="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
-                    <img class="w-48 h-48 mb-12" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
-                    <p class="text-white text-xl mb-8"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
-                    <p class="text-white text-xl"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
+                    <img class="w-48 h-48 mb-10" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
+                    <p class="text-white text-xl mb-8 ml-4"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
+                    <p class="text-white text-xl ml-4"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
                 </div>
                 <div class="flex flex-col items-center sm:items-end space-4">
-                    <img class="w-48 h-48 mb-12" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
-                    <p class="text-white text-xl mb-8"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
-                    <p class="text-white text-xl"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
+                    <img class="w-48 h-48 mb-10" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
+                    <p class="text-white text-xl mb-8 mr-4"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
+                    <p class="text-white text-xl mr-4"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
                 </div>
             </div>
         </div>
@@ -91,11 +113,11 @@
 			<!-- Ajout d'amis -->
             <div class="relative w-full max-w-md mb-6 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg">
 				<div class="relative p-5">
-					<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Ajout d'amis</h5>
+					<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">{{$t('Add_Friend')}}</h5>
 					<input
 						type="text"
 						v-model="searchUsername"
-						placeholder="Ajouter un joueur"
+						:placeholder="$t('Exemple_Add_Friend')"
 						class="w-4/5 p-2 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
 					/>
 					<button
@@ -110,7 +132,7 @@
                 style="max-height: calc(100vh - 150px); margin-bottom: 36px; height: 500px;"
             >
                 <div class="relative p-5 h-full flex flex-col">
-                    <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Mes Amis</h5>
+                    <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">{{$t('My_Friends')}}</h5>
                     <ul 
                         class="flex-grow overflow-y-auto pr-2"
                         style="max-height: calc(100% - 50px);"
@@ -173,21 +195,25 @@
                 lose_tictactoe: null,
                 searchUsername: '',
                 statusOptions: [
-                    {value: "online", label: "En ligne"},
-                    {value: "inactive", label: "Inactif"},
-                    {value: "offline", label: "Hors ligne"},
+                    {value: "online", label: this.$t('Statut1')},
+                    {value: "inactive", label: this.$t('Statut2')},
+                    {value: "offline", label: this.$t('Statut3')},
                 ],
+                state_newPseudo: false,
+                state_newMdp: false,
+                newPseudo: null,
+                newMdp: null,
 			};
 		},
         computed: {
             statusLabel() {
                 switch (this.status) {
                     case 'online':
-                    return 'En ligne';
+                    return this.$t('Statut1');
                     case 'offline':
-                    return 'Hors ligne';
+                    return this.$t('Statut3');
                     case 'inactive':
-                    return 'Inactif';
+                    return this.$t('Statut2');
                     default:
                     return 'Aucun statut';
                 }
@@ -195,9 +221,13 @@
         },
         methods: {
             selectStatus(value) {
-                this.status = this.status === value ? null : value;
+                if (this.status === value) {
+                    return;
+                }
+                this.status = value;
                 this.updateStatus();
             },
+
             async get_profil_api() {
 				console.log("get profil api");
 				try {
@@ -257,25 +287,25 @@
             },
             async updatePseudo() {
                 try {
-                    const newPseudo = prompt("Entrez votre nouveau pseudo :");
-                    if (newPseudo) {
-                        const response = await apiClient.put('profil/', {username: newPseudo});
+                    // const newPseudo = prompt("Entrez votre nouveau pseudo :");
+                    // if (newPseudo) {
+                        const response = await apiClient.put('profil/', {username: this.newPseudo});
                         console.log('Pseudo mis à jour avec succès :', response.data);
-                        this.pseudo = newPseudo;
-                    }
+                        this.pseudo = this.newPseudo;
+                    // }
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du pseudo :', error.response?.data || error.message);
                 }
             },
             async updateMdp() {
                 try {
-                    const newMdp = prompt("Entrez votre nouveau password :");
-                    if (newMdp) {
-                        const response = await apiClient.put('profil/', {password: newMdp});
+                    // const newMdp = prompt("Entrez votre nouveau password :");
+                    // if (newMdp) {
+                        const response = await apiClient.put('profil/', {password: this.newMdp});
                         console.log('mdp mis à jour avec succès :', response.data);
-                        // this.mdp = newMdp;
+                        // this.mdp = this.newMdp;
                         this.mdp = "*".repeat(12);
-                    }
+                    // }
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du mdp :', error.response?.data || error.message);
                 }

@@ -66,7 +66,8 @@
 	<!-- Profil -->
 	<div class="relative flex justify-center">
 		<img v-if="!GetConnectState" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
-		<img v-if="GetConnectState" @click="ToggleSubMenu()" @keydown.enter="ToggleSubMenu()" @keydown.space="ToggleSubMenu()" tabindex="0" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10 cursor-pointer" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
+		<img v-if="GetConnectState && !img" @click="ToggleSubMenu()" @keydown.enter="ToggleSubMenu()" @keydown.space="ToggleSubMenu()" tabindex="0" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10 cursor-pointer" src="../../assets/img/default_avatar.png" alt="Avatar par défaut"/>
+		<img v-if="GetConnectState && img" :src="img" @click="ToggleSubMenu()" @keydown.enter="ToggleSubMenu()" @keydown.space="ToggleSubMenu()" tabindex="0" class="h-14 w-14 rounded-xl border-2 border-red-600 absolute -top-10 cursor-pointer" alt="Notre Avatar"/>
 
 		<div v-if="!GetConnectState" class="bg-gray-900 border border-gray-600 rounded-md w-26 absolute top-6" role="menu">
 			<ul>
@@ -120,6 +121,7 @@
 				connect_index: -1,
 				connectedmenu_state: false,
 				connected_index: -1,
+				img: null,
 				// items: [],
 				// tabletestapi: {
 				// 	test1: "yes yes",
@@ -244,6 +246,10 @@
 		},
 		mounted() {
 			this.$i18n.locale = this.GetLanguageState;
+			if (this.GetUserState) {
+				console.log(this.GetUserState.username);
+				this.img = `http://localhost:8000/media/player_picture/${this.GetUserState.username}.png`;
+			}
 		},
 	};
 </script>
