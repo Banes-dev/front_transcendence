@@ -254,7 +254,7 @@
 		},
 		mounted() {
 			this.$i18n.locale = this.GetLanguageState;
-			if (GetConnectState) {
+			if (this.GetConnectState) {
 				this.header_get_profil();
 			}
 			// if (this.GetUserState) {
