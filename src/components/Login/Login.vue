@@ -32,9 +32,7 @@
 					class="w-full mt-1 p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
 					/>
 				</div>
-				<div v-if="errorMessage" class="mb-4 text-red-500 text-sm">
-					{{errorMessage}}
-				</div>
+				<div v-if="errorMessage" class="mb-6 flex items-center justify-center text-red-700 font-bold">{{errorMessage}}</div>
 				<button
 					type="submit"
 					class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md"

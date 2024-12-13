@@ -5,66 +5,29 @@
 <template>
     <div class="fixed inset-0 flex flex-col items-center justify-center">
         <LoopVideo/>
-	</div>
+	<!-- </div> -->
         <router-link
             to="/"
             class="absolute top-0 sm:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
         ><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}</router-link>
-        <!-- <div class="relative w-full max-w-xs sm:max-w-md bg-gray-900 border border-gray-600 outline-red-600 rounded-lg">
-            <div class="p-5 relative">
-                <h2 class="text-white">{{pseudo}}</h2>
-                <h2 class="text-white">{{mdp}}</h2>
-                <h2 class="text-white">{{img}}</h2>
-                <ul>
-                    <li v-for="(friend, index) in friends" :key="index" class="text-white">
-                        {{ friend.username }}
-                    </li>
-                </ul>
-                <h2 class="text-white">{{win_pong}}</h2>
-                <h2 class="text-white">{{lose_pong}}</h2>
-                <h2 class="text-white">{{win_tictactoe}}</h2>
-                <h2 class="text-white">{{lose_tictactoe}}</h2>
-
-                <div class="mt-5">
-                    <input
-                        type="text"
-                        v-model="searchUsername"
-                        placeholder="Rechercher un joueur"
-                        class="w-full p-2 rounded-md bg-gray-700 border border-gray-600 text-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
-                    />
-                    <button
-                        @click="addFriend"
-                        class="w-full bg-red-600 hover:bg-red-700 text-yellow-400 font-medium py-2 px-4 rounded-md mt-2"
-                    >Ajouter comme ami</button>
-                </div>
-            </div>
-            <button @click="get_profil_api()" class="absolute top-80 px-4 py-2  text-white hover:text-red-600 cursor-pointer bg-gray-700">Test Get Api</button>
-        </div> -->
-
         <!-- Player info -->
-        <!-- <div class="relative top-16 left-4 w-73/100 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg">
-			<img class="relative scale-50 rounded-xl" src="../../assets/img/default_avatar.png" alt="Notre image de profil"/>
-            <div class="relative p-5">
-                <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Informations personnelles</h5>
-				<button
-					@click="addFriend()"
-					class="w-1/6 bg-red-600 hover:bg-red-700 text-yellow-400 font-semibold py-2 rounded-lg shadow-lg"
-				><i class="fa-solid fa-user-plus"></i></button>
-			</div>
-		</div> -->
-        <!-- Player info -->
-        <div class="relative top-16 left-4 w-73/100 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-4 flex">
+        <div class="relative top-10 -left-60 mb-6 w-73/100 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-4 flex">
             <!-- Image de profil -->
-            <div class="flex flex-col items-center mb-0">
-                <img class="w-96 h-96 rounded-xl object-cover mr-4 mb-4" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
-                <button 
+            <div class="flex flex-col items-center">
+                <div v-if="!img">
+                    <img class="w-96 h-96 rounded-xl object-cover mr-4 mb-0" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
+                </div>
+                <div v-else>
+					<img :src="img" class="w-96 h-96 rounded-xl object-cover mr-4 mb-0" alt="Image de profil"/>
+				</div>
+                <!-- <button 
                     @click="replaceImage"
                     class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
-                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier l'image</button>
+                ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier l'image</button> -->
             </div>
             <!-- Informations -->
             <div>
-                <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Informations personnelles</h5>
+                <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">Informations personnelles</h5>
                 <!-- pseudo -->
                 <p class="text-gray-300 mb-2">Pseudo : {{pseudo}}</p>
                 <button 
@@ -106,25 +69,25 @@
         </div>
 
         <!-- Stats de jeux -->
-        <!-- <div class="relative bottom-4 left-4 w-73/100 bg-gray-900 border border-gray-600 outline-red-600 rounded-lg shadow-lg p-4 flex">
-        </div> -->
-        <div class="relative -bottom-16 w-73/100 mx-4 mt-2 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 p-3 text-sm rounded-lg shadow-lg">
+        <div class="relative -bottom-9 -left-60 w-73/100 mx-4 mt-2 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 p-3 text-sm rounded-lg shadow-lg"
+            style="max-height: calc(100vh - 530px); margin-bottom: 36px; height: 410px;"
+        >
             <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start">
                 <div class="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
-                    <img class="w-48 h-48 mb-2" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
-                    <p class="text-white"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
-                    <p class="text-white"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
+                    <img class="w-48 h-48 mb-12" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
+                    <p class="text-white text-xl mb-8"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
+                    <p class="text-white text-xl"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
                 </div>
                 <div class="flex flex-col items-center sm:items-end space-4">
-                    <img class="w-48 h-48 mb-2" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
-                    <p class="text-white"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
-                    <p class="text-white"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
+                    <img class="w-48 h-48 mb-12" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
+                    <p class="text-white text-xl mb-8"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
+                    <p class="text-white text-xl"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
                 </div>
             </div>
         </div>
         
         <!-- Amis -->
-		<div class="fixed top-4 right-4 w-full max-w-md h-screen flex flex-col">
+		<div class="relative sm:fixed top-4 right-4 w-full max-w-md h-screen flex flex-col">
 			<!-- Ajout d'amis -->
             <div class="relative w-full max-w-md mb-6 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg">
 				<div class="relative p-5">
@@ -145,12 +108,12 @@
             <div 
                 class="relative flex-grow w-full max-w-md bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg" 
                 style="max-height: calc(100vh - 150px); margin-bottom: 36px; height: 500px;"
-                >
+            >
                 <div class="relative p-5 h-full flex flex-col">
                     <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Mes Amis</h5>
                     <ul 
-                    class="flex-grow overflow-y-auto pr-2"
-                    style="max-height: calc(100% - 50px);"
+                        class="flex-grow overflow-y-auto pr-2"
+                        style="max-height: calc(100% - 50px);"
                     >
                     <li 
                         v-for="(friend, index) in friends" 
@@ -171,7 +134,7 @@
                 </div>
             </div>
         </div>
-    <!-- </div> -->
+    </div>
 </template>
 
 <script>
@@ -232,7 +195,6 @@
         },
         methods: {
             selectStatus(value) {
-                // Permet de sélectionner uniquement une option à la fois
                 this.status = this.status === value ? null : value;
                 this.updateStatus();
             },
@@ -251,8 +213,9 @@
                     this.mdp = "*".repeat(12);
                     console.log(this.mdp);
 
-                    this.img = response.data.data.image;
-                    console.log(this.img);
+                    this.img = `http://localhost:8000/media/player_picture/${this.pseudo}.png`;
+                    // this.img = response.data.data.image;
+                    // console.log(this.img);
 
                     this.status = response.data.data.status;
                     console.log(this.status);
@@ -296,10 +259,9 @@
                 try {
                     const newPseudo = prompt("Entrez votre nouveau pseudo :");
                     if (newPseudo) {
-                        const response = await apiClient.put('profil/', { username: newPseudo });
+                        const response = await apiClient.put('profil/', {username: newPseudo});
                         console.log('Pseudo mis à jour avec succès :', response.data);
                         this.pseudo = newPseudo;
-                        // this.get_profil_api();
                     }
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du pseudo :', error.response?.data || error.message);
@@ -309,20 +271,45 @@
                 try {
                     const newMdp = prompt("Entrez votre nouveau password :");
                     if (newMdp) {
-                        const response = await apiClient.put('profil/', { password: newMdp });
+                        const response = await apiClient.put('profil/', {password: newMdp});
                         console.log('mdp mis à jour avec succès :', response.data);
-                        this.mdp = newMdp ;
+                        // this.mdp = newMdp;
                         this.mdp = "*".repeat(12);
-                        // this.get_profil_api();
                     }
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du mdp :', error.response?.data || error.message);
                 }
             },
+            // async replaceImage() {
+			// 	try {
+			// 		const newImage = prompt("Entrez votre nouvelle image :");
+			// 		if (newImage) {
+			// 			const response = await apiClient.put('profil/', { image: newImage });
+			// 			console.log('Image mise à jour avec succès :', response.data);
+			// 			this.img = newImage;
+			// 			// this.get_profil_api();
+			// 		}
+			// 	} catch (error) {
+			// 		console.error('Erreur lors de la mise à jour du image :', error.response?.data || error.message);
+			// 	}
+			// },	
         },
         mounted() {
             this.get_profil_api();
         },
+        // beforeUnmount() {
+        //         this.item = null,
+		// 		this.pseudo = null,
+        //         this.mdp= null,
+        //         this.img= null,
+        //         this.status= "online",
+        //         this.friends= {},
+				
+        //         this.win_pong= null,
+        //         this.lose_pong= null,
+        //         this.win_tictactoe= null,
+        //         this.lose_tictactoe= null
+        // },
 	};
 </script>
 
