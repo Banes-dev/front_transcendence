@@ -224,6 +224,14 @@
 					return (0);
 				}
 			},
+			async header_get_profil() {
+				try {
+					const response = await apiClient.get('profil/');
+					this.img = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
+				} catch (error) {
+					console.error('Erreur lors de la récupération des données :', error);
+				}
+			},
 			// async getapi() {
 			// 	console.log("get api");
 			// 	try {
@@ -246,10 +254,14 @@
 		},
 		mounted() {
 			this.$i18n.locale = this.GetLanguageState;
-			if (this.GetUserState) {
-				console.log(this.GetUserState.username);
-				this.img = `http://localhost:8000/media/player_picture/${this.GetUserState.username}.png`;
+			if (GetConnectState) {
+				this.header_get_profil();
 			}
+			// if (this.GetUserState) {
+			// 	console.log("json parse : ", JSON.parse(this.GetUserState));
+			// 	console.log("json stringify : ", JSON.stringify(this.GetUserState));
+			// 	this.img = `http://localhost:8000/media/player_picture/${this.GetUserState.username}.png`;
+			// }
 		},
 	};
 </script>
