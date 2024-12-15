@@ -146,11 +146,9 @@
 				}
 			},
 			async post_pong(score_player1) {
-				console.log("post end pong api");
 				try {
 					const userState = this.GetUserState;
 					let state;
-					console.log(score_player1);
 					if (score_player1 >= 5) {
 						state = "win_pong";
 					}
@@ -158,7 +156,6 @@
 						state = "lose_pong";
 					}
 					const response = await apiClient.post('player/', {user: userState, stat_type: state});
-					console.log('Données envoyées avec succès :', response.data);
 				} catch (error) {;
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 				}

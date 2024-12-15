@@ -20,13 +20,6 @@
 		<div v-if="previewImage" class="w-40 h-40 overflow-hidden rounded-lg">
 			<img :src="previewImage" alt="Prévisualisation" class="object-cover w-full h-full" />
 		</div>
-	
-		<!-- <button
-			v-if="selectedFile"
-			class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-			@click="uploadFile"
-		>Upload
-		</button> -->
     </div>
 </template>
   
@@ -114,8 +107,4 @@
 		},
 	};
 </script>
-  
-<style scoped>
-	/* Ajout d'un hover pour les zones actives (optionnel) */
-</style>
   

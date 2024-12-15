@@ -6,13 +6,6 @@ import es from './locales/es.json'
 import store from './store';
 
 function loadLocaleMessages() {
-	// const locales = [{fr: fr}, {en: en}, {es: es}]
-	// const messages = {}
-	// locales.forEach(lang => {
-	// 	const key = Object.keys(lang)
-	// 	messages[key] = lang[key] 
-	// })
-	// return messages
 	const messages = {
         fr: fr,
         en: en,
@@ -22,7 +15,7 @@ function loadLocaleMessages() {
 }
 
 export default createI18n({
-    legacy: false, // Désactiver le mode legacy
+    legacy: false,
     locale: store.getters.GetLanguageState,
     fallbackLocale: 'fr',
     messages: loadLocaleMessages()

@@ -124,12 +124,6 @@ export default createStore({
 			if (user) {
 				commit('SetUser', JSON.parse(user));
 				commit('SetConnectState', true);
-				// commit('SetColor1State', color1 || "#ff0000");
-				// commit('SetColor2State', color2 || "#ffd200");
-				// commit('SetBallSpeedTimeState', JSON.parse(ball_speed_time) || false);
-				// commit('SetBallSpeedManualState', JSON.parse(ball_speed_manual) || 1);
-				// commit('SetRemoveHitState', JSON.parse(remove_hit) || false);
-				// commit('SetLayoutState', JSON.parse(layout) || false);
 			}
 			commit('SetPlayIaState', JSON.parse(play_ia) || false);
 			commit('SetColor1State', color1 || "#ff0000");

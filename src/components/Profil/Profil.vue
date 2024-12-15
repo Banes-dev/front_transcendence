@@ -141,7 +141,6 @@
                             class="p-2 text-white bg-gray-800 mb-3 rounded-lg shadow-lg flex justify-between items-center"
                         >
                             <div class="flex items-center space-x-3">
-                                <!-- <img class="w-8 h-8 rounded-lg" src="../../assets/img/default_avatar.png" alt="Image de votre ami"/> -->
                                 <img 
                                     class="w-8 h-8" 
                                     :src="'http://localhost:8000/media/player_picture/' + friend.username + '.png'" 
@@ -235,41 +234,36 @@
             },
 
             async get_profil_api() {
-				console.log("get profil api");
 				try {
 					const response = await apiClient.get('profil/');
-                    console.log("Structure complète :", response);
 					this.items = response.data.data;
-					console.log(this.items);
+					// console.log(this.items);
 
                     this.pseudo = response.data.data.username;
-                    console.log(this.pseudo);
+                    // console.log(this.pseudo);
 
                     this.mdp = response.data.data.password;
                     this.mdp = "*".repeat(12);
-                    console.log(this.mdp);
+                    // console.log(this.mdp);
 
                     this.img = `http://localhost:8000/media/player_picture/${this.pseudo}.png`;
-                    // this.img = response.data.data.image;
                     // console.log(this.img);
 
                     this.status = response.data.data.status;
-                    console.log(this.status);
+                    // console.log(this.status);
 
                     this.friends = response.data.data.friends;
-                    console.log("friends:", this.friends);
+                    // console.log(this.friends);
 
                     this.win_pong = response.data.data.win_pong;
-                    console.log(this.win_pong);
+                    // console.log(this.win_pong);
                     this.lose_pong = response.data.data.lose_pong;
-                    console.log(this.lose_pong);
+                    // console.log(this.lose_pong);
 
                     this.win_tictactoe = response.data.data.win_tictactoe;
-                    console.log(this.win_tictactoe);
+                    // console.log(this.win_tictactoe);
                     this.lose_tictactoe = response.data.data.lose_tictactoe;
-                    console.log(this.lose_tictactoe);
-
-                    console.log("Get profil bien effectuer");
+                    // console.log(this.lose_tictactoe);
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
 				}
@@ -277,7 +271,6 @@
             async addFriend() {
                 try {
                     const response = await apiClient.post('AddFriends/', {friend_username: this.searchUsername});
-                    console.log("AddFriends ok");
                     this.get_profil_api(); // Rafraîchit la liste des amis
                 } catch (error) {
                     console.error('Erreur lors de l\'ajout d\'un ami :', error.response?.data || error.message);
@@ -286,7 +279,6 @@
             async updateStatus() {
                 try {
                     const response = await apiClient.put('profil/', {status: this.status});
-                    console.log('Status ok:', response.data);
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du statut :', error.response?.data || error.message);
                 }
@@ -294,7 +286,6 @@
             async updatePseudo() {
                 try {
                     const response = await apiClient.put('profil/', {username: this.newPseudo});
-                    console.log('Pseudo mis à jour avec succès :', response.data);
                     this.pseudo = this.newPseudo;
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du pseudo :', error.response?.data || error.message);
@@ -303,9 +294,7 @@
             async updateMdp() {
                 try {
                     const response = await apiClient.put('profil/', {password: this.newMdp});
-                    console.log('mdp mis à jour avec succès :', response.data);
-                    // this.mdp = this.newMdp;
-                     this.mdp = "*".repeat(12);
+                    this.mdp = "*".repeat(12);
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du mdp :', error.response?.data || error.message);
                 }
@@ -315,7 +304,6 @@
 			// 		const newImage = prompt("Entrez votre nouvelle image :");
 			// 		if (newImage) {
 			// 			const response = await apiClient.put('profil/', { image: newImage });
-			// 			console.log('Image mise à jour avec succès :', response.data);
 			// 			this.img = newImage;
 			// 			// this.get_profil_api();
 			// 		}
@@ -327,19 +315,6 @@
         mounted() {
             this.get_profil_api();
         },
-        // beforeUnmount() {
-        //         this.item = null,
-		// 		this.pseudo = null,
-        //         this.mdp= null,
-        //         this.img= null,
-        //         this.status= "online",
-        //         this.friends= {},
-				
-        //         this.win_pong= null,
-        //         this.lose_pong= null,
-        //         this.win_tictactoe= null,
-        //         this.lose_tictactoe= null
-        // },
 	};
 </script>
 

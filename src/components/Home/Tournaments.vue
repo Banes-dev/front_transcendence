@@ -3,7 +3,6 @@
 </script>
 
 <template>
-	<!-- <div class="fixed inset-0 overflow-auto flex flex-col items-center justify-center"> -->
 	<div class="w-screen h-screen flex flex-col items-center justify-start md:justify-center hidden-scrollbar">
 		<LoopVideo/>
 		<div class="relative w-4/5 md:w-3/5 mt-8 mb-8 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg">

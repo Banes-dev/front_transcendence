@@ -10,7 +10,6 @@
 			<div class="absolute top-3 right-3">
 				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>
-			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Register')}}</h2> -->
 			<form @submit.prevent="submitRegister">
 				<div class="mb-4">
 					<label for="pseudo" class="block text-sm font-medium text-gray-300">{{$t('Pseudo')}}</label>
@@ -77,11 +76,6 @@
 				image: null,
 				image_link: null,
 				check_conditions: false,
-				table_register: {
-					username: "NULL",
-					password: "NULL",
-					image: "NULL",
-				},
 				error_return_api: null,
 			};
 		},
@@ -94,17 +88,6 @@
 				// console.log(this.password);
 				// console.log(this.confirm_password);
 				// console.log(this.image);
-
-				// this.table_register.username = this.pseudo;
-				// this.table_register.password = this.password;
-				// this.table_register.image = this.image;
-				// if (this.image) {
-				// 	this.table_register.image = await this.convertToBase64(this.image);
-				// }
-				
-				// console.log(this.table_register.username);
-				// console.log(this.table_register.password);
-				// console.log(this.table_register.image);
 
 				const formData = new FormData();
 				formData.append('username', this.pseudo);
@@ -119,7 +102,7 @@
 					this.$router.push('/');
 				}
 				else {
-					console.log("recup erreur de register");
+					console.error("error post register");
 				}
 			},
 			handleImageSelected(file) {
@@ -127,20 +110,15 @@
 				this.image_link = URL.createObjectURL(file);
 			},
 			async postregister(formData) {
-				console.log("post register api");
 				try {
-					// const response = await apiClient.post('register/', this.table_register);
 					const response = await apiClient.post('register/', formData, {
 						headers: {
 							'Content-Type': 'multipart/form-data',
 						},
 					});
-					console.log('Données envoyées avec succès :', response.data);
 					this.CloseConnect();
-					// this.Login(response.data);
 					return (1);
 				} catch (error) {
-					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
 					this.error_return_api = this.$t('Error_MdpApi');
 					return (0);
 				}

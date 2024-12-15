@@ -174,7 +174,7 @@
 						window.location.reload();
 					}
 					else {
-						console.log("recup erreur de deconnect");
+						console.error("error disconect");
 					}
 				}
 				if (index == 3) {
@@ -186,15 +186,13 @@
     					window.location.reload();
 					}
 					else {
-						console.log("recup erreur de delete");
+						console.error("error delete account");
 					}
 				}
 			},
 			async deconnect_api() {
-				console.log("post deconnect api");
 				try {
 					const response = await apiClient.post('logout/', this.GetUserState);
-					console.log('Données envoyées avec succès :', response.data);
 					return (1);
 				} catch (error) {
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);
@@ -202,10 +200,8 @@
 				}
 			},
 			async delete_api() {
-				console.log("post delete api");
 				try {
 					const response = await apiClient.post('delete/', this.GetUserState);
-					console.log('Données envoyées avec succès :', response.data);
 					return (1);
 				} catch (error) {
 					console.error('Erreur lors de l\'envoi des données :', error.response ? error.response.data : error.message);

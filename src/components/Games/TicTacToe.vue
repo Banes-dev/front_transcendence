@@ -78,7 +78,7 @@
 			}
 		} else if (board.value.every(cell => cell)) {
 			// Égalité
-			console.log('Match nul');
+			// console.log('Match nul');
 		} else {
 			// Changer de joueur
 			currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'; // Change de joueur

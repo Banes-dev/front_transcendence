@@ -30,9 +30,6 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     // Variables du jeu
     let player1 = 0;
     let player2 = 0;
-    // const paddleWidth = 105;
-    // const paddleHeight = 160;
-    // const paddleOffset = 14;
     const ballSize = 10;
     const paddleWidth = canvas.width * 0.05;  // 5% de la largeur du canvas
     const paddleHeight = canvas.height * 0.2; // 20% de la hauteur du canvas

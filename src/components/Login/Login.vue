@@ -10,7 +10,6 @@
 			<div class="absolute top-3 right-3">
 				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>
-			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Login')}}</h2> -->
 			<form @submit.prevent="submitLogin">
 				<div class="mb-4">
 					<label for="pseudo" class="block text-sm font-medium text-gray-300">{{$t('Pseudo')}}</label>
@@ -61,13 +60,9 @@
 			};
 		},
 		methods: {
-			// ...mapActions(['CloseConnect']),
 			...mapActions(['OpenConnect']),
 			...mapActions(['Login']),
-			// api rest envoie de pseudo et password
 			async submitLogin() {
-				console.log(this.pseudo);
-				console.log(this.password);
 				this.table_login.username = this.pseudo;
 				this.table_login.password = this.password;
 				const result = await this.postlogin();
@@ -76,14 +71,12 @@
 					this.$router.push('/');
 				}
 				else {
-					console.log("recup erreur de login");
+					console.error("error login");
 				}
 			},
 			async postlogin() {
-				console.log("post login api");
 				try {
 					const response = await apiClient.post('login/', this.table_login);
-					console.log('Données envoyées avec succès :', response.data);
 					this.Login(response.data);
 					this.errorMessage = '';
 					return (1);

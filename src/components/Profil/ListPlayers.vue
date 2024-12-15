@@ -16,7 +16,6 @@
                             @click="toggleMenu(index)"
                             class="w-full text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2"
                         >
-                            <!-- <img class="w-8 h-8 rounded-lg" src="../../assets/img/default_avatar.png" alt="Image de votre ami"/> -->
                             <img 
                                 class="w-8 h-8" 
                                 :src="'http://localhost:8000/media/player_picture/' + player.username + '.png'" 
@@ -81,14 +80,11 @@
                 }
             },
             async get_profil_api() {
-                console.log("get profil api");
                 try {
                     const response = await apiClient.get('ListPlayers/');
-                    console.log("Structure complète :", response);
 
                     if(response.data && response.data.status === 'success'){
                         this.players = response.data.data;
-                        console.log("Liste Player:", this.players);
                     } else {
                         throw new Error("Format inattendu de la réponse de l'API");
                     }
