@@ -2,7 +2,7 @@
 	<header class="bg-gray-900 text-gray-300 py-6 mt-auto max-w-6xl mx-auto px-36 rounded-b-xl relative">
 		<!-- Tournois -->
 		<div v-if="$i18n.locale === 'en'">
-			<router-link to="/tournaments" class="flex items-center absolute left-2.5 top-4 space-x-0">
+			<router-link to="/custom_tournaments" class="flex items-center absolute left-2.5 top-4 space-x-0">
 				<h2 class="text-white text-sm">{{$t('Tournaments')}}</h2>
 				<img
 					class="relative h-5 w-5"
@@ -12,7 +12,7 @@
 			</router-link>
 		</div>
 		<div v-else>
-			<router-link to="/tournaments" class="flex items-center absolute left-5 top-3.5 space-x-1">
+			<router-link to="/custom_tournaments" class="flex items-center absolute left-5 top-3.5 space-x-1">
 				<h2 class="text-white">{{$t('Tournaments')}}</h2>
 				<img
 					class="relative h-5 w-5"
@@ -74,7 +74,6 @@
 				<li v-for="(name, index) in [$t('Login'), $t('Register')]" :key="index">
 					<router-link
 						:to="index === 0 ? '/login' : '/register'"
-						@click="connect_change()"
 						@focus="connect_index = index"
 						@blur="connect_index = -1"
 						:class="{
@@ -220,9 +219,11 @@
 			async header_get_profil() {
 				try {
 					const response = await apiClient.get('profil/');
-					this.img = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
+					// this.img = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
+					const potentialImg = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
+					this.img = null; 
 				}
 			},
 		},

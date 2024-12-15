@@ -8,7 +8,7 @@
 		<LoopVideo/>
 		<div class="relative bg-gray-900 border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 w-full max-w-xs sm:max-w-md p-8 rounded-md">
 			<div class="absolute top-3 right-3">
-				<router-link to="/" @click="return_home" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
+				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>
 			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Login')}}</h2> -->
 			<form @submit.prevent="submitLogin">
@@ -61,7 +61,8 @@
 			};
 		},
 		methods: {
-			...mapActions(['CloseConnect']),
+			// ...mapActions(['CloseConnect']),
+			...mapActions(['OpenConnect']),
 			...mapActions(['Login']),
 			// api rest envoie de pseudo et password
 			async submitLogin() {
@@ -70,23 +71,19 @@
 				this.table_login.username = this.pseudo;
 				this.table_login.password = this.password;
 				const result = await this.postlogin();
-				if (result == 1)
-				{
+				if (result == 1) {
+					this.OpenConnect();
 					this.$router.push('/');
 				}
 				else {
 					console.log("recup erreur de login");
 				}
 			},
-			return_home() {
-				this.CloseConnect();
-			},
 			async postlogin() {
 				console.log("post login api");
 				try {
 					const response = await apiClient.post('login/', this.table_login);
 					console.log('Données envoyées avec succès :', response.data);
-					console.log(response.data);
 					this.Login(response.data);
 					this.errorMessage = '';
 					return (1);
@@ -96,9 +93,6 @@
 					return (0);
 				}
 			},
-		},
-		beforeUnmount() {
-			this.CloseConnect();
 		},
 	};
 </script>

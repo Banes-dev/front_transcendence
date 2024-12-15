@@ -71,7 +71,7 @@
 
 <script>
     export default {
-        name: "Tournaments",
+        name: "Custom_Tournaments",
         data() {
             return {
                 game_choice: false,

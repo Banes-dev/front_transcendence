@@ -8,7 +8,7 @@
 		<LoopVideo/>
 		<div class="relative bg-gray-900 border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 w-full max-w-xs sm:max-w-md p-8 rounded-md">
 			<div class="absolute top-3 right-3">
-				<router-link to="/" @click="return_home" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
+				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>
 			<!-- <h2 class="flex items-center justify-center text-white">{{$t('Register')}}</h2> -->
 			<form @submit.prevent="submitRegister">
@@ -122,9 +122,6 @@
 					console.log("recup erreur de register");
 				}
 			},
-			return_home() {
-				this.CloseConnect();
-			},
 			handleImageSelected(file) {
 				this.image = file;
 				this.image_link = URL.createObjectURL(file);
@@ -148,9 +145,6 @@
 					return (0);
 				}
 			},
-		},
-		beforeUnmount() {
-			this.CloseConnect();
 		},
 	};
 </script>

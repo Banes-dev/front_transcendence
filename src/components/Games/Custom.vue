@@ -126,14 +126,12 @@
                     <router-link
                         to="/"
                         class="text-white bg-gradient-to-br from-red-800 to-red-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
-                    ><i class="fa-solid fa-xmark"></i> {{$t('Cancel')}}
-                    </router-link>
+                    ><i class="fa-solid fa-xmark mr-2"></i>{{$t('Cancel')}}</router-link>
                     <router-link
                         to="/"
                         @click="change_preferences()"
                         class="text-white bg-gradient-to-br from-green-800 to-green-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
-                    ><i class="fa-solid fa-check"></i> {{$t('Apply')}}
-                    </router-link>
+                    ><i class="fa-solid fa-check mr-2"></i>{{$t('Apply')}}</router-link>
                 </div>
             </div>
         </div>

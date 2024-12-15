@@ -9,12 +9,12 @@
 				<a
 					@click.prevent="navigateTo('/pong')"
 					class="text-white bg-gradient-to-br from-red-600 to-yellow-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center cursor-pointer"
-				><i class="fa-solid fa-gamepad"></i> {{$t('Play')}}
+				><i class="fa-solid fa-gamepad mr-2"></i> {{$t('Play')}}
 				</a>
 				<a
 					@click.prevent="navigateTo('/custom')"
 					class="text-white bg-gradient-to-br from-gray-600 to-gray-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-2 py-1 text-center cursor-pointer"
-				><i class="fa-solid fa-sliders"></i> {{$t('Preferences')}}
+				><i class="fa-solid fa-sliders mr-1"></i> {{$t('Preferences')}}
 				</a>
 			</div>
 		</div>
@@ -29,12 +29,12 @@
 				<a
 					@click.prevent="navigateTo('/tictactoe')"
 					class="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-red-600 to-yellow-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center cursor-pointer"
-				><i class="fa-solid fa-gamepad"></i> {{$t('Play')}}
+				><i class="fa-solid fa-gamepad mr-2"></i> {{$t('Play')}}
 				</a>
 				<a
 					@click.prevent="navigateTo('/custom')"
 					class="text-white bg-gradient-to-br from-gray-600 to-gray-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-2 py-1 text-center cursor-pointer"
-				><i class="fa-solid fa-sliders"></i> {{$t('Preferences')}}
+				><i class="fa-solid fa-sliders mr-1"></i> {{$t('Preferences')}}
 				</a>
 			</div>
 		</div>

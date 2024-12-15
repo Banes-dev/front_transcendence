@@ -12,6 +12,7 @@ export default createStore({
 		remove_hit: false,
 		layout: false,
 		language: "fr",
+		tournament: null,
 	},
 	getters: {
 		GetUserState(state) {
@@ -43,6 +44,9 @@ export default createStore({
 		},
 		GetLanguageState(state) {
 			return state.language;
+		},
+		GetTournament(state) {
+			return state.tournament;
 		},
 	},
 	mutations: {
@@ -89,12 +93,20 @@ export default createStore({
 			state.language = value;
 			localStorage.setItem('language', JSON.stringify(value));
 		},
+		SetTournament(state, tournament) {
+			state.tournament = tournament;
+			localStorage.setItem('tournament', JSON.stringify(tournament));
+		},
+		ClearTournament(state) {
+			state.tournament = null;
+			localStorage.removeItem('tournament');
+		},
 	},
 	actions: {
-		Login({ commit }, userData) {
+		Login({commit}, userData) {
 			commit('SetUser', userData);
 		},
-		Logout({ commit }) {
+		Logout({commit}) {
 			commit('ClearUser');
 		},
 		InitializeStore({ commit }) {
@@ -107,6 +119,7 @@ export default createStore({
 			const remove_hit = localStorage.getItem('remove_hit');
 			const layout = localStorage.getItem('layout');
 			const language = localStorage.getItem('language');
+			const tournament = localStorage.getItem('tournament');
 
 			if (user) {
 				commit('SetUser', JSON.parse(user));
@@ -125,6 +138,7 @@ export default createStore({
 			commit('SetRemoveHitState', JSON.parse(remove_hit) || false);
 			commit('SetLayoutState', JSON.parse(layout) || false);
 			commit('SetLanguageState', JSON.parse(language) || "fr");
+			commit('SetTournament', JSON.parse(tournament));
 		},
 		ChangeLanguage({commit}, language) {
 			commit('SetLanguageState', language);
@@ -134,6 +148,12 @@ export default createStore({
 		},
 		CloseConnect({commit}) {
 			commit('SetConnectState', false);
+		},
+		CreateTournament({commit}, tournament) {
+			commit('SetTournament', tournament);
+		},
+		DeleteTournament({commit}) {
+			commit('ClearTournament');
 		},
 	},
 });
