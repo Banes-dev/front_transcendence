@@ -3,122 +3,116 @@
 </script>
 
 <template>
-    <div class="fixed inset-0 flex flex-col items-center justify-center">
+    <div class="w-screen h-screen flex flex-col items-center hidden-scrollbar">
         <LoopVideo/>
         <router-link
             to="/"
-            class="absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
+            class="absolute top-0 md:left-0 text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
         ><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}</router-link>
-        <!-- Conteneur principal -->
-        <div class="flex flex-col items-start w-full space-y-6 ml-20">
+        <!-- Player info -->
+        <div class="flex flex-col items-center md:items-start w-full space-y-6 mt-20 md:mt-16 md:ml-12">
             <!-- Section Informations joueur -->
-            <div class="w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-6">
+            <div class="w-4/5 md:w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-6">
                 <div class="flex flex-col md:flex-row items-center md:items-start">
                     <!-- Image de profil -->
-                    <div>
-                    <img
-                        v-if="!img"
-                        src="../../assets/img/default_avatar.png"
-                        alt="Image de profil"
-                        class="w-44 h-44 md:w-52 md:h-52 xl:w-64 xl:h-64 rounded-xl object-cover"
-                    />
-                    <img
-                        v-else
-                        :src="img"
-                        alt="Image de profil"
-                        class="w-44 h-44 md:w-52 md:h-52 xl:w-64 xl:h-64 rounded-xl object-cover"
-                    />
+                    <div v-if="!img">
+                        <img class="w-44 h-44 md:w-52 md:h-52 xl:w-96 xl:h-96 rounded-xl object-cover mr-4 mb-0" src="../../assets/img/default_avatar.png" alt="Image de profil"/>
                     </div>
+                    <div v-else>
+                        <img :src="img" class="w-44 h-44 md:w-52 md:h-52 xl:w-96 xl:h-96 rounded-xl object-cover mr-4 mb-0" alt="Image de profil"/>
+                    </div>
+                    <!-- <button 
+                        @click="replaceImage"
+                        class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg"
+                    ><i class="fa-solid fa-pen-to-square mr-2"></i>Modifier l'image</button> -->
         
                     <!-- Détails du joueur -->
                     <div class="flex-1">
-                    <h5 class="text-2xl font-bold text-white mb-4">{{$t('Title_Info')}}</h5>
-                    <p class="text-gray-300 mb-2">{{$t('Profil_Pseudo')}}{{ pseudo }}</p>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <label
-                        class="flex items-center bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg cursor-pointer"
-                        >
-                        <input type="checkbox" v-model="state_newPseudo" class="hidden" />
-                        <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Pseudo')}}
-                        </label>
-                        <div v-if="state_newPseudo" class="flex items-center space-x-2">
-                        <input
-                            type="text"
-                            v-model="newPseudo"
-                            :placeholder="$t('Exemple_Edit_Pseudo')"
-                            class="w-full p-2 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg"
-                        />
-                        <button
-                            @click="updatePseudo"
-                            class="bg-red-600 hover:bg-red-700 text-yellow-400 px-4 py-2 rounded-lg"
-                        >
-                            <i class="fa-solid fa-check"></i>
-                        </button>
+                        <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">{{$t('Title_Info')}}</h5>
+                        <!-- pseudo -->
+                        <p class="text-gray-300 mb-2">{{$t('Profil_Pseudo')}}{{pseudo}}</p>
+                        <label class="inline-flex items-center bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg cursor-pointer">
+                        <input type="checkbox" v-model="state_newPseudo" class="hidden"/>
+                        <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Pseudo')}}</label>
+                        <div v-if="state_newPseudo">
+                            <input
+                                type="text"
+                                v-model="newPseudo"
+                                :placeholder="$t('Exemple_Edit_Pseudo')"
+                                class="w-5/5 p-1 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
+                            />
+                            <button
+                                @click="updatePseudo"
+                                class="w-10 mb-4 bg-red-600 hover:bg-red-700 text-yellow-400 py-1 rounded-lg shadow-lg"
+                            ><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <!-- mdp -->
+                        <p class="text-gray-300 mb-2">{{$t('Profil_Mdp')}}{{mdp}}</p>
+                        <label class="inline-flex items-center bg-gray-700 hover:bg-gray-600 mb-4 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-lg cursor-pointer">
+                            <input type="checkbox" v-model="state_newMdp" class="hidden"/>
+                        <i class="fa-solid fa-pen-to-square mr-2"></i>{{$t('Edit_Mdp')}}</label>
+                        <div v-if="state_newMdp">
+                            <input
+                                type="text"
+                                v-model="newMdp"
+                                :placeholder="$t('Exemple_Edit_Mdp')"
+                                class="w-5/5 p-1 bg-gray-700 border border-gray-600 text-gray-300 rounded-lg shadow-lg mr-2"
+                            />
+                            <button
+                                @click="updateMdp"
+                                class="w-10 mb-4 bg-red-600 hover:bg-red-700 text-yellow-400 py-1 rounded-lg shadow-lg"
+                            ><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <!-- status -->
+                        <p class="text-gray-300 mb-2">{{$t('Profil_Statut')}}</p>
+                        <div class="flex space-x-4 mb-4">
+                            <div v-for="option in statusOptions" :key="option.value" class="flex items-center">
+                                <input 
+                                    type="checkbox" 
+                                    :id="option.value" 
+                                    :checked="status === option.value" 
+                                    @change="selectStatus(option.value)"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                />
+                                <label :for="option.value" class="ml-2 text-sm text-gray-300">{{option.label}}</label>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div 
+                                :class="{
+                                    'w-6 h-6 rounded-full': true,
+                                    'bg-green-600': status === 'online',
+                                    'bg-yellow-500': status === 'inactive',
+                                    'bg-red-600': status === 'offline'
+                                }"
+                            ></div>
+                            <span class="text-white right-4">{{statusLabel}}</span>
                         </div>
                     </div>
-                    <p class="text-gray-300 mb-2">{{$t('Profil_Statut')}}</p>
-                    <div class="flex space-x-4">
-                        <div
-                        v-for="option in statusOptions"
-                        :key="option.value"
-                        class="flex items-center"
-                        >
-                        <input
-                            type="radio"
-                            :id="option.value"
-                            :checked="status === option.value"
-                            @change="selectStatus(option.value)"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
-                        />
-                        <label :for="option.value" class="ml-2 text-sm text-gray-300">
-                            {{ option.label }}
-                        </label>
-                        </div>
-                    </div>
-                    </div>
                 </div>
-                </div>
+            </div>
         
-                <!-- Section Statistiques -->
-                <div class="w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-6">
+            <!-- Section Statistiques -->
+            <div class="w-4/5 md:w-2/3 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg p-6">
                 <div class="flex flex-col md:flex-row justify-between items-center md:items-start">
-                    <!-- Stats Pong -->
-                    <div class="flex flex-col items-center mb-6 md:mb-0">
-                    <img
-                        src="../../assets/img/pong_trans.png"
-                        alt="Image Pong"
-                        class="w-48 h-48 mb-4"
-                    />
-                    <p class="text-white text-lg mb-2">
-                        <strong>{{$t('Win_Pong')}}:</strong> {{ win_pong }}
-                    </p>
-                    <p class="text-white text-lg">
-                        <strong>{{$t('Lose_Pong')}}:</strong> {{ lose_pong }}
-                    </p>
+                    <div class="flex flex-col items-center sm:items-start mb-4 sm:mb-0">
+                        <img class="w-48 h-48 mb-10" src="../../assets/img/pong_trans.png" alt="Image du Pong"/>
+                        <p class="text-white text-xl mb-8 ml-4"><strong>{{$t('Win_Pong')}}</strong>{{win_pong}}</p>
+                        <p class="text-white text-xl ml-4"><strong>{{$t('Lose_Pong')}}</strong>{{lose_pong}}</p>
                     </div>
-        
-                    <!-- Stats Morpion -->
-                    <div class="flex flex-col items-center">
-                    <img
-                        src="../../assets/img/morpion_trans.png"
-                        alt="Image Morpion"
-                        class="w-48 h-48 mb-4"
-                    />
-                    <p class="text-white text-lg mb-2">
-                        <strong>{{$t('Win_TicTacToe')}}:</strong> {{ win_tictactoe }}
-                    </p>
-                    <p class="text-white text-lg">
-                        <strong>{{$t('Lose_TicTacToe')}}:</strong> {{ lose_tictactoe }}
-                    </p>
+                    <div class="flex flex-col items-center sm:items-end space-4">
+                        <img class="w-48 h-48 mb-10" src="../../assets/img/morpion_trans.png" alt="Image du Morpion"/>
+                        <p class="text-white text-xl mb-8 mr-4"><strong>{{$t('Win_TicTacToe')}}</strong>{{win_tictactoe}}</p>
+                        <p class="text-white text-xl mr-4"><strong>{{$t('Lose_TicTacToe')}}</strong>{{lose_tictactoe}}</p>
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- Amis -->
-		<div class="relative md:fixed top-4 right-0 mr-6 w-1/4 h-screen flex flex-col">
+		<div class="relative md:fixed top-4 right-0 w-4/5 md:w-1/4 h-screen md:mr-6 mt-16 md:mt-0 flex flex-col">
 			<!-- Ajout d'amis -->
-            <div class="relative w-full max-w-md mb-6 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg">
+            <div class="relative w-full mb-6 bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg">
 				<div class="relative p-5">
 					<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">{{$t('Add_Friend')}}</h5>
 					<input
@@ -135,7 +129,7 @@
 			</div>
             <!-- Listes d'amis -->
             <div 
-                class="relative flex-grow w-full max-w-md bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg" 
+                class="relative flex-grow w-full bg-gray-900 border border-gray-600 hover:border-red-600 hover:outline outline-2 outline-red-600 rounded-lg shadow-lg" 
                 style="max-height: calc(100vh - 150px); margin-bottom: 36px; height: 500px;"
             >
                 <div class="relative p-5 h-full flex flex-col">
@@ -294,25 +288,19 @@
             },
             async updatePseudo() {
                 try {
-                    // const newPseudo = prompt("Entrez votre nouveau pseudo :");
-                    // if (newPseudo) {
-                        const response = await apiClient.put('profil/', {username: this.newPseudo});
-                        console.log('Pseudo mis à jour avec succès :', response.data);
-                        this.pseudo = this.newPseudo;
-                    // }
+                    const response = await apiClient.put('profil/', {username: this.newPseudo});
+                    console.log('Pseudo mis à jour avec succès :', response.data);
+                    this.pseudo = this.newPseudo;
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du pseudo :', error.response?.data || error.message);
                 }
             },
             async updateMdp() {
                 try {
-                    // const newMdp = prompt("Entrez votre nouveau password :");
-                    // if (newMdp) {
-                        const response = await apiClient.put('profil/', {password: this.newMdp});
-                        console.log('mdp mis à jour avec succès :', response.data);
-                        // this.mdp = this.newMdp;
-                        this.mdp = "*".repeat(12);
-                    // }
+                    const response = await apiClient.put('profil/', {password: this.newMdp});
+                    console.log('mdp mis à jour avec succès :', response.data);
+                    // this.mdp = this.newMdp;
+                     this.mdp = "*".repeat(12);
                 } catch (error) {
                     console.error('Erreur lors de la mise à jour du mdp :', error.response?.data || error.message);
                 }
