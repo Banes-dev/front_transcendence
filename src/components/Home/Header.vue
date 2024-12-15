@@ -135,7 +135,6 @@
 			}
 		},
 		methods: {
-			...mapActions(['OpenConnect']),
 			...mapActions(['Logout']),
 			...mapActions(['ChangeLanguage']),
 			getLanguageName(locale) {
@@ -150,9 +149,6 @@
 				this.$i18n.locale = locale;
 				this.ChangeLanguage(locale);
 				this.lang_state = false;
-			},
-			connect_change() {
-				this.OpenConnect();
 			},
 			ToggleSubMenu() {
 				if (this.connectedmenu_state == false) {
@@ -219,8 +215,7 @@
 			async header_get_profil() {
 				try {
 					const response = await apiClient.get('profil/');
-					// this.img = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
-					const potentialImg = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
+					this.img = `http://localhost:8000/media/player_picture/${response.data.data.username}.png`;
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
 					this.img = null; 

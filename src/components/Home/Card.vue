@@ -55,12 +55,10 @@ export default {
 		...mapGetters(['GetConnectState']),
 	},
 	methods: {
-		...mapActions(['OpenConnect']),
 		navigateTo(route) {
 			if (this.GetConnectState) {
 				this.$router.push(route);
 			} else {
-				this.OpenConnect();
 				this.$router.push('/login');
 			}
 		},

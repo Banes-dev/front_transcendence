@@ -123,6 +123,7 @@ export default createStore({
 
 			if (user) {
 				commit('SetUser', JSON.parse(user));
+				commit('SetConnectState', true);
 				// commit('SetColor1State', color1 || "#ff0000");
 				// commit('SetColor2State', color2 || "#ffd200");
 				// commit('SetBallSpeedTimeState', JSON.parse(ball_speed_time) || false);
