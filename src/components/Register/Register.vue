@@ -139,6 +139,7 @@
 						},
 					});
 					console.log('Données envoyées avec succès :', response.data);
+					this.CloseConnect();
 					// this.Login(response.data);
 					return (1);
 				} catch (error) {
@@ -147,6 +148,9 @@
 					return (0);
 				}
 			},
+		},
+		beforeUnmount() {
+			this.CloseConnect();
 		},
 	};
 </script>

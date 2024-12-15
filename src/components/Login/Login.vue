@@ -97,6 +97,9 @@
 				}
 			},
 		},
+		beforeUnmount() {
+			this.CloseConnect();
+		},
 	};
 </script>
 

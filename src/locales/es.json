@@ -32,6 +32,7 @@
     "Phone_Size":"Para jugar, pon el teléfono en modo horizontal.",
 
     "Reset":"Restablecer",
+    "Hit_Cancel": "Tiro cancelado",
     "Player1_TicTacToe":"Jugador 1 (x)",
     "Player2_TicTacToe":"Jugador 2 (o)",
     "Equality":"Igualdad !",

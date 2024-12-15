@@ -47,6 +47,11 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     let ballSpeedY = 0 * store.getters["GetBallSpeedManualState"];
     let ball_more_speed_x = 0;
     let ball_more_speed_y = 0;
+
+    // Fps
+    const FPS = 60;
+    const FRAME_DURATION = 1000 / FPS; // Durée de chaque frame en millisecondes (≈16.67ms)
+    let lastFrameTime = 0;
   
     // Mouvement des raquettes
     let leftPaddleSpeed = 0;
@@ -151,7 +156,7 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
         setTimeout(() => {
             ballSpeedX = 8 * store.getters["GetBallSpeedManualState"];
             isSpeedIncreaseActive = true;
-        }, "4000");
+        }, "2500");
     }
   
     // Mouvement des raquettes
@@ -225,7 +230,7 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     let sleep = 1000;
   
     // Fonction de jeu
-    function gameLoop() {
+    function gameLoop(currentTime) {
         if (player1 >= 5 || player2 >= 5) {
             isGameRunning = false;
             cancelAnimationFrame(animationFrameId);
@@ -236,16 +241,20 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
             updateGameState();
             lastUpdateTime = now;
         }
-        MoveBall();
-        MovePaddles();
-        if (store.getters["GetBallSpeedTimeState"] == true) {
-            IncreaseBallSpeed();
+
+        const deltaTime = currentTime - lastFrameTime;
+        if (deltaTime >= FRAME_DURATION) {
+            lastFrameTime = currentTime; // Mettre à jour le temps de la dernière frame
+            MoveBall();
+            MovePaddles();
+            if (store.getters["GetBallSpeedTimeState"] == true) {
+                IncreaseBallSpeed();
+            }
+            Draw();
+            if (isAIEnabled && ai) {
+                rightPaddleSpeed = ai.updateAi(gameState);
+            }
         }
-        Draw();
-        if (isAIEnabled && ai) {
-            rightPaddleSpeed = ai.updateAi(gameState);
-        }
-    
         if (isGameRunning) {
             animationFrameId = requestAnimationFrame(gameLoop);
         }

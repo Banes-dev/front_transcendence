@@ -32,6 +32,7 @@
     "Phone_Size":"Please turn your phone to landscape mode to play.",
 
     "Reset":"Reset",
+    "Hit_Cancel": "Shot cancelled",
     "Player1_TicTacToe":"Player 1 (x)",
     "Player2_TicTacToe":"Player 2 (o)",
     "Equality":"Equality !",

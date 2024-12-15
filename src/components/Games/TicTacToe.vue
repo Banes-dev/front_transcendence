@@ -11,9 +11,13 @@
 	const board = ref(Array(9).fill(null));
 	const currentPlayer = ref('X');
 	const winner = ref(null);
+	const cancel_move = ref(false);
 
 	// Message de statut
 	const statusMessage = computed(() => {
+		if (cancel_move.value == true) {
+			return `<i class="fa-solid fa-ban mr-6"></i>${t('Hit_Cancel')}<i class="fa-solid fa-ban ml-6"></i>`;
+		}
 		if (winner.value) {
 			if (currentPlayer.value === "X") {
 				return `<i class="fa-solid fa-trophy mr-6"></i>${t('Player1_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
@@ -56,7 +60,10 @@
 		if (board.value[index] || winner.value) return; // Empêche de jouer sur une case occupée ou après la fin
 		if (store.getters["GetRemoveHitState"]) {
 			if (Math.random() < 1 / 9) {
-				console.log('Coup annulé, chance sur 9 activée.');
+				cancel_move.value = true;
+				setTimeout(() => {
+					cancel_move.value = false;
+				}, 2000);
 				currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'; // Change de joueur
 				return;
 			}
