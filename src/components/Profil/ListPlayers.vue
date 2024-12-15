@@ -14,8 +14,16 @@
                         <!-- Bouton principal pour chaque joueur -->
                         <button
                             @click="toggleMenu(index)"
-                            class="w-full text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg shadow-lg"
-                        >{{player.username}}</button>
+                            class="w-full text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2"
+                        >
+                            <!-- <img class="w-8 h-8 rounded-lg" src="../../assets/img/default_avatar.png" alt="Image de votre ami"/> -->
+                            <img 
+                                class="w-8 h-8" 
+                                :src="'http://localhost:8000/media/player_picture/' + player.username + '.png'" 
+                                alt="Image de votre ami"
+                            />
+                            <span>{{player.username}}</span>
+                        </button>
                         <!-- Sous-menu affiché si actif -->
                         <div v-if="openMenus.includes(index)" class="mx-4 mt-2 bg-gray-700 p-3 text-sm rounded-lg shadow-lg">
                             <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start">

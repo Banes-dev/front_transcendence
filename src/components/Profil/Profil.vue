@@ -134,25 +134,30 @@
             >
                 <div class="relative p-5 h-full flex flex-col">
                     <h5 class="mb-6 text-2xl font-bold tracking-tight text-white">{{$t('My_Friends')}}</h5>
-                    <ul 
-                        class="flex-grow overflow-y-auto pr-2"
-                        style="max-height: calc(100% - 50px);"
-                    >
-                    <li 
-                        v-for="(friend, index) in friends" 
-                        :key="index" 
-                        class="p-2 text-white bg-gray-800 mb-3 rounded-lg shadow-lg flex justify-between items-center"
-                    >
-                        <span>{{friend.username}}</span>
-                        <div 
-                            :class="{
-                                'w-4 h-4 rounded-full': true,
-                                'bg-green-600': friend.status === 'online',
-                                'bg-yellow-500': friend.status === 'inactive',
-                                'bg-red-600': friend.status === 'offline'
-                            }"
-                        ></div>
-                    </li>
+                    <ul class="flex-grow overflow-y-auto pr-2" style="max-height: calc(100% - 50px);">
+                        <li
+                            v-for="(friend, index) in friends"
+                            :key="index"
+                            class="p-2 text-white bg-gray-800 mb-3 rounded-lg shadow-lg flex justify-between items-center"
+                        >
+                            <div class="flex items-center space-x-3">
+                                <!-- <img class="w-8 h-8 rounded-lg" src="../../assets/img/default_avatar.png" alt="Image de votre ami"/> -->
+                                <img 
+                                    class="w-8 h-8" 
+                                    :src="'http://localhost:8000/media/player_picture/' + friend.username + '.png'" 
+                                    alt="Image de votre ami"
+                                />
+                                <span>{{friend.username}}</span>
+                            </div>
+                            <div 
+                                :class="{
+                                    'w-4 h-4 rounded-full': true,
+                                    'bg-green-600': friend.status === 'online',
+                                    'bg-yellow-500': friend.status === 'inactive',
+                                    'bg-red-600': friend.status === 'offline'
+                                }"
+                            ></div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -173,23 +178,23 @@
                 img: null,
                 status: "online",
                 friends: {},
-				friends: [
-					{username: "test1", status: "online"},
-					{username: "test2", status: "offline"},
-					{username: "test3", status: "inactive"},
-                    {username: "test4", status: "online"},
-					{username: "test5", status: "offline"},
-					{username: "test6", status: "inactive"},
-                    {username: "test7", status: "online"},
-					{username: "test8", status: "offline"},
-					{username: "test9", status: "inactive"},
-                    {username: "test10", status: "online"},
-					{username: "test11", status: "offline"},
-					{username: "test12", status: "inactive"},
-                    {username: "test13", status: "online"},
-					{username: "test14", status: "offline"},
-					{username: "test15", status: "inactive"},
-				],
+				// friends: [
+				// 	{username: "test1", status: "online"},
+				// 	{username: "test2", status: "offline"},
+				// 	{username: "test3", status: "inactive"},
+                //     {username: "test4", status: "online"},
+				// 	{username: "test5", status: "offline"},
+				// 	{username: "test6", status: "inactive"},
+                //     {username: "test7", status: "online"},
+				// 	{username: "test8", status: "offline"},
+				// 	{username: "test9", status: "inactive"},
+                //     {username: "test10", status: "online"},
+				// 	{username: "test11", status: "offline"},
+				// 	{username: "test12", status: "inactive"},
+                //     {username: "test13", status: "online"},
+				// 	{username: "test14", status: "offline"},
+				// 	{username: "test15", status: "inactive"},
+				// ],
                 win_pong: null,
                 lose_pong: null,
                 win_tictactoe: null,
