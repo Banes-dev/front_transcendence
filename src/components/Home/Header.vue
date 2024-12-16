@@ -2,7 +2,7 @@
 	<header class="bg-gray-900 text-gray-300 py-6 mt-auto max-w-6xl mx-auto px-36 rounded-b-xl relative">
 		<!-- Tournois -->
 		<div v-if="$i18n.locale === 'en'">
-			<router-link to="/custom_tournaments" class="flex items-center absolute left-2.5 top-4 space-x-0">
+			<router-link to="/" @click="OpenTournament()" class="flex items-center absolute left-2.5 top-4 space-x-0">
 				<h2 class="text-white text-sm">{{$t('Tournaments')}}</h2>
 				<img
 					class="relative h-5 w-5"
@@ -12,7 +12,7 @@
 			</router-link>
 		</div>
 		<div v-else>
-			<router-link to="/custom_tournaments" class="flex items-center absolute left-5 top-3.5 space-x-1">
+			<router-link to="/" @click="OpenTournament()" class="flex items-center absolute left-5 top-3.5 space-x-1">
 				<h2 class="text-white">{{$t('Tournaments')}}</h2>
 				<img
 					class="relative h-5 w-5"
@@ -56,7 +56,7 @@
 							}"
 							type="button"
 							role="menuitem"
-							>{{ getLanguageName(locale) }}
+							>{{getLanguageName(locale)}}
 						</button>
 					</li>
 				</ul>
@@ -125,6 +125,7 @@
 			...mapGetters(['GetConnectState']),
 			...mapGetters(['GetUserState']),
 			...mapGetters(['GetLanguageState']),
+			...mapGetters(['GetTournament']),
 			menuItems() {
 				return [
 					{text: this.$t('Profil'), icon: 'fas fa-user', colorClass: 'text-sky-500 hover:text-yellow-400'},
@@ -149,6 +150,14 @@
 				this.$i18n.locale = locale;
 				this.ChangeLanguage(locale);
 				this.lang_state = false;
+			},
+			OpenTournament() {
+				if (this.GetTournament) {
+					this.$router.push('/tournaments');
+				}
+				else {
+					this.$router.push('/custom_tournaments');
+				}
 			},
 			ToggleSubMenu() {
 				if (this.connectedmenu_state == false) {

@@ -47,30 +47,6 @@
 						/>
 					</div>
 				</div>
-
-				<!-- Arbre des tournois -->
-				<!-- <div>
-					<ul>
-						<li v-for="(round, roundIndex) in rounds" :key="'round-' + roundIndex" class="mb-6">
-						<h4 class="text-lg text-yellow-400">Tour {{ roundIndex + 1 }}</h4>
-							<ul>
-								<li
-									v-for="(match, matchIndex) in round"
-									:key="'match-' + roundIndex + '-' + matchIndex"
-									class="text-white"
-								>Match {{ matchIndex + 1 }} : 
-									<span class="font-bold">
-										{{match[0]?.name || `Joueur ${match[0]?.id}`}}
-									</span>
-									<span> - </span>
-									<span class="font-bold">
-										{{match[1]?.name || `Joueur ${match[1]?.id}`}}
-									</span>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div> -->
 				<!-- Creer le tournois -->
 				<div class="bottom-8 w-full flex justify-center">
 					<router-link
@@ -95,88 +71,38 @@
 				game_choice: false, // Toggle pour le choix du jeu
 				nb_player: 3, // Nombre initial de joueurs
 				players: [], // Liste des joueurs
-				// rounds: [], // Arbre du tournoi
-				// byePlayer: null, // Stocke le joueur qui passe un tour
 			};
 		},
 		methods: {
 			...mapActions(['CreateTournament']),
-			// Sauvegarde les infos du tournois dans le vuex
 			save_tournament() {
-				console.log("Save tournament");
-				// cree un obj tournament
-				// set a l'objet tournament les infos game_choice, nb_player, players
-				// Envoyer l'objet tournament dans le SetTournament du vuex
-
-				tournament = {game_choice: this.game_choice, nb_player: this.nb_player, players: this.players};
-				this.CreateTournament(tournament);
-			},
-
-			// Mélange aléatoire des joueurs
-			shuffleArray(array) {
-				for (let i = array.length - 1; i > 0; i--) {
-					const j = Math.floor(Math.random() * (i + 1));
-					[array[i], array[j]] = [array[j], array[i]]; // Échange
+				let i = 0;
+				while (this.players[i] != null) {
+					if (this.players[i].name == null || this.players[i].name == '') {
+						this.players[i].name = this.$t('Player') + " " + (this.players[i].id);
+					}
+					i = i + 1;
 				}
+				let tournament = {game_choice: this.game_choice, nb_player: this.nb_player, players: this.players};
+				this.CreateTournament(tournament);
 			},
 
 			// Mise à jour de la liste des joueurs
 			updatePlayers(nb) {
 				this.players = Array.from({length: nb}, (_, i) => ({
 					id: i + 1,
-					name: '', // Nom vide par défaut
+					name: '',
 				}));
-			},
-
-			// Génération de l'arbre du tournoi
-			generateTournament() {
-			let currentRound = [...this.players]; // Copie de la liste des joueurs
-			this.shuffleArray(currentRound); // Mélange initial des joueurs
-			this.rounds = []; // Réinitialise l'arbre des tours
-			this.byePlayer = null; // Réinitialise le joueur "bye"
-
-			while (currentRound.length > 1 || this.byePlayer) {
-				const matches = [];
-
-				// Gérer le joueur "bye" uniquement au premier tour
-				if (currentRound.length % 2 === 1 && !this.byePlayer) {
-					const randomIndex = Math.floor(Math.random() * currentRound.length);
-					this.byePlayer = currentRound.splice(randomIndex, 1)[0]; // Retire un joueur au hasard
-				}
-
-				// Crée les matchs pour le tour
-				for (let i = 0; i < currentRound.length; i += 2) {
-					const match = [currentRound[i], currentRound[i + 1]].filter(Boolean); // Crée des matchs
-					matches.push(match);
-				}
-				this.rounds.push(matches); // Ajoute les matchs du tour actuel
-
-				// Prépare les gagnants pour le prochain tour
-				const nextRound = matches.map((match) =>
-					match[Math.floor(Math.random() * match.length)] // Gagnant aléatoire
-				);
-
-				// Ajouter le joueur "bye" au deuxième tour
-				if (this.byePlayer) {
-					nextRound.push(this.byePlayer);
-					this.byePlayer = null; // Réinitialise le joueur "bye"
-				}
-
-				currentRound = nextRound; // Met à jour la liste des joueurs pour le prochain tour
-			}
 			},
 		},
 		watch: {
-			// Surveille les changements du nombre de joueurs
 			nb_player(newNb) {
-				this.updatePlayers(newNb); // Mets à jour les joueurs
-				this.generateTournament(); // Mets à jour l'arbre du tournoi
+				this.updatePlayers(newNb);
 			},
 		},
 		mounted() {
 			// Initialisation
 			this.updatePlayers(this.nb_player);
-			this.generateTournament();
 
 			// input
 			const rangeInput = document.getElementById('price-range-input');

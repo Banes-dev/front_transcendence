@@ -222,6 +222,9 @@ export default function startPongGame(canvas, onPaddleMove, GetScore) {
     }
 
     let isAIEnabled = store.getters["GetPlayIaState"]; // Active l'IA
+    if (store.getters["GetTournament"].playing === true) {
+        let isAIEnabled = false;
+    }
     let ai = aiController();
     let lastUpdateTime = Date.now();
     let sleep = 1000;

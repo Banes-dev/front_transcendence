@@ -9,6 +9,7 @@
 		<div v-if="isMobile && (!isLandscape && !isWidth)" class="fixed inset-0 flex flex-col items-center justify-center bg-gray-900">
 			<h2 class="text-white text-2xl mx-8">{{$t("Phone_Size")}}</h2>
 			<router-link
+				v-if="!GetTournament.playing"
 				to="/"
 				class="absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
 			><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}
@@ -17,14 +18,17 @@
 		<div v-else class="w-11.5/12 h-11/12 max-w-screen max-h-screen flex justify-center items-center bg-gray-900">
 			<canvas ref="PongCanvas" :style="{borderColor: GetColor2State}" class="relative w-11.5/12 h-11/12 border-4 rounded-lg shadow-lg"></canvas>
 			<router-link
+				v-if="!GetTournament.playing"
 				to="/"
 				class="z-50 absolute top-0 md:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
 			><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}
 			</router-link>
 			<!-- Score & Touches -->
 			<KeybindInfo class="hidden md:block"/>
-			<h2 class="absolute mr-52 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{score_player1}}</h2>
-			<h2 class="absolute ml-52 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{score_player2}}</h2>
+			<h2 v-if="!GetTournament.playing" class="absolute mr-52 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{score_player1}}</h2>
+			<h2 v-if="!GetTournament.playing" class="absolute ml-52 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{score_player2}}</h2>
+			<h2 v-if="GetTournament.playing" class="absolute mr-88 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{GetTournament.actualround.players[0].name}} - {{score_player1}}</h2>
+			<h2 v-if="GetTournament.playing" class="absolute ml-88 justify-center top-24 text-4xl" :style="{color: GetColor1State}">{{GetTournament.actualround.players[1].name}} - {{score_player2}}</h2>
 			<!-- Paddle lantern -->
 			<img
 				class="absolute"
@@ -77,13 +81,22 @@
 			</div>
 			<!-- Victoire fin de match -->
 			<div v-if="score_player1 >= 5 || score_player2 >= 5" class="absolute justify-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-red-800 to-red-500 hover:bg-gradient-to-bl rounded-lg shadow-lg">
-				<h2 v-if="score_player1 >= 5" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{$t("Victory_Player1")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
-				<h2 v-if="score_player2 >= 5" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{$t("Victory_Player2")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
+				<h2 v-if="score_player1 >= 5 && !GetTournament.playing" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{$t("Victory_Player1")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
+				<h2 v-if="score_player2 >= 5 && !GetTournament.playing" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{$t("Victory_Player2")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
+				<h2 v-if="score_player1 >= 5 && GetTournament.playing" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{GetTournament.actualround.players[0].name}} {{$t("Victory_Player1")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
+				<h2 v-if="score_player2 >= 5 && GetTournament.playing" class="relative justify-center text-white text-4xl mx-6 my-8"><i class="fa-solid fa-trophy mr-4"></i>{{GetTournament.actualround.players[1].name}} {{$t("Victory_Player2")}}<i class="fa-solid fa-trophy ml-4"></i></h2>
 				<button
-					v-if="score_player1 >= 5 || score_player2 >= 5"
+					v-if="score_player1 >= 5 || score_player2 >= 5 && !GetTournament.playing"
 					@click="startGameLoop()"
 					class="absolute top-32 left-1/2 -translate-x-1/2 justify-center px-4 py-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-white rounded-lg shadow-lg"
 				><i class="fa-solid fa-rotate-right mr-3"></i>{{$t('Reset')}}</button>
+				<router-link
+					v-if="GetTournament.playing"
+					to="/tournaments"
+					@click="SetWinnerOfGame()"
+					class="absolute top-32 left-1/2 -translate-x-1/2 justify-center px-4 py-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-white rounded-lg shadow-lg"
+				><i class="fa-solid fa-rotate-right mr-3"></i> {{$t('Reset')}} Retourner au tournois
+				</router-link>
 			</div>
 		</div>
 	</div>
@@ -120,8 +133,36 @@
 			...mapGetters(['GetBallSpeedManualState']),
 			...mapGetters(['GetRemoveHitState']),
 			...mapGetters(['GetUserState']),
+			...mapGetters(['GetTournament']),
 		},
 		methods: {
+			...mapActions(['CreateTournament']),
+			SetWinnerOfGame() {
+				const tournament = this.GetTournament;
+				tournament.playing = false;
+				const winner = this.score_player1 >= 5 ? tournament.actualround.players[0] : tournament.actualround.players[1];
+				// const roundIndex = tournament.rounds.findIndex(
+				// 	(round) => round === tournament.actualround
+				// );
+				// if (roundIndex !== -1) {
+				// 	console.log("winner fait");
+				// 	tournament.rounds[roundIndex].winner = winner;
+				// }
+				for (let i = 0; i < tournament.rounds.length; i++) {
+					const round = tournament.rounds[i];
+
+					const matchIndex = round.findIndex((match) => match === tournament.actualround);
+					if (matchIndex !== -1) {
+						// Mettre à jour le winner du match
+						tournament.rounds[i][matchIndex].winner = winner;
+					}
+				}
+				tournament.actualround = null;
+				// tournament.actualround.winner = winner;
+				this.CreateTournament(tournament);
+				this.$router.push('/tournaments');
+			},
+
 			// Update size & position
 			updateLanternHeight() {
 				const canvas = this.$refs.PongCanvas;
@@ -141,8 +182,10 @@
 				this.score_player1 = recup_score.player1;
 				this.score_player2 = recup_score.player2;
 				if (this.score_player1 >= 5 || this.score_player2 >= 5) {
-					// appel api
-					this.post_pong(this.score_player1);
+					if (!this.GetTournament.playing) {
+						// appel api
+						this.post_pong(this.score_player1);
+					}
 				}
 			},
 			async post_pong(score_player1) {
