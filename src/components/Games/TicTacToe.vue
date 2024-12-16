@@ -5,9 +5,11 @@
 	import {useStore} from 'vuex';
 	import {ref, computed} from 'vue';
 	import apiClient from '@/axios';
+	import {useRouter} from 'vue-router';
 
 	const {t} = useI18n()
 	const store = useStore();
+	const router = useRouter();
 	const board = ref(Array(9).fill(null));
 	const currentPlayer = ref('X');
 	const winner = ref(null);
@@ -20,9 +22,15 @@
 		}
 		if (winner.value) {
 			if (currentPlayer.value === "X") {
+				if (store.getters["GetTournament"].playing) {
+					return `<i class="fa-solid fa-trophy mr-6"></i>${store.getters["GetTournament"].actualround.players[0].name} ${t('Player1_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
+				}
 				return `<i class="fa-solid fa-trophy mr-6"></i>${t('Player1_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
 			}
 			else {
+				if (store.getters["GetTournament"].playing) {
+					return `<i class="fa-solid fa-trophy mr-6"></i>${store.getters["GetTournament"].actualround.players[1].name} ${t('Player2_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
+				}
 				return `<i class="fa-solid fa-trophy mr-6"></i>${t('Player2_TicTacToe')}<i class="fa-solid fa-trophy ml-6"></i>`;
 			}
 		}
@@ -30,9 +38,15 @@
 			return `<i class="fa-solid fa-handshake-angle mr-6"></i>${t('Equality')}`;
 		}
 		if (currentPlayer.value === "X") {
+			if (store.getters["GetTournament"].playing) {
+				return `<i class="fa-solid fa-play mr-6"></i>${store.getters["GetTournament"].actualround.players[0].name} ${t('Player1_TicTacToe')}`;
+			}
 			return `<i class="fa-solid fa-play mr-6"></i>${t('Player1_TicTacToe')}`;
 		}
 		else {
+			if (store.getters["GetTournament"].playing) {
+				return `<i class="fa-solid fa-play mr-6"></i>${store.getters["GetTournament"].actualround.players[1].name} ${t('Player2_TicTacToe')}`;
+			}
 			return `<i class="fa-solid fa-play mr-6"></i>${t('Player2_TicTacToe')}`;
 		}
 	});
@@ -58,23 +72,27 @@
 	// Fonction pour effectuer un mouvement
 	const makeMove = async (index) => {
 		if (board.value[index] || winner.value) return; // Empêche de jouer sur une case occupée ou après la fin
-		if (store.getters["GetRemoveHitState"]) {
-			if (Math.random() < 1 / 9) {
-				cancel_move.value = true;
-				setTimeout(() => {
-					cancel_move.value = false;
-				}, 2000);
-				currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'; // Change de joueur
-				return;
+		if (!store.getters["GetTournament"].playing) {
+			if (store.getters["GetRemoveHitState"]) {
+				if (Math.random() < 1 / 9) {
+					cancel_move.value = true;
+					setTimeout(() => {
+						cancel_move.value = false;
+					}, 2000);
+					currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'; // Change de joueur
+					return;
+				}
 			}
 		}
 		board.value[index] = currentPlayer.value;
 		if (checkWinner()) {
-			// Gérer l'appel API après avoir trouvé un gagnant
-			try {
-				await post_tictactoe(currentPlayer.value);
-			} catch (error) {
-				console.error('Erreur lors de l\'envoi du résultat :', error);
+			if (!store.getters["GetTournament"].playing) {
+				// Gérer l'appel API après avoir trouvé un gagnant
+				try {
+					await post_tictactoe(currentPlayer.value);
+				} catch (error) {
+					console.error('Erreur lors de l\'envoi du résultat :', error);
+				}
 			}
 		} else if (board.value.every(cell => cell)) {
 			// Égalité
@@ -90,6 +108,50 @@
 		board.value = Array(9).fill(null);
 		currentPlayer.value = 'X';
 		winner.value = null;
+	};
+
+	const IsEgual = computed(() => {
+		return (board.value && board.value.every(cell => cell != null));
+	});
+
+	const IsFinish = computed(() => {
+		return winner.value != null;
+	});
+
+	const SetWinnerOfGame = async () => {
+		// console.log(winner.value);
+		// return;
+		const tournament = store.getters['GetTournament'];
+		tournament.playing = false;
+		const currentWinner = winner.value === 'X' ? tournament.actualround.players[0] : tournament.actualround.players[1];
+		let i = 0;
+		while (i < tournament.rounds.length) {
+			const round = tournament.rounds[i];
+
+			const matchIndex = round.findIndex((match) => match === tournament.actualround);
+			if (matchIndex !== -1) {
+				tournament.rounds[i][matchIndex].winner = currentWinner;
+				break;
+			}
+			i++;
+		}
+		if (tournament.rounds[i + 1] != null) {
+			let i_match = 0;
+			while (tournament.rounds[i + 1][i_match] != null) {
+				if (tournament.rounds[i + 1][i_match].players[0].id == null) {
+					tournament.rounds[i + 1][i_match].players[0] = currentWinner;
+					break;
+				}
+				if (tournament.rounds[i + 1][i_match].players[1].id == null) {
+					tournament.rounds[i + 1][i_match].players[1] = currentWinner;
+					break;
+				}
+				i_match = i_match + 1;
+			}
+		}
+		tournament.actualround = null;
+		await store.dispatch("CreateTournament", tournament);
+		router.push('/tournaments');
 	};
 
 	const isGameOver = computed(() => {
@@ -117,6 +179,7 @@
 	<div class="fixed inset-0 flex flex-col items-center justify-center">
 		<LoopVideo/>
 		<router-link
+			v-if="!GetTournament.playing"
 			to="/"
 			class="absolute top-0 sm:left-0 justify-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-xl text-center px-5 py-3 rounded-b-lg md:rounded-none md:rounded-br-lg shadow-lg"
 		><i class="fa-solid fa-left-long mr-3"></i> {{$t('Back')}}</router-link>
@@ -149,15 +212,26 @@
 	
 		<!-- Bouton de réinitialisation -->
 		<button
-			v-if="isGameOver"
+			v-if="isGameOver && !GetTournament.playing"
 			@click="resetGame"
 			class="absolute bottom-40 px-4 py-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-white rounded-lg shadow-lg"
 		><i class="fa-solid fa-rotate-right mr-3"></i>{{$t('Reset')}}</button>
+		<button
+			v-if="IsEgual && GetTournament.playing"
+			@click="resetGame"
+			class="absolute bottom-40 px-4 py-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-white rounded-lg shadow-lg"
+		><i class="fa-solid fa-rotate-right mr-3"></i>{{$t('Reset')}}</button>
+		<router-link
+			v-if="IsFinish && GetTournament.playing"
+			to="/tournaments"
+			@click="SetWinnerOfGame"
+			class="absolute bottom-40 px-4 py-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-br from-sky-800 to-sky-500 hover:bg-gradient-to-bl text-white rounded-lg shadow-lg"
+		><i class="fa-solid fa-rotate-right mr-3"></i>{{$t('Reset')}} Retourner au tournois</router-link>
 	</div>
 </template>
 
 <script>
-	import {mapGetters, mapMutations} from 'vuex';
+	import {mapGetters, mapActions} from 'vuex';
 
 	export default {
 		name: 'TicTacToe',
@@ -166,7 +240,46 @@
 			...mapGetters(['GetColor2State']),
 			...mapGetters(['GetRemoveHitState']),
 			...mapGetters(['GetUserState']),
+			...mapGetters(['GetTournament']),
 		},
+		// methods: {
+		// 	...mapActions(['CreateTournament']),
+		// 	SetWinnerOfGame() {
+		// 		console.log(winner.value);
+		// 		return;
+		// 		const tournament = this.GetTournament;
+		// 		tournament.playing = false;
+		// 		const winner = this.winner.value >= 5 ? tournament.actualround.players[0] : tournament.actualround.players[1];
+		// 		let i = 0;
+		// 		while (i < tournament.rounds.length) {
+		// 			const round = tournament.rounds[i];
+
+		// 			const matchIndex = round.findIndex((match) => match === tournament.actualround);
+		// 			if (matchIndex !== -1) {
+		// 				tournament.rounds[i][matchIndex].winner = winner;
+		// 				break;
+		// 			}
+		// 			i++;
+		// 		}
+		// 		if (tournament.rounds[i + 1] != null) {
+		// 			let i_match = 0;
+		// 			while (tournament.rounds[i + 1][i_match] != null) {
+		// 				if (tournament.rounds[i + 1][i_match].players[0].id == null) {
+		// 					tournament.rounds[i + 1][i_match].players[0] = winner;
+		// 					break;
+		// 				}
+		// 				if (tournament.rounds[i + 1][i_match].players[1].id == null) {
+		// 					tournament.rounds[i + 1][i_match].players[1] = winner;
+		// 					break;
+		// 				}
+		// 				i_match = i_match + 1;
+		// 			}
+		// 		}
+		// 		tournament.actualround = null;
+		// 		this.CreateTournament(tournament);
+		// 		this.$router.push('/tournaments');
+		// 	},
+		// },
 	};
 </script>
 

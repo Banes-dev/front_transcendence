@@ -141,24 +141,32 @@
 				const tournament = this.GetTournament;
 				tournament.playing = false;
 				const winner = this.score_player1 >= 5 ? tournament.actualround.players[0] : tournament.actualround.players[1];
-				// const roundIndex = tournament.rounds.findIndex(
-				// 	(round) => round === tournament.actualround
-				// );
-				// if (roundIndex !== -1) {
-				// 	console.log("winner fait");
-				// 	tournament.rounds[roundIndex].winner = winner;
-				// }
-				for (let i = 0; i < tournament.rounds.length; i++) {
+				let i = 0;
+				while (i < tournament.rounds.length) {
 					const round = tournament.rounds[i];
 
 					const matchIndex = round.findIndex((match) => match === tournament.actualround);
 					if (matchIndex !== -1) {
-						// Mettre à jour le winner du match
 						tournament.rounds[i][matchIndex].winner = winner;
+						break;
+					}
+					i++;
+				}
+				if (tournament.rounds[i + 1] != null) {
+					let i_match = 0;
+					while (tournament.rounds[i + 1][i_match] != null) {
+						if (tournament.rounds[i + 1][i_match].players[0].id == null) {
+							tournament.rounds[i + 1][i_match].players[0] = winner;
+							break;
+						}
+						if (tournament.rounds[i + 1][i_match].players[1].id == null) {
+							tournament.rounds[i + 1][i_match].players[1] = winner;
+							break;
+						}
+						i_match = i_match + 1;
 					}
 				}
 				tournament.actualround = null;
-				// tournament.actualround.winner = winner;
 				this.CreateTournament(tournament);
 				this.$router.push('/tournaments');
 			},

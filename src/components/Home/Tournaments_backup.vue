@@ -54,7 +54,7 @@
                         class="text-white bg-gradient-to-br from-red-800 to-red-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
                     ><i class="fa-solid fa-xmark mr-2"></i>Supprimer le tournois</router-link>
                     <router-link
-                        to="/tournaments"
+                        to="/"
                         @click="play_next_match()"
                         class="text-white bg-gradient-to-br from-green-800 to-green-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
                     ><i class="fa-solid fa-arrow-right mr-2"></i>Jouer le match suivant</router-link>
@@ -120,6 +120,16 @@
 					nb_rounds = nb_rounds + 1;
 					nb_match = 0;
 				}
+				console.log("Le gagnant du tournois est : ", this.tournament.rounds[this.tournament.rounds.length - 1][0].winner);
+
+
+				// this.CreateTournament(this.tournament);
+				// if (this.tournament.game_choice == true) {
+				// 	this.$router.push('/tictactoe');
+				// }
+				// else {
+				// 	this.$router.push('/pong');
+				// }
 			},
 
 			// Mélange aléatoire des joueurs
@@ -161,11 +171,20 @@
 
 					// Prépare les gagnants pour le prochain tour
 					const nextRound = matches.map((match, index) => {
-						return {
-							id: null,
-							name: `Gagnant du match ${index + 1}`
+						// return {
+						// 	// id: match[0]?.id || 'ID inconnu',
+						// 	// name: match[0]?.name || `Gagnant du match ${index + 1}`
+						// 	id: 'ID inconnu',
+						// 	name: `Gagnant du match ${index + 1}`
+						// };
+						return match.winner || {
+							id: 'ID inconnu',
+							name: `Gagnant du match ${index + 1}`,
 						};
 					});
+					// const nextRound = matches.map((match) =>
+					// 	match[Math.floor(Math.random() * match.length)] // Gagnant aléatoire
+					// );
 
 					// Ajouter le joueur "bye" au deuxième tour
 					if (this.tournament.byePlayer) {
@@ -180,7 +199,8 @@
 		mounted() {
 			this.tournament = this.GetTournament;
 
-			if (!this.tournament.rounds || this.tournament.rounds.length === 0) {
+			console.log(this.tournament);
+			if (this.tournament.rounds == null) {
 				// Initialisation
 				this.generateTournament();
 				this.CreateTournament(this.tournament);

@@ -10,7 +10,7 @@ const getCsrfToken = () => {
 
 // Configurer Axios pour inclure le token CSRF
 const apiClient = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'https://localhost:8443/api/api',
     headers: {
         'Content-Type': 'application/json',
     },
