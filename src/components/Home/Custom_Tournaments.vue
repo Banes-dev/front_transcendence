@@ -10,19 +10,19 @@
 				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>
 			<div class="p-5 relative z-20">
-				<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Creation de tournois</h5>
+				<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">{{$t('Creation_Tournaments')}}</h5>
 				<!-- game choice -->
 				<label class="mb-3 inline-flex items-center cursor-pointer">
 					<span class="text-white">Pong</span>
 					<input type="checkbox" v-model="game_choice" class="sr-only peer">
 					<div class="relative w-11 h-6 -mt-0 -right-3 bg-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
-					<span class="text-white ml-6">TicTacToe</span>
+					<span class="text-white ml-6">{{$t('TicTacToe')}}</span>
 				</label>
 
 				<!-- Nombre de joueurs -->
-				<h2 class="text-white relative sm:absolute my-4">Nombre de joueurs :</h2>
+				<h2 class="text-white relative sm:absolute my-4">{{$t('Number_Players')}}</h2>
                 <div class="relative mb-12 top-4 sm:left-38">
-                    <label for="price-range-input" class="sr-only">Default range</label>
+                    <label for="price-range-input" class="sr-only"></label>
                     <input id="price-range-input" type="range" v-model="nb_player" min="3" max="8" class="w-3/5 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
                     <span class="text-sm text-gray-400 absolute start-0 -bottom-6">x3</span>
                     <span class="text-sm text-gray-400 absolute w-2/5 end-6 -bottom-6">x8</span>
@@ -37,12 +37,12 @@
 				<div class="mb-6">
 					<div v-for="(player, index) in players" :key="player.id" class="mb-1">
 						<label :for="'player-' + player.id" class="block text-sm font-medium text-gray-300">
-						Joueur {{index + 1}}</label>
+						{{$t('Player')}} {{index + 1}}</label>
 						<input
 							:id="'player-' + player.id"
 							v-model="player.name"
 							type="text"
-							placeholder="Entrez un pseudo"
+							:placeholder="$t('Enter_Pseudo')"
 							class="w-full mt-1 px-3 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-red-600"
 						/>
 					</div>
@@ -53,7 +53,7 @@
 						to="/tournaments"
 						@click="save_tournament()"
 						class="text-white bg-gradient-to-br from-green-800 to-green-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
-					><i class="fa-solid fa-plus mr-1"></i> {{$t('Create_Tournaments')}}
+					><i class="fa-solid fa-plus mr-2"></i>{{$t('Create_Tournaments')}}
 					</router-link>
 				</div>
 			</div>

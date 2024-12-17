@@ -18,7 +18,7 @@
                         >
                             <img 
                                 class="w-8 h-8" 
-                                :src="'http://localhost:8443/api/media/player_picture/' + player.username + '.png'" 
+                                :src="'https://localhost:8443/api/media/player_picture/' + player.username + '.png'" 
                                 alt="Image de votre ami"
                             />
                             <span>{{player.username}}</span>

@@ -10,13 +10,13 @@
 				<router-link to="/" class="text-yellow-400 px-1.5 py-0.5 rounded-md bg-red-600 hover:bg-red-700">✘</router-link>
 			</div>
 			<div class="p-5 relative z-20">
-				<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">Tournois</h5>
+				<h5 class="mb-6 text-2xl font-bold tracking-tight text-white">{{$t('Tournaments')}}</h5>
 				<!-- affichage info du tournois, jeu et nb joueur -->
-				<h2 class="text-lg text-white">Jeu choisi : {{ tournament.game_choice ? 'Tictactoe' : 'Pong' }}</h2>
+				<h2 class="text-lg text-white">{{$t('Choice_Games')}}{{tournament.game_choice ? $t('TicTacToe') : 'Pong'}}</h2>
 				<div v-if="tournament.players && tournament.players.length" class="mt-2">
-					<h3 class="text-lg text-white inline-block">Liste des joueurs :</h3>
+					<h3 class="text-lg text-white inline-block">{{$t('List_Players_Tournaments')}}</h3>
 					<span class="text-white ml-2">
-						{{ tournament.players.map(player => player.name || `Joueur ${player.id}`).join(', ') }}
+						{{tournament.players.map(player => player.name || `${this.$t('Player')} ${player.id}`).join(', ')}}
 					</span>
 				</div>
 
@@ -30,7 +30,7 @@
 									v-for="(match, matchIndex) in round"
 									:key="'match-' + roundIndex + '-' + matchIndex"
 									class="text-white"
-								>Match {{matchIndex + 1}} : 
+								>{{$t('Game')}} {{matchIndex + 1}} : 
 									<span class="font-bold">
 										{{match.players[0]?.name || `Joueur ${match.players[0]?.id}`}}
 									</span>
@@ -39,7 +39,7 @@
 										{{match.players[1]?.name || `Joueur ${match.players[1]?.id}`}}
 									</span>
 									<span v-if="match.winner">
-										- Vainqueur : {{match.winner?.name || `Joueur ${match.winner?.id}`}}
+										{{$t('Winner')}} {{match.winner?.name || `Joueur ${match.winner?.id}`}}
 									</span>
 								</li>
 							</ul>
@@ -52,12 +52,12 @@
                         to="/custom_tournaments"
 						@click="delete_tournament()"
                         class="text-white bg-gradient-to-br from-red-800 to-red-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
-                    ><i class="fa-solid fa-xmark mr-2"></i>Supprimer le tournois</router-link>
+                    ><i class="fa-solid fa-xmark mr-2"></i>{{$t('Delete_Tournaments')}}</router-link>
                     <router-link
                         to="/tournaments"
                         @click="play_next_match()"
                         class="text-white bg-gradient-to-br from-green-800 to-green-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2 text-center"
-                    ><i class="fa-solid fa-arrow-right mr-2"></i>Jouer le match suivant</router-link>
+                    ><i class="fa-solid fa-arrow-right mr-2"></i>{{$t('Play_Game_Tournaments')}}</router-link>
                 </div>
 			</div>
 		</div>
@@ -163,7 +163,7 @@
 					const nextRound = matches.map((match, index) => {
 						return {
 							id: null,
-							name: `Gagnant du match ${index + 1}`
+							name: `${this.$t('Winner_Of_Game')} ${index + 1}`
 						};
 					});
 
