@@ -220,7 +220,7 @@
 			async header_get_profil() {
 				try {
 					const response = await apiClient.get('profil/');
-					this.img = `https://localhost:8443/api/media/player_picture/${response.data.data.username}.png`;
+					this.img = `https://localhost:8443/api/media/player_picture/${response.data.data.id}.png`;
 				} catch (error) {
 					console.error('Erreur lors de la récupération des données :', error);
 					this.img = null; 

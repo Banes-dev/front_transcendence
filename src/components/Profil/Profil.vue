@@ -143,7 +143,7 @@
                             <div class="flex items-center space-x-3">
                                 <img 
                                     class="w-8 h-8" 
-                                    :src="'https://localhost:8443/api/media/player_picture/' + friend.username + '.png'" 
+                                    :src="'https://localhost:8443/api/media/player_picture/' + friend.id + '.png'" 
                                     alt="Image de votre ami"
                                 />
                                 <span>{{friend.username}}</span>
@@ -246,7 +246,7 @@
                     this.mdp = "*".repeat(12);
                     // console.log(this.mdp);
 
-                    this.img = `https://localhost:8443/api/media/player_picture/${this.pseudo}.png`;
+                    this.img = `https://localhost:8443/api/media/player_picture/${this.id}.png`;
                     // console.log(this.img);
 
                     this.status = response.data.data.status;
