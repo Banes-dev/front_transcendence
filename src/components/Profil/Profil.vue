@@ -142,7 +142,7 @@
                         >
                             <div class="flex items-center space-x-3">
                                 <img 
-                                    class="w-8 h-8" 
+                                    class="w-8 h-8"
                                     :src="'https://localhost:8443/api/media/player_picture/' + friend.id + '.png'" 
                                     alt="Image de votre ami"
                                 />
