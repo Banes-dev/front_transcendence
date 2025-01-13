@@ -246,8 +246,6 @@
                     this.mdp = "*".repeat(12);
                     // console.log(this.mdp);
 
-                    console.log(response.data.data.id);
-                    console.log(this.id);
                     this.img = `https://localhost:8443/api/media/player_picture/${response.data.data.id}.png`;
                     // console.log(this.img);
 
@@ -255,7 +253,6 @@
                     // console.log(this.status);
 
                     this.friends = response.data.data.friends;
-                    console.log(this.friends[1].id);
                     // console.log(this.friends);
 
                     this.win_pong = response.data.data.win_pong;
